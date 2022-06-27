@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 
 using Quid_pro_Quo.Authentification;
@@ -22,7 +23,7 @@ namespace Quid_pro_Quo.Services
             _UoW = uow;
         }
 
-        public async Task<string> Login(string username, string password)
+        public async Task<JwtApiModel> Login(string username, string password)
         {
             if (string.IsNullOrEmpty(username))
             {
@@ -39,8 +40,9 @@ namespace Quid_pro_Quo.Services
                 throw new NotFoundAppException($"user not found");
             }
 
+            string inputHashPass = HashPassword(password);
             string userHashPass = await _UoW.UserRepository.GetHashPasswordById(user.Id);
-            if (userHashPass != HashPassword(password))
+            if (userHashPass != inputHashPass)
             {
                 throw new NotFoundAppException($"uncorrect password");
             }
@@ -48,7 +50,7 @@ namespace Quid_pro_Quo.Services
             ClaimsIdentity claims = GetIdentity(user.UserName, user.Role);
             string jwtString = JwtTokenizer.GetEncodedJWT(claims, AuthOptions.Lifetime);
 
-            return jwtString;
+            return new JwtApiModel(jwtString);
         }
         public async Task<UserApiModel> Registration(string username, string password)
         {
@@ -73,32 +75,61 @@ namespace Quid_pro_Quo.Services
                 AvatarFileName = null,
                 Biographi = "",
                 Role = "User",
+                LoginInfo = new LoginInfoEntity()
+                {
+                    HashPassword = HashPassword(password),
+                },
             };
             user = await _UoW.UserRepository.Add(user);
+            await _UoW.SaveChanges();
 
             return UserMapping.ToUserAM(user);
         }
 
+        public async Task ChangePassword(string username, string oldPassword, string newPassword)
+        {
+            if (string.IsNullOrEmpty(oldPassword))
+            {
+                throw new ArgumentException($"{nameof(oldPassword)} not specified");
+            }
+            if (string.IsNullOrEmpty(newPassword))
+            {
+                throw new ArgumentException($"{nameof(newPassword)} not specified");
+            }
+
+            UserEntity user = await _UoW.UserRepository.GetByName(username);
+            if (user is null)
+            {
+                throw new NotFoundAppException($"user not found");
+            }
+
+            string inputHashPass = HashPassword(oldPassword);
+            string userHashPass = await _UoW.UserRepository.GetHashPasswordById(user.Id);
+            if (userHashPass != inputHashPass)
+            {
+                throw new NotFoundAppException($"uncorrect old password");
+            }
+
+            user.LoginInfo.HashPassword = HashPassword(newPassword);
+            await _UoW.UserRepository.Update(user);
+            await _UoW.SaveChanges();
+        }
+
         protected static string HashPassword(string password)
         {
-            byte[] salt;
-            byte[] buffer2;
             if (password == null)
             {
                 throw new ArgumentNullException("password");
             }
-            using (Rfc2898DeriveBytes bytes = new Rfc2898DeriveBytes(password, 0x10, 0x3e8))
-            {
-                salt = bytes.Salt;
-                buffer2 = bytes.GetBytes(0x20);
-            }
-            byte[] dst = new byte[0x31];
-            Buffer.BlockCopy(salt, 0, dst, 1, 0x10);
-            Buffer.BlockCopy(buffer2, 0, dst, 0x11, 0x20);
-            return Convert.ToBase64String(dst);
+
+            var sha = SHA256.Create();
+            var asByteArray = Encoding.Default.GetBytes(password);
+            var hashPass = sha.ComputeHash(asByteArray);
+
+            return Convert.ToBase64String(hashPass);
         }
 
-        private ClaimsIdentity GetIdentity(string username, string role)
+        protected ClaimsIdentity GetIdentity(string username, string role)
         {
             var claims = new List<Claim>
             {

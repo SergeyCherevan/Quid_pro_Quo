@@ -6,8 +6,5 @@ namespace Quid_pro_Quo.Database.Ralational
     public class LoginInfoEntity : BaseEntity<int>
     {
         public string HashPassword { get; set; }
-
-        [ForeignKey("Id")]
-        public virtual UserEntity User { get; set; }
     }
 }

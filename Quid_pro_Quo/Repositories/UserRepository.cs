@@ -19,8 +19,10 @@ namespace Quid_pro_Quo.Repositories
 
 
 
-        public async Task<UserEntity> GetByName(string username) => await _db.Users.FirstOrDefaultAsync(u => u.UserName == username);
-        public async Task<string> GetHashPasswordById(int id) => (await _loginInfoRepository.GetById(id)).HashPassword;
+        public async Task<UserEntity> GetByName(string username)
+            => await _db.Users.Include(u => u.LoginInfo).FirstOrDefaultAsync(u => u.UserName == username);
+        public async Task<string> GetHashPasswordById(int id)
+            => (await _loginInfoRepository.GetById(id)).HashPassword;
         public async Task<IEnumerable<UserEntity>> GetByFilter(string keywords, int pageNumber, int pageSize)
         {
             await Task.Run(() => { });
@@ -53,6 +55,15 @@ namespace Quid_pro_Quo.Repositories
                 .FromSqlRaw(sqlQuery)
                 .AsEnumerable()
                 .First().Value;
+        }
+
+        public async new Task<UserEntity> Add(UserEntity user)
+        {
+            user = (await _db.Users.AddAsync(user)).Entity;
+            user.LoginInfo.Id = user.Id;
+            await _db.LoginInfos.AddAsync(user.LoginInfo);
+
+            return user;
         }
     }
 }

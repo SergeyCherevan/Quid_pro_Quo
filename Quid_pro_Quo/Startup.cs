@@ -21,21 +21,20 @@ namespace Quid_pro_Quo
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             Configuration.Bind("AuthOptions", new AuthOptions());
 
-            System.Console.Write("Please, input secret key: ");
-            AuthOptions.Key = System.Console.ReadLine();
-            System.Console.WriteLine();
+            //System.Console.Write("Please, input secret key: ");
+            //AuthOptions.Key = System.Console.ReadLine();
+            //System.Console.WriteLine();
 
 
 

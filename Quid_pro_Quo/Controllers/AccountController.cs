@@ -22,7 +22,7 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<string>> Login([FromBody] LoginApiModel model)
+        public async Task<ActionResult<object>> Login([FromBody] LoginApiModel model)
         {
             try
             {
@@ -69,12 +69,40 @@ namespace Quid_pro_Quo.Controllers
         }
 
         [HttpPost]
-        [Route("currentUser/{username}")]
-        public async Task<ActionResult<UserApiModel>> CurrentUser(string username)
+        [Route("changePassword")]
+        public async Task<ActionResult<UserApiModel>> ChangePassword([FromBody] ChangePasswordModel model)
         {
             try
             {
-                return await _userService.GetUserByName(username);
+                await _accountService.ChangePassword(User.Identity.Name, model.OldPassword, model.NewPassword);
+                return Ok(new
+                {
+                    Message = "Password was changed"
+                });
+            }
+            catch (AlreadyExistAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "User already exist"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+        [HttpGet]
+        [Route("currentUser")]
+        public async Task<ActionResult<UserApiModel>> CurrentUser()
+        {
+            try
+            {
+                return await _userService.GetUserByName(User.Identity.Name);
             }
             catch (NotFoundAppException)
             {
