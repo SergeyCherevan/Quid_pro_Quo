@@ -49,7 +49,7 @@ namespace Quid_pro_Quo.Repositories
                 :
                     "";
 
-            string sqlQuery = $"SELECT * FROM [Users] {condition}";
+            string sqlQuery = $"SELECT COUNT(*) AS Value FROM [Users] {condition}";
 
             return _db.Set<ScalarReturn<int>>()
                 .FromSqlRaw(sqlQuery)
