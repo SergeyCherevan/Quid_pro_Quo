@@ -9,5 +9,6 @@ namespace Quid_pro_Quo.Repositories.Interfaces
     {
         Task<IEnumerable<PostEntity>> GetByAuthorId(int id);
         Task<IEnumerable<PostEntity>> GetByFilter(string keywords, int pageNumber, int pageSize);
+        Task<int> GetCountByFilter(string keywords);
     }
 }

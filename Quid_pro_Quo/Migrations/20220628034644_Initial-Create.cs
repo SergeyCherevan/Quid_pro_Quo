@@ -71,7 +71,7 @@ namespace Quid_pro_Quo.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Text = table.Column<string>(type: "TEXT", nullable: true),
-                    ImagesFileName = table.Column<string>(type: "TEXT", nullable: true),
+                    ImageFileNames = table.Column<string>(type: "TEXT", nullable: true),
                     AuthorId = table.Column<int>(type: "INTEGER", nullable: false),
                     PostedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
                     IsActual = table.Column<bool>(type: "INTEGER", nullable: false),

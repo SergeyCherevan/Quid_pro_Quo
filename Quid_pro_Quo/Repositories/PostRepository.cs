@@ -32,5 +32,23 @@ namespace Quid_pro_Quo.Repositories
 
             return _db.Posts.FromSqlRaw(sqlQuery);
         }
+        public async Task<int> GetCountByFilter(string keywords)
+        {
+            await Task.Run(() => { });
+
+            string condition =
+                keywords != "" ?
+                    "WHERE " + String.Join(" AND ", keywords.Split(" ").Select(e =>
+                    $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    )"))
+                :
+                    "";
+
+            string sqlQuery = $"SELECT COUNT(*) AS Value FROM [Posts] {condition}";
+
+            return _db.Set<ScalarReturn<int>>()
+                .FromSqlRaw(sqlQuery)
+                .AsEnumerable()
+                .First().Value;
+        }
     }
 }

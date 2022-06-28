@@ -83,7 +83,7 @@ namespace Quid_pro_Quo.Services
             user = await _UoW.UserRepository.Add(user);
             await _UoW.SaveChanges();
 
-            return UserMapping.ToUserAM(user);
+            return UserMapping.ToUserApiModel(user);
         }
 
         public async Task ChangePassword(string username, string oldPassword, string newPassword)

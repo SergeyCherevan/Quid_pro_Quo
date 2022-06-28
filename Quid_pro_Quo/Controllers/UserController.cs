@@ -54,7 +54,7 @@ namespace Quid_pro_Quo.Controllers
             {
                 return BadRequest(new
                 {
-                    Error = "Page size can't equal 0"
+                    Error = "Page size can't be equal 0"
                 });
             }
 

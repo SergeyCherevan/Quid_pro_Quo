@@ -29,14 +29,14 @@ namespace Quid_pro_Quo.Services
                 throw new NotFoundAppException($"user not found");
             }
 
-            return UserMapping.ToUserAM(user);
+            return user.ToUserApiModel();
         }
 
         public async Task<UsersPageApiModel> GetUsersByFilter(string keywords, int pageNumber, int pageSize)
             => new UsersPageApiModel()
                 {
                     Users = (await _UoW.UserRepository.GetByFilter(keywords, pageNumber, pageSize))
-                                .Select(userEntity => UserMapping.ToUserAM(userEntity)),
+                                .Select(userEntity => userEntity.ToUserApiModel()),
                     UsersCount = await _UoW.UserRepository.GetCountByFilter(keywords),
                 };
     }

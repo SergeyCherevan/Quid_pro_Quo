@@ -63,6 +63,7 @@ namespace Quid_pro_Quo
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPostService, PostService>();
 
 
 

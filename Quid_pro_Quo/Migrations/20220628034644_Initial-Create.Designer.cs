@@ -9,7 +9,7 @@ using Quid_pro_Quo.Database.Ralational;
 namespace Quid_pro_Quo.Migrations
 {
     [DbContext(typeof(QuidProQuoRelationalDbContext))]
-    [Migration("20220627091135_InitialCreate")]
+    [Migration("20220628034644_Initial-Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,7 +66,7 @@ namespace Quid_pro_Quo.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ImagesFileName")
+                    b.Property<string>("ImageFileNames")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActual")
@@ -119,12 +119,6 @@ namespace Quid_pro_Quo.Migrations
                     b.HasIndex("RequestingPostId");
 
                     b.ToTable("Proposals");
-                });
-
-            modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.ScalarReturn<int>", b =>
-                {
-                    b.Property<int>("Value")
-                        .HasColumnType("INTEGER");
                 });
 
             modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.UserEntity", b =>

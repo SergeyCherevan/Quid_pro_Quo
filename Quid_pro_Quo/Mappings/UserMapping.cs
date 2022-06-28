@@ -3,9 +3,9 @@ using Quid_pro_Quo.WebApiModels;
 
 namespace Quid_pro_Quo.Mappings
 {
-    public class UserMapping
+    public static class UserMapping
     {
-        public static UserApiModel ToUserAM(UserEntity entity) => new UserApiModel()
+        public static UserApiModel ToUserApiModel(this UserEntity entity) => new UserApiModel()
         {
             Id = entity.Id,
             UserName = entity.UserName,

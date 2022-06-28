@@ -64,7 +64,7 @@ namespace Quid_pro_Quo.Migrations
                     b.Property<int>("AuthorId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ImagesFileName")
+                    b.Property<string>("ImageFileNames")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActual")
@@ -117,12 +117,6 @@ namespace Quid_pro_Quo.Migrations
                     b.HasIndex("RequestingPostId");
 
                     b.ToTable("Proposals");
-                });
-
-            modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.ScalarReturn<int>", b =>
-                {
-                    b.Property<int>("Value")
-                        .HasColumnType("INTEGER");
                 });
 
             modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.UserEntity", b =>

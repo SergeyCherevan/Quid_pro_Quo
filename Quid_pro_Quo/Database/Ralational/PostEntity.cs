@@ -8,7 +8,7 @@ namespace Quid_pro_Quo.Database.Ralational
     {
         public string Title { get; set; }
         public string Text { get; set; }
-        public string ImagesFileName { get; set; }
+        public string ImageFileNames { get; set; }
         public int AuthorId { get; set; }
         public DateTime PostedAt { get; set; }
         public bool IsActual { get; set; }

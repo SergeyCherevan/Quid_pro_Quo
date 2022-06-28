@@ -37,8 +37,7 @@ namespace Quid_pro_Quo.Repositories
 
             IEnumerable<MessagingCardApiModel> messagingCards
                 = messagings
-                .Select(async e => await new MessagingMapping(_userRepository)
-                    .ToMessagingCardAM(e, e.User1Id == id ? e.User2Id : e.User1Id))
+                .Select(async e => await e.ToMessagingCardApiModel(e.User1Id == id ? e.User2Id : e.User1Id, _userRepository))
                 .Select(e => e.Result);
 
 
