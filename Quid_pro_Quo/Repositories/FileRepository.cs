@@ -44,5 +44,14 @@ namespace Quid_pro_Quo.Repositories
 
             return fileName;
         }
+
+        public async Task Delete(string folderName, string fileName)
+        {
+            await Task.Run(() => { });
+
+            string filePath = Path.Combine(_env.ContentRootPath, $"FileStorage/{folderName}/{fileName}");
+
+            File.Delete(filePath);
+        }
     }
 }

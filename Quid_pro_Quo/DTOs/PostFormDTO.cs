@@ -3,8 +3,6 @@
 using System;
 using System.Collections.Generic;
 
-using Quid_pro_Quo.WebApiModels;
-
 namespace Quid_pro_Quo.DTOs
 {
     public class PostFormDTO

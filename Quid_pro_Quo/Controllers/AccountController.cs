@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 
 using System.Threading.Tasks;
 using System;
@@ -6,6 +7,8 @@ using System;
 using Quid_pro_Quo.WebApiModels;
 using Quid_pro_Quo.Services.Interfaces;
 using Quid_pro_Quo.Exceptions;
+using Quid_pro_Quo.Services;
+using Quid_pro_Quo.Mappings;
 
 namespace Quid_pro_Quo.Controllers
 {
@@ -15,11 +18,15 @@ namespace Quid_pro_Quo.Controllers
     {
         IAccountService _accountService { get; set; }
         IUserService _userService { get; set; }
-        public AccountController(IAccountService accountService, IUserService userService)
+        public AccountController(IAccountService accountService, IUserService userService, IWebHostEnvironment env)
         {
             _accountService = accountService;
             _userService = userService;
+
+            (_accountService as AccountService).SetProperties(this, env);
         }
+
+
 
         [HttpPost]
         [Route("login")]
@@ -71,7 +78,7 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpPost]
         [Route("changePassword")]
-        public async Task<ActionResult<UserApiModel>> ChangePassword([FromBody] ChangePasswordModel model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
         {
             try
             {
@@ -96,6 +103,32 @@ namespace Quid_pro_Quo.Controllers
                 });
             }
         }
+
+        [HttpPut]
+        [Route("edit")]
+        public async Task<ActionResult<UserApiModel>> Edit([FromBody] AccountFormApiModel model)
+        {
+            try
+            {
+                return await _accountService.Edit(model.ToAccountFormDTO(User.Identity.Name));
+            }
+            catch (AlreadyExistAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "User already exist"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+
 
         [HttpGet]
         [Route("currentUser")]
