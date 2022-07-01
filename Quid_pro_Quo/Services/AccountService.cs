@@ -147,7 +147,7 @@ namespace Quid_pro_Quo.Services
             if (account.AvatarFile is not null)
             {
                 string filename = await _fileRepository.Add("Avatars", account.AvatarFile);
-                if (user.AvatarFileName is not null)
+                if (string.IsNullOrEmpty(user.AvatarFileName))
                 {
                     await _fileRepository.Delete("Avatars", user.AvatarFileName);
                 }

@@ -43,7 +43,6 @@
     <Folder Include="ClientApp\" />
     <Folder Include="FileStorage\Avatars\" />
     <Folder Include="FileStorage\Files\" />
-    <Folder Include="FileStorage\Images\" />
   </ItemGroup>
 
   <ItemGroup>
