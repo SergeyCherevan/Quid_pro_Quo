@@ -40,7 +40,6 @@
 
   <ItemGroup>
     <Folder Include="AppData\" />
-    <Folder Include="ClientApp\" />
     <Folder Include="FileStorage\Avatars\" />
     <Folder Include="FileStorage\Files\" />
   </ItemGroup>
