@@ -36,18 +36,18 @@ namespace Quid_pro_Quo.Services
 
 
 
-        public async Task<JwtApiModel> Login(string username, string password)
+        public async Task<JwtApiModel> Login(string userName, string password)
         {
-            if (string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(userName))
             {
-                throw new ArgumentException($"{nameof(username)} not specified");
+                throw new ArgumentException($"{nameof(userName)} not specified");
             }
             if (string.IsNullOrEmpty(password))
             {
                 throw new ArgumentException($"{nameof(password)} not specified");
             }
 
-            UserEntity user = await _UoW.UserRepository.GetByName(username);
+            UserEntity user = await _UoW.UserRepository.GetByName(userName);
             if (user is null)
             {
                 throw new NotFoundAppException($"user not found");
@@ -66,18 +66,18 @@ namespace Quid_pro_Quo.Services
             return new JwtApiModel(jwtString);
         }
 
-        public async Task<UserApiModel> Registration(string username, string password)
+        public async Task<UserApiModel> Registration(string userName, string password)
         {
-            if (string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(userName))
             {
-                throw new ArgumentException($"{nameof(username)} not specified");
+                throw new ArgumentException($"{nameof(userName)} not specified");
             }
             if (string.IsNullOrEmpty(password))
             {
                 throw new ArgumentException($"{nameof(password)} not specified");
             }
 
-            UserEntity user = await _UoW.UserRepository.GetByName(username);
+            UserEntity user = await _UoW.UserRepository.GetByName(userName);
             if (user is not null)
             {
                 throw new AlreadyExistAppException($"user already exist");
@@ -85,7 +85,7 @@ namespace Quid_pro_Quo.Services
 
             user = new UserEntity()
             {
-                UserName = username,
+                UserName = userName,
                 AvatarFileName = null,
                 Biographi = "",
                 Role = "User",
@@ -100,7 +100,7 @@ namespace Quid_pro_Quo.Services
             return UserMapping.ToUserApiModel(user);
         }
 
-        public async Task ChangePassword(string username, string oldPassword, string newPassword)
+        public async Task ChangePassword(string userName, string oldPassword, string newPassword)
         {
             if (string.IsNullOrEmpty(oldPassword))
             {
@@ -111,7 +111,7 @@ namespace Quid_pro_Quo.Services
                 throw new ArgumentException($"{nameof(newPassword)} not specified");
             }
 
-            UserEntity user = await _UoW.UserRepository.GetByName(username);
+            UserEntity user = await _UoW.UserRepository.GetByName(userName);
             if (user is null)
             {
                 throw new NotFoundAppException($"user not found");
@@ -176,11 +176,11 @@ namespace Quid_pro_Quo.Services
             return Convert.ToBase64String(hashPass);
         }
 
-        protected ClaimsIdentity GetIdentity(string username, string role)
+        protected ClaimsIdentity GetIdentity(string userName, string role)
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, username),
+                new Claim(ClaimsIdentity.DefaultNameClaimType, userName),
                 new Claim(ClaimsIdentity.DefaultRoleClaimType, role)
             };
 

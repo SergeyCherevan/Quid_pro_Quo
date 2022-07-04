@@ -21,9 +21,9 @@ namespace Quid_pro_Quo.Services
             _UoW = uow;
         }
 
-        public async Task<UserApiModel> GetUserByName(string username)
+        public async Task<UserApiModel> GetUserByName(string userName)
         {
-            UserEntity user = await _UoW.UserRepository.GetByName(username);
+            UserEntity user = await _UoW.UserRepository.GetByName(userName);
             if (user is null)
             {
                 throw new NotFoundAppException($"user not found");

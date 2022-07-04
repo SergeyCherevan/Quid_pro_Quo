@@ -78,7 +78,7 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpPost]
         [Route("changePassword")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordModel model)
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordApiModel model)
         {
             try
             {

@@ -10,7 +10,7 @@ namespace Quid_pro_Quo.Services.Interfaces
 {
     public interface IUserService
     {
-        Task<UserApiModel> GetUserByName(string username);
+        Task<UserApiModel> GetUserByName(string userName);
         Task<UsersPageApiModel> GetUsersByFilter(string keywords, int pageNumber, int pageSize);
     }
 }

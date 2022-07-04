@@ -19,8 +19,8 @@ namespace Quid_pro_Quo.Repositories
 
 
 
-        public async Task<UserEntity> GetByName(string username)
-            => await _db.Users.Include(u => u.LoginInfo).FirstOrDefaultAsync(u => u.UserName == username);
+        public async Task<UserEntity> GetByName(string userName)
+            => await _db.Users.Include(u => u.LoginInfo).FirstOrDefaultAsync(u => u.UserName == userName);
         public async Task<string> GetHashPasswordById(int id)
             => (await _loginInfoRepository.GetById(id)).HashPassword;
         public async Task<IEnumerable<UserEntity>> GetByFilter(string keywords, int pageNumber, int pageSize)

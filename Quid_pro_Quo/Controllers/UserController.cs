@@ -21,12 +21,12 @@ namespace Quid_pro_Quo.Controllers
         }
 
         [HttpGet]
-        [Route("get/{username}")]
-        public async Task<ActionResult<UserApiModel>> Get(string username)
+        [Route("get/{userName}")]
+        public async Task<ActionResult<UserApiModel>> Get(string userName)
         {
             try
             {
-                return await _userService.GetUserByName(username);
+                return await _userService.GetUserByName(userName);
             }
             catch (NotFoundAppException)
             {
