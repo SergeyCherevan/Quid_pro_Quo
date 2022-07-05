@@ -4,16 +4,28 @@
 
   <h1 class="text-center">{{title}}</h1>
 
-  <h4><b>{{usernameLabel}}</b> {{userModel.userName}}</h4>
-  <h4><b>{{idLabel}}</b> {{userModel.id}}</h4>
+  <div class="row align-items-start">
 
-  <hr class="bg-danger border-2 border-top border-danger" *ngIf="postItems.length">
+    <div class="col">
+      <h4><b>{{idStr}}</b> {{userModel.id}}</h4>
+      <h4><b>{{usernameStr}}</b> {{userModel.userName}}</h4>
 
-  <div *ngFor="let postItem of postItems">
+      <h4><b>{{biographiStr}}</b></h4>
+      <span class="fs-5"><i>{{userModel.biographi}}</i></span>
+    </div>
 
-    <post [postModel]="postItem" (click)="goPostPage(postItem.id)" [style.cursor]="'pointer'"></post>
+    <div class="col">
+      <div class="avatar-with-button">
+        <img src="/api/file/avatar/{{userModel.avatarFileName ?? 'default_avatar.png'}}" class="avatar-on-profile" />
+      </div>
+    </div>
 
-    <br />
+    <hr class="bg-danger border-2 border-top border-danger" *ngIf="postItems.length">
+
+    <div *ngFor="let postItem of postItems">
+      <post [postModel]="postItem" (click)="goPostPage(postItem.id)" [style.cursor]="'pointer'"></post>
+      <br />
+    </div>
 
   </div>
 

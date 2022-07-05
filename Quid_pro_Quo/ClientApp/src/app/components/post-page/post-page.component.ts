@@ -14,7 +14,7 @@ import { PostResponseModel } from '../../models/post-response.model'
 export class PostPageComponent implements OnInit {
 
   title: string = "Сторінка заметки";
-  idLabel: string = "ID заметки: ";
+  idStr: string = "ID заметки: ";
   authorLabel: string = "Автор заметки: ";
   deleteStr: string = "Удалить заметку";
 

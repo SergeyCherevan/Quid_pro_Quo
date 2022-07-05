@@ -11,14 +11,15 @@ import { PostResponseModel } from '../../models/post-response.model'
 @Component({
   selector: 'user-page',
   templateUrl: './user-page.component.html',
+  styleUrls: [ '../account-page/account-page.component.scss' ],
 })
 export class UserPageComponent implements OnInit {
 
   title: string = "Сторінка користувача";
-  idLabel: string = "ID користувача:";
-  usernameLabel: string = "Ім'я користувача:";
-  logoutStr: string = "Выйти";
-  changePasswordStr: string = "Изменить пароль";
+  idStr: string = "ID користувача:";
+  usernameStr: string = "Ім'я користувача:";
+  biographiStr: string = "Біографія:";
+  editAccountStr: string = "Редагувати аккаунт";
 
 
   subscription: Subscription;

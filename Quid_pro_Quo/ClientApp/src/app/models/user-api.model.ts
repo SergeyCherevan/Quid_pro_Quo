@@ -1,7 +1,7 @@
 export interface UserApiModel {
   id: number;
   userName: string;
-  avatarFileName: string;
+  avatarFileName?: string;
   biographi: string;
   role: string;
 }

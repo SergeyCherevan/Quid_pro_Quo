@@ -9,15 +9,22 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Username</th>
+        <th>Username (Avatar)</th>
+        <th>Biographi</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let user of usersData" [style.cursor]="'pointer'" routerLink="/accountPage/{{user.userName}}">
-        <td>{{user.id}}</td>
-        <td>{{user.userName}}</td>
-      </tr>
+      <ng-template ngFor let-user [ngForOf]="usersData.users">
+        <tr [style.cursor]="'pointer'" routerLink="/userPage/{{user.userName}}">
+          <td>{{user.id}}</td>
+          <td>
+            {{user.userName}}
+            <img src="/api/file/avatar/{{user.avatarFileName ?? 'default_avatar.png'}}" class="avatar-img"/>
+          </td>
+          <td innerHtml="{{getInnerHtmlByString(user.biographi)}}"></td>
+        </tr>
+      </ng-template>
     </tbody>
 
   </table>
