@@ -33,6 +33,10 @@ export class UserPageComponent implements OnInit {
   };
   postItems: PostResponseModel[] = [];
 
+  getInnerHtmlByString(str: string) {
+    return str.split('  ').join(' &nbsp;').split('\n').join('<br>');
+  }
+
   get myUsername(): string | undefined {
     return this.authorizationService.userName;
   }

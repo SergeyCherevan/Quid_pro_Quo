@@ -11,7 +11,16 @@
       <h4><b>{{usernameStr}}</b> {{userModel.userName}}</h4>
 
       <h4><b>{{biographiStr}}</b></h4>
-      <span class="fs-5"><i>{{userModel.biographi}}</i></span>
+      <span class="fs-5" innerHtml="{{getInnerHtmlByString(userModel.biographi)}}"></span>
+
+      <div *ngIf="isMyPage">
+        <hr class="bg-danger border-2 border-top border-danger">
+
+        <button type="button" class="btn btn-primary" routerLink="/accountPage">
+          {{editAccountStr}}
+        </button>
+      </div>
+
     </div>
 
     <div class="col">
