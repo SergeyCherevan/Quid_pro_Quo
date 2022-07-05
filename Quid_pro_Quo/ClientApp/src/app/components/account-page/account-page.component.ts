@@ -8,6 +8,7 @@ import { DictionaryService } from '../../services/dictionary.service';
 
 import { UserApiModel } from '../../models/user-api.model';
 import { AccountFormApiModel } from '../../models/account-form-api.model';
+import { ChangePasswordApiModel } from '../../models/change-password-api.model';
 
 @Component({
   selector: 'account-page',
@@ -24,14 +25,19 @@ export class AccountPageComponent implements OnInit {
 
 
 
+  idStr: string = "ID користувача:";
   usernameStr: string = "Ім'я користувача";
   biographiStr: string = "Боіграфія";
-  passwordStr: string = "Пароль";
-  confirmPasswordStr: string = "Підтвердіть пароль";
+  oldPasswordStr: string = "Старий пароль";
+  newPasswordStr: string = "Новий пароль";
+  confirmNewPasswordStr: string = "Підтвердіть пароль";
 
+  changesIsSavedStr: string = "Зміни збережені";
   uncorrectUsernameStr: string = "Некоректне ім'я користувача. Не менше 4 буквено-цифрових символів";
   uncorrectPasswordStr: string = "Некоректний пароль. Не менше 4 буквено-цифрових символів";
   uncorrectConfirmPasswordStr: string = "Паролі не співпадають";
+
+  isChangesSaved: boolean = false;
 
   serverError: Error | null = null;
   get firstSpanError(): string {
@@ -77,15 +83,16 @@ export class AccountPageComponent implements OnInit {
   userModel: UserApiModel = {
     id: 0,
     userName: "",
-    avatarFileName: "",
+    avatarFileName: undefined,
     biographi: "",
     role: "",
   };
 
-  randNum: number = 0;
-  rand(): number {
-    return Math.random();
-  }
+  changePasswordModel = {
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  };
 
   //subscription: Subscription;
 
@@ -134,9 +141,20 @@ export class AccountPageComponent implements OnInit {
   saveChanges(): void {
     this.requestService
       .putMultipartForm('/api/account/edit', this.editAccountFormData, this.authorizationService.jwtString)
+      .then(() => this.isChangesSaved = true)
       .then(() => this.authorizationService.login({
         userName: this.userModel.userName,
         password: this.authorizationService.password!,
+      }))
+      .then(() => window.location.reload());
+  }
+
+  changePassword(): void {
+    this.authorizationService
+      .changePassword(this.changePasswordModel)
+      .then(() => this.authorizationService.login({
+        userName: this.authorizationService.userName!,
+        password: this.changePasswordModel.newPassword,
       }))
       .then(() => window.location.reload());
   }
