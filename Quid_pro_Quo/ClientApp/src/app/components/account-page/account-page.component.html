@@ -1,0 +1,114 @@
+<br />
+
+<div class="container">
+
+  <h1 class="text-center">
+    {{title}}
+    <a routerLink="/userPage/{{this.authorizationService.userName}}">
+      {{this.authorizationService.userName}}
+    </a>
+  </h1>
+
+  <br />
+
+  <form name="editAccountForm">
+    <div class="row align-items-start">
+
+      <div class="col">
+
+        <div class="avatar-with-button" (click)="clickOnAvatar()">
+          <img [src]="avatarOnProfileSrc" class="avatar-on-profile"/>
+          <img src="assets/upload-arrow.png" id="upload-icon">
+        </div>
+
+        <input type="file" accept="image/*" id="avatar-input"
+               name="avatarFile" (change)="onSelectFile($event)">
+        <span for="avatarFile" class="text-danger"></span>
+      </div>
+
+      <div class="col">
+        <div class="mb-3">
+          <label for="userName" class="form-label">{{usernameStr}}</label>
+          <input type="text" class="form-control" name="userName" [(ngModel)]="userModel.userName"
+                 #userName="ngModel" required pattern="^[A-Za-z0-9]{4,40}$"
+                 (ngModelChange)="resetServerError()">
+          <span for="userName" [hidden]="(userName.valid || userName.untouched) && !serverError" class="text-danger">
+            {{firstSpanError}}
+          </span>
+        </div>
+
+        <div class="mb-3">
+          <label for="userName" class="form-label">{{biographiStr}}</label>
+          <textarea type="text" class="form-control" name="text" [(ngModel)]="userModel.biographi"
+                    #biographi="ngModel"
+                    rows="5"></textarea>
+        </div>
+
+        <p class="text-center">
+
+          <button type="button" class="btn btn-primary"
+                  [style.margin]="'0 .5vw 0 0'"
+                  (click)="logout()">
+            {{logoutStr}}
+          </button>
+
+          <button type="button" class="btn btn-primary"
+                  [style.margin]="'0 .5vw 0 0'"
+                  (click)="saveChanges()">
+            {{saveChangesStr}}
+            <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+              <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+            </svg>
+          </button>
+
+        </p>
+      </div>
+
+    </div>
+  </form>
+
+  <br />
+
+  <form name="changePasswordForm">
+    <div class="row align-items-start">
+      <div class="container col-6">
+        <label asp-for="NewPassword">Введите новый пароль:</label>
+        <input asp-for="NewPassword" type="password" style="width: 100%;"><br>
+        <span asp-validation-for="NewPassword" class="text-danger"></span><br>
+
+        <label asp-for="ConfirmNewPassword">Подтвердите новый пароль:</label>
+        <input asp-for="ConfirmNewPassword" type="password" style="width: 100%;"><br>
+        <span asp-validation-for="ConfirmNewPassword" class="text-danger"></span><br>
+
+        <label asp-for="OldPassword">Введите старый пароль: *</label>
+        <input asp-for="OldPassword" type="password" style="width: 100%;"><br>
+        <span asp-validation-for="OldPassword" class="text-danger"></span>
+
+
+
+        <span class="text-success fs-5">
+          RedactResult
+          <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+          </svg>
+        </span>
+
+        <p class="text-center">
+
+          <button type="submit" class="btn btn-primary">
+            {{changePasswordStr}}
+            <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
+              <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+            </svg>
+          </button>
+
+        </p>
+
+      </div>
+    </div>
+  </form>
+
+
+</div>
+
+<script src="assets/avatar-input.js"></script>

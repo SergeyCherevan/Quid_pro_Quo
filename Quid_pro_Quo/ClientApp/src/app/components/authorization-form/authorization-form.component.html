@@ -1,0 +1,77 @@
+<!-- Modal -->
+<div class="modal fade" id="authorization-form-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{formTitle}}</h5>
+        <button type="button" class="btn-close" id="authorization-form-close-button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <form name="loginForm" *ngIf="isLoginOrReg == isLogin">
+          <div class="mb-3">
+            <label for="userName" class="form-label">{{usernameStr}}</label>
+            <input type="text" class="form-control" name="userName" [(ngModel)]="formData.userName"
+                   #userName="ngModel" required pattern="^[A-Za-z0-9]{4,40}$"
+                   (ngModelChange)="resetServerError()">
+            <span for="userName" [hidden]="(userName.valid || userName.untouched) && !serverError" class="text-danger">
+              {{firstSpanError}}
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">{{passwordStr}}</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="formData.password"
+                   #password="ngModel" required pattern="^[A-Za-z0-9]{4,40}$"
+                   (ngModelChange)="resetServerError()">
+            <span for="password" [hidden]="password.valid || password.untouched" class="text-danger">
+              {{uncorrectPasswordStr}}
+            </span>
+          </div>
+        </form>
+
+        <form name="registrationForm" *ngIf="isLoginOrReg == isReg">
+          <div class="mb-3">
+            <label for="userName" class="form-label">{{usernameStr}}</label>
+            <input type="text" class="form-control" name="userName" [(ngModel)]="formData.userName"
+                   #userName="ngModel" required pattern="^[A-Za-z0-9]{4,40}$"
+                   (ngModelChange)="resetServerError()">
+            <span for="userName" [hidden]="(userName.valid || userName.untouched) && !serverError" class="text-danger">
+              {{firstSpanError}}
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">{{passwordStr}}</label>
+            <input type="password" class="form-control" name="password" [(ngModel)]="formData.password"
+                   #password="ngModel" required pattern="^[A-Za-z0-9]{4,40}$"
+                   (ngModelChange)="resetServerError()">
+            <span for="password" [hidden]="password.valid || password.untouched" class="text-danger">
+              {{uncorrectPasswordStr}}
+            </span>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label">{{confirmPasswordStr}}</label>
+            <input type="password" class="form-control" name="confirmPassword" [(ngModel)]="formData.confirmPassword"
+                   #confirmPassword="ngModel" (ngModelChange)="resetServerError()">
+            <span for="confirmPassword" [hidden]="confirmPassword.value === password.value || confirmPassword.untouched"
+                  class="text-danger">
+              {{uncorrectConfirmPasswordStr}}
+            </span>
+          </div>
+        </form>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="switchForm()">
+          {{formSwitchingButton}}
+        </button>
+        <button type="button" class="btn btn-primary" (click)="submitForm()">
+          {{formSubmitButton}}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

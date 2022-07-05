@@ -1,0 +1,34 @@
+<br />
+
+<div class="container">
+
+  <h1 class="text-center">{{title}}</h1>
+
+  <h4><b>{{idLabel}}</b> {{postModel.id}}</h4>
+  <h4><b>{{authorLabel}}</b> <a routerLink="/accountPage/{{postModel.userName}}">{{postModel.userName}}</a></h4>
+
+  <div *ngIf="isMyPage">
+
+    <hr class="bg-danger border-2 border-top border-danger">
+
+    <button type="button" class="btn btn-primary"
+            [style.margin]="'0 .5vw 0 0'"
+            (click)="deletePost()">
+      {{deleteStr}}
+    </button>
+
+    <hr class="bg-danger border-2 border-top border-danger">
+
+  </div>
+
+  <post [postModel]="postModel"></post>
+
+  <div *ngIf="isMyPage">
+
+    <hr class="bg-danger border-2 border-top border-danger">
+
+    <edit-post-form [formData]="postModel" (onPostEdited)="downloadPost()"></edit-post-form>
+
+  </div>
+
+</div>

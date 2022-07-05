@@ -1,0 +1,20 @@
+<br />
+
+<div class="container">
+
+  <h1 class="text-center">{{title}}</h1>
+
+  <h4><b>{{usernameLabel}}</b> {{userModel.userName}}</h4>
+  <h4><b>{{idLabel}}</b> {{userModel.id}}</h4>
+
+  <hr class="bg-danger border-2 border-top border-danger" *ngIf="postItems.length">
+
+  <div *ngFor="let postItem of postItems">
+
+    <post [postModel]="postItem" (click)="goPostPage(postItem.id)" [style.cursor]="'pointer'"></post>
+
+    <br />
+
+  </div>
+
+</div>

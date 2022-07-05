@@ -1,0 +1,108 @@
+.avatar-on-profile {
+  width: 20vw;
+  height: 20vw;
+}
+
+/* edit-profile */
+.avatar-with-button {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+
+  #upload-icon {
+    width: 20vh;
+    height: 20vh;
+    position: absolute;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    -webkit-transition: 0.6s;
+    transition: 0.6s;
+  }
+
+  &:hover:not(:active) #upload-icon {
+    opacity: 1;
+    -webkit-animation: upload-icon-vibration 1.25s;
+    animation: upload-icon-vibration 1.25s;
+  }
+
+  &:active #upload-icon {
+    width: 25vh;
+    height: 25vh;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes upload-icon-vibration {
+  from {
+    top: 50%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  20% {
+    top: 40%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  40% {
+    top: 45%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  60% {
+    top: 40%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  to {
+    top: 50%;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+  }
+}
+
+@keyframes upload-icon-vibration {
+  from {
+    top: 50%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  20% {
+    top: 40%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  40% {
+    top: 45%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  60% {
+    top: 40%;
+    -webkit-animation-timing-function: ease;
+    animation-timing-function: ease;
+  }
+
+  to {
+    top: 50%;
+    -webkit-animation-timing-function: linear;
+    animation-timing-function: linear;
+  }
+}
+
+#avatar-input {
+  display: none;
+}

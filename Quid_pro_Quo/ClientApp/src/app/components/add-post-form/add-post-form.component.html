@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row justify-content-center" name="addPostForm">
+
+    <form class="col-8">
+
+      <h2 class="text-center">{{formTitle}}</h2>
+
+      <div class="mb-3">
+        <label for="title" class="form-label">{{titleStr}}</label>
+        <input type="text" class="form-control" name="title" [(ngModel)]="formData.title"
+               #title="ngModel" required
+               (ngModelChange)="resetServerError()">
+        <span for="title" [hidden]="(title.valid || title.untouched) && !serverError" class="text-danger">
+          {{firstSpanError}}
+        </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="text" class="form-label">{{textStr}}</label>
+        <textarea type="text" class="form-control" name="text" [(ngModel)]="formData.text"
+                  #text="ngModel" required
+                  (ngModelChange)="resetServerError()"
+                  rows="5"></textarea>
+        <span for="text" [hidden]="(text.valid || text.untouched) && !serverError" class="text-danger">
+          {{emptyTextStr}}
+        </span>
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="submitForm()">
+        {{formSubmitButton}}
+      </button>
+
+    </form>
+
+  </div>
+</div>
