@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using System.Threading.Tasks;
 using System;
@@ -104,9 +105,10 @@ namespace Quid_pro_Quo.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut]
         [Route("edit")]
-        public async Task<ActionResult<UserApiModel>> Edit([FromBody] AccountFormApiModel model)
+        public async Task<ActionResult<UserApiModel>> Edit([FromForm] AccountFormApiModel model)
         {
             try
             {
@@ -130,6 +132,7 @@ namespace Quid_pro_Quo.Controllers
 
 
 
+        [Authorize]
         [HttpGet]
         [Route("currentUser")]
         public async Task<ActionResult<UserApiModel>> CurrentUser()
