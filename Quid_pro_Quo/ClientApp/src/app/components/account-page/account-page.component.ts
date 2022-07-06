@@ -33,12 +33,12 @@ export class AccountPageComponent implements OnInit {
   confirmNewPasswordStr: string = "Підтвердіть пароль";
 
   changesIsSavedStr: string = "Зміни збережені";
+  passwordIsChangedStr: string = "Пароль змінено";
   uncorrectUsernameStr: string = "Некоректне ім'я користувача. Не менше 4 буквено-цифрових символів";
-  uncorrectPasswordStr: string = "Некоректний пароль. Не менше 4 буквено-цифрових символів";
+  uncorrectNewPasswordStr: string = "Некоректний пароль. Не менше 4 буквено-цифрових символів";
   uncorrectConfirmPasswordStr: string = "Паролі не співпадають";
 
   isChangesSaved: boolean = false;
-
   serverError: Error | null = null;
   get firstSpanError(): string {
 
@@ -47,8 +47,17 @@ export class AccountPageComponent implements OnInit {
       : this.uncorrectUsernameStr;
   }
 
+  isPasswordChanged: boolean = false;
+  serverChangePassError: Error | null = null;
+  get firstChangePassSpanError(): string {
+
+    return this.serverChangePassError ?
+      this.dictionaryService.get(this.serverChangePassError.message)
+      : "";
+  }
+
   resetServerError() {
-    this.serverError = null;
+    this.serverError = this.serverChangePassError = null;
   }
 
 
@@ -146,16 +155,15 @@ export class AccountPageComponent implements OnInit {
         userName: this.userModel.userName,
         password: this.authorizationService.password!,
       }))
-      .then(() => window.location.reload());
+      .then(() => window.location.reload())
+      .catch((err: Error) => this.serverError = err);
   }
 
   changePassword(): void {
     this.authorizationService
       .changePassword(this.changePasswordModel)
-      .then(() => this.authorizationService.login({
-        userName: this.authorizationService.userName!,
-        password: this.changePasswordModel.newPassword,
-      }))
-      .then(() => window.location.reload());
+      .then(() => this.isPasswordChanged = true)
+      .then(() => window.location.reload())
+      .catch((err: Error) => this.serverChangePassError = err);
   }
 }

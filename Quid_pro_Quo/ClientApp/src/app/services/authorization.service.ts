@@ -83,11 +83,10 @@ export class AuthorizationService {
 
   changePassword(formData: ChangePasswordApiModel): Promise<any> {
     return this.requestService
-      .put('/api/user/changePassword', {
+      .put('/api/account/changePassword', {
         oldPassword: formData.oldPassword,
         newPassword: formData.newPassword,
       }, this.jwtString)
-      .catch(() => { })
       .then(() => this.login({
         userName: this.userName!,
         password: formData.newPassword,
