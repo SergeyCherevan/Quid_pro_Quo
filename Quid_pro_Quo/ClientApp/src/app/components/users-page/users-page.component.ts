@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { UserApiModel } from '../../models/user-api.model';
 import { UsersPageApiModel } from '../../models/users-page-api.model';
@@ -15,7 +17,8 @@ import { AuthorizationService } from '../../services/authorization.service';
 })
 export class UsersPageComponent implements OnInit {
 
-  title: string = "Користувачі:";
+  title: string = "Користувачі";
+  searchStr: string = "Шукати";
 
   usersData: UsersPageApiModel = {
     users: [],
@@ -34,15 +37,49 @@ export class UsersPageComponent implements OnInit {
     return str.split('  ').join(' &nbsp;').split('\n').join('<br>');
   }
 
+  querySubscription: Subscription;
+  keywords: string = '';
+  pageNumber: number = 0;
+  pageSize: number = 10;
+
+  get pageCount(): number {
+    return Math.floor(this.usersData.usersCount / this.pageSize) +
+      (this.usersData.usersCount % this.pageSize > 0 ? 1 : 0);
+  }
+
+  pageNumbersArr(begin: number, end: number) {
+    let arr = [];
+    for (let i = begin; i <= end; i++) {
+      arr.push(i);
+    }
+    return arr;
+  }
+
   constructor(
+    public activateRoute: ActivatedRoute,
+    public router: Router,
     public dictionaryService: DictionaryService,
     public requestService: RequestService,
-    public authorizationService: AuthorizationService) { }
+    public authorizationService: AuthorizationService
+  ) {
+    this.querySubscription = activateRoute.queryParams.subscribe(
+      (queryParam: any) => {
+        this.keywords = queryParam['keywords'] ?? '';
+        this.pageNumber = Number(queryParam['pageNumber'] ?? 0);
+
+        this.ngOnInit();
+      }
+    );
+  }
 
   ngOnInit(): void {
     this.requestService
-      .get('/api/user/getByFilter?pageNumber=0&pageSize=10', this.authorizationService.jwtString)
+      .get(`/api/user/getByFilter?keywords=${this.keywords}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
+        this.authorizationService.jwtString)
       .then((respObj: UsersPageApiModel) => this.usersData = respObj);
   }
 
+  search(): void {
+    this.router.navigateByUrl(`/usersPage?keywords=${this.keywords}&pageNumber=${this.pageNumber}`);
+  }
 }
