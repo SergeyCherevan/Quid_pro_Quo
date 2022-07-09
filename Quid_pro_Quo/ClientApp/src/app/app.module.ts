@@ -13,7 +13,7 @@ import { PostPageComponent } from './components/post-page/post-page.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { AuthorizationFormComponent } from './components/authorization-form/authorization-form.component';
-import { AddPostFormComponent } from './components/add-post-form/add-post-form.component';
+import { AddPostPageComponent } from './components/add-post-page/add-post-page.component';
 import { PostComponent } from './components/post/post.component';
 import { EditPostFormComponent } from './components/edit-post-form/edit-post-form.component';
 
@@ -27,6 +27,7 @@ const appRoutes: Routes = [
   { path: 'userPage/:userName', component: UserPageComponent },
   { path: 'accountPage', component: AccountPageComponent },
   { path: 'postPage/:id', component: PostPageComponent },
+  { path: 'addPostPage', component: AddPostPageComponent },
   { path: '**', component: NotFoundPageComponent },
 ];
 
@@ -41,7 +42,7 @@ const appRoutes: Routes = [
     FooterComponent,
     AuthorizationFormComponent,
     PostComponent,
-    AddPostFormComponent,
+    AddPostPageComponent,
     PostPageComponent,
     EditPostFormComponent,
     UserPageComponent,

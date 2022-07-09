@@ -50,7 +50,12 @@ namespace Quid_pro_Quo.Mappings
                    AuthorName = (await userRepository.GetById(entity.AuthorId)).UserName,
                    PostedAt = entity.PostedAt,
                    IsActual = entity.IsActual,
-                   PerformServiceOnDatesList = entity.PerformServiceOnDatesList.Split(";").Select(s => DateTime.Parse(s)),
+                   PerformServiceOnDatesList =
+                       string.IsNullOrEmpty(entity.PerformServiceOnDatesList)
+                       ?
+                       new DateTime[] {}
+                       :
+                       entity.PerformServiceOnDatesList.Split(";").Select(s => DateTime.Parse(s)),
                    PerformServiceInPlace = entity.PerformServiceInPlace,
                };
     }

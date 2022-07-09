@@ -91,9 +91,7 @@
 
   <div *ngFor="let post of postsData.posts">
 
-    <post [postModel]="post" [style.cursor]="'pointer'"></post>
-
-    <!--(click)="goNotePage(post.id)"-->
+    <post [postModel]="post" [style.cursor]="'pointer'" routerLink="/postPage/{{post.id}}"></post>
 
     <br />
 

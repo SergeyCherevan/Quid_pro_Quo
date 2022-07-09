@@ -71,6 +71,6 @@ export class PostPageComponent implements OnInit {
         undefined,
         this.authorizationService.jwtString)
       .catch(() => { })
-      .then(() => this.router.navigateByUrl(`/accountPage/${this.postModel.authorName}`));
+      .then(() => this.router.navigateByUrl('/'));
   }
 }

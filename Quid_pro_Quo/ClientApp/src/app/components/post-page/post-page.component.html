@@ -5,7 +5,7 @@
   <h1 class="text-center">{{title}}</h1>
 
   <h4><b>{{idStr}}</b> {{postModel.id}}</h4>
-  <h4><b>{{authorLabel}}</b> <a routerLink="/accountPage/{{postModel.authorName}}">{{postModel.authorName}}</a></h4>
+  <h4><b>{{authorLabel}}</b> <a routerLink="/userPage/{{postModel.authorName}}">{{postModel.authorName}}</a></h4>
 
   <div *ngIf="isMyPage">
 
@@ -17,18 +17,18 @@
       {{deleteStr}}
     </button>
 
-    <hr class="bg-danger border-2 border-top border-danger">
-
   </div>
+
+  <hr class="bg-danger border-2 border-top border-danger">
 
   <post [postModel]="postModel"></post>
 
-  <div *ngIf="isMyPage">
+  <!--<div *ngIf="isMyPage">
 
     <hr class="bg-danger border-2 border-top border-danger">
 
     <edit-post-form [formData]="postModel" (onPostEdited)="downloadPost()"></edit-post-form>
 
-  </div>
+  </div>-->
 
 </div>
