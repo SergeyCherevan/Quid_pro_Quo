@@ -6,7 +6,7 @@ import { AuthorizationService } from '../../services/authorization.service';
 import { RequestService } from '../../services/request.service';
 
 import { UserApiModel } from '../../models/user-api.model'
-import { PostResponseModel } from '../../models/post-response.model'
+import { PostGetApiModel } from '../../models/post-get-api.model'
 
 @Component({
   selector: 'user-page',
@@ -31,7 +31,7 @@ export class UserPageComponent implements OnInit {
     biographi: "",
     role: "",
   };
-  postItems: PostResponseModel[] = [];
+  postItems: PostGetApiModel[] = [];
 
   getInnerHtmlByString(str: string) {
     return str.split('  ').join(' &nbsp;').split('\n').join('<br>');

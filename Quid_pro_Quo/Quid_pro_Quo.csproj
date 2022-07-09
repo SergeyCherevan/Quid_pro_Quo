@@ -35,17 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Remove="wwwroot\favicon.ico" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="AppData\" />
     <Folder Include="FileStorage\Avatars\" />
     <Folder Include="FileStorage\Files\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\favicon.ico" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../../services/authorization.service';
 import { RequestService } from '../../services/request.service';
 
-import { PostResponseModel } from '../../models/post-response.model'
+import { PostGetApiModel } from '../../models/post-get-api.model'
 
 @Component({
   selector: 'post-page',
@@ -19,12 +19,16 @@ export class PostPageComponent implements OnInit {
   deleteStr: string = "Удалить заметку";
 
 
-  postModel: PostResponseModel = {
+  postModel: PostGetApiModel = {
     id: "",
     title: "",
     text: "",
-    userName: "",
-    lastUpdate: new Date(),
+    imageFileNames: "",
+    authorName: "",
+    postedAt: new Date(),
+    isActual: false,
+    performServiceOnDatesList: [],
+    performServiceInPlace: ""
   };
 
   subscription: Subscription;
@@ -34,7 +38,7 @@ export class PostPageComponent implements OnInit {
   }
 
   get isMyPage(): boolean {
-    return this.postModel.userName === this.myUsername;
+    return this.postModel.authorName === this.myUsername;
   }
 
   constructor(
@@ -67,6 +71,6 @@ export class PostPageComponent implements OnInit {
         undefined,
         this.authorizationService.jwtString)
       .catch(() => { })
-      .then(() => this.router.navigateByUrl(`/accountPage/${this.postModel.userName}`));
+      .then(() => this.router.navigateByUrl(`/accountPage/${this.postModel.authorName}`));
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { PostApiModel } from '../../models/post-api.model';
+import { PostGetApiModel } from '../../models/post-get-api.model';
 
 import { DictionaryService } from '../../services/dictionary.service';
 import { AuthorizationService } from '../../services/authorization.service';
@@ -13,47 +13,47 @@ import { RequestService } from '../../services/request.service';
 })
 export class AddPostFormComponent implements OnInit {
 
-  formData: PostApiModel = {
-    title: "",
-    text: "",
-  };
+  //formData: PostGetApiModel = {
+  //  title: "",
+  //  text: "",
+  //};
 
-  formTitle: string = "Добавление заметки";
+  //formTitle: string = "Добавление заметки";
 
-  titleStr: string = "Заголовок заметки";
-  textStr: string = "Текст заметки";
+  //titleStr: string = "Заголовок заметки";
+  //textStr: string = "Текст заметки";
 
-  formSubmitButton: string = "Добавить";
+  //formSubmitButton: string = "Добавить";
 
-  emptyTitleStr: string = "Отсутствует заколовок";
-  emptyTextStr: string = "Отсутствует текст";
+  //emptyTitleStr: string = "Отсутствует заколовок";
+  //emptyTextStr: string = "Отсутствует текст";
 
-  serverError: Error | null = null;
-  get firstSpanError(): string {
+  //serverError: Error | null = null;
+  //get firstSpanError(): string {
 
-    return this.serverError ?
-        this.dictionaryService.get(this.serverError.message)
-      : this.emptyTitleStr;
-  }
+  //  return this.serverError ?
+  //      this.dictionaryService.get(this.serverError.message)
+  //    : this.emptyTitleStr;
+  //}
 
-  constructor(
-    public dictionaryService: DictionaryService,
-    public authorizationService: AuthorizationService,
-    public requestService: RequestService,
-  ) { }
+  //constructor(
+  //  public dictionaryService: DictionaryService,
+  //  public authorizationService: AuthorizationService,
+  //  public requestService: RequestService,
+  //) { }
 
   ngOnInit(): void { }
 
-  @Output() onPostAdded = new EventEmitter<boolean>();
+  //@Output() onPostAdded = new EventEmitter<boolean>();
 
-  submitForm(): void {
-    this.requestService
-      .post('/api/post/add/', this.formData, this.authorizationService.jwtString)
-      .then(() => this.onPostAdded.emit());
-  }
+  //submitForm(): void {
+  //  this.requestService
+  //    .post('/api/post/add/', this.formData, this.authorizationService.jwtString)
+  //    .then(() => this.onPostAdded.emit());
+  //}
 
-  resetServerError(): void {
-    this.serverError = null;
-  }
+  //resetServerError(): void {
+  //  this.serverError = null;
+  //}
 
 }

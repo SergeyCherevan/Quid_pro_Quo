@@ -1,16 +1,88 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
+import { PostGetApiModel } from '../../models/post-get-api.model';
+import { PostsPageApiModel } from '../../models/posts-page-api-model';
+
+import { DictionaryService } from '../../services/dictionary.service';
+import { RequestService } from '../../services/request.service';
+import { AuthorizationService } from '../../services/authorization.service';
 
 @Component({
   selector: 'timeline-page',
   templateUrl: './timeline-page.component.html',
+  providers: [DictionaryService],
 })
 export class TimelinePageComponent implements OnInit {
 
-  title: string[] = [ "Стрічка послуг" ];
+  title: string = "Стрічка послуг";
+  searchStr: string = "Шукати";
 
-  constructor() { }
+  postsData: PostsPageApiModel = {
+    posts: [],
+    postsCount: 0,
+  };
 
-  ngOnInit(): void {
+  post: PostGetApiModel = {
+    id: "",
+    title: "",
+    text: "",
+    imageFileNames: "",
+    authorName: "",
+    postedAt: new Date(),
+    isActual: false,
+    performServiceOnDatesList: [],
+    performServiceInPlace: ""
+  };
+
+  getInnerHtmlByString(str: string) {
+    return str.split('  ').join(' &nbsp;').split('\n').join('<br>');
   }
 
+  querySubscription: Subscription;
+  keywords: string = '';
+  pageNumber: number = 0;
+  pageSize: number = 10;
+
+  get pageCount(): number {
+    return Math.floor(this.postsData.postsCount / this.pageSize) +
+      (this.postsData.postsCount % this.pageSize > 0 ? 1 : 0);
+  }
+
+  pageNumbersArr(begin: number, end: number) {
+    let arr = [];
+    for (let i = begin; i <= end; i++) {
+      arr.push(i);
+    }
+    return arr;
+  }
+
+  constructor(
+    public activateRoute: ActivatedRoute,
+    public router: Router,
+    public dictionaryService: DictionaryService,
+    public requestService: RequestService,
+    public authorizationService: AuthorizationService
+  ) {
+    this.querySubscription = activateRoute.queryParams.subscribe(
+      (queryParam: any) => {
+        this.keywords = queryParam['keywords'] ?? '';
+        this.pageNumber = Number(queryParam['pageNumber'] ?? 0);
+
+        this.ngOnInit();
+      }
+    );
+  }
+
+  ngOnInit(): void {
+    this.requestService
+      .get(`/api/post/getByFilter?keywords=${this.keywords}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
+        this.authorizationService.jwtString)
+      .then((respObj: PostsPageApiModel) => this.postsData = respObj);
+  }
+
+  search(): void {
+    this.router.navigateByUrl(`?keywords=${this.keywords}&pageNumber=${this.pageNumber}`);
+  }
 }

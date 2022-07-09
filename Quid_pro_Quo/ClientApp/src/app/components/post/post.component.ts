@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { PostResponseModel } from '../../models/post-response.model';
+import { PostGetApiModel } from '../../models/post-get-api.model';
 
 @Component({
   selector: 'post',
@@ -9,12 +9,16 @@ import { PostResponseModel } from '../../models/post-response.model';
 })
 export class PostComponent implements OnInit {
 
-  @Input() postModel: PostResponseModel = {
+  @Input() postModel: PostGetApiModel = {
     id: "",
     title: "",
     text: "",
-    userName: "",
-    lastUpdate: new Date(),
+    imageFileNames: "",
+    authorName: "",
+    postedAt: new Date(),
+    isActual: false,
+    performServiceOnDatesList: [],
+    performServiceInPlace: ""
   };
 
   get titleInnerHTML() {

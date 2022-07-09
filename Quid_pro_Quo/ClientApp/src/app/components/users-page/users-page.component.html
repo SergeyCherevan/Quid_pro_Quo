@@ -94,7 +94,7 @@
     <thead>
       <tr>
         <th>Id</th>
-        <th>Username (Avatar)</th>
+        <th>(Avatar) Username</th>
         <th>Biographi</th>
       </tr>
     </thead>
@@ -104,8 +104,8 @@
         <tr [style.cursor]="'pointer'" routerLink="/userPage/{{user.userName}}">
           <td>{{user.id}}</td>
           <td>
-            {{user.userName}}
             <img src="/api/file/avatar/{{user.avatarFileName ?? 'default_avatar.png'}}" class="avatar-img" />
+            {{user.userName}}
           </td>
           <td innerHtml="{{getInnerHtmlByString(user.biographi)}}"></td>
         </tr>

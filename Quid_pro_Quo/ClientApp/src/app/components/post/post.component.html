@@ -9,8 +9,8 @@
       <div class="post-text" [innerHtml]="textInnerHTML"></div>
 
       <div class="row">
-        <div class="col-6"><p><i><a routerLink="/accountPage/{{postModel.userName}}">{{postModel.userName}}</a></i></p></div>
-        <div class="col-6 text-end"><p>{{postModel.lastUpdate | date:'dd.MM.YY HH:mm:ss'}}</p></div>
+        <div class="col-6"><p><i><a routerLink="/userPage/{{postModel.authorName}}">{{postModel.authorName}}</a></i></p></div>
+        <div class="col-6 text-end"><p>{{postModel.postedAt | date:'dd.MM.YY HH:mm:ss'}}</p></div>
       </div>
 
     </div>
