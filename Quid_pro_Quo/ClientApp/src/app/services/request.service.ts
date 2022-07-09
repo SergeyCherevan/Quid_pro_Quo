@@ -48,6 +48,28 @@ export class RequestService {
       });
   }
 
+  postMultipartForm(address: string, formData: FormData, jwtString?: string) {
+
+    return fetch(address, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${jwtString}`,
+      },
+      body: formData,
+    })
+      .then(async response => {
+        if (response.ok) {
+          try {
+            return response.json();
+          } catch {
+            return {};
+          }
+        } else {
+          throw Error((await response.json()).error);
+        }
+      });
+  }
+
   put(address: string, postObj: object, jwtString?: string) {
 
     return fetch(address, {

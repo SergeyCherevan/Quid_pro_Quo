@@ -9,7 +9,7 @@
 
       <div class="mb-3">
         <label for="title" class="form-label">{{titleStr}}</label>
-        <input type="text" class="form-control" name="title" [(ngModel)]="formData.title"
+        <input type="text" class="form-control" name="title" [(ngModel)]="postModel.title"
                #title="ngModel" required
                (ngModelChange)="resetServerError()">
         <span for="title" [hidden]="(title.valid || title.untouched) && !serverError" class="text-danger">
@@ -19,13 +19,20 @@
 
       <div class="mb-3">
         <label for="text" class="form-label">{{textStr}}</label>
-        <textarea type="text" class="form-control" name="text" [(ngModel)]="formData.text"
+        <textarea type="text" class="form-control" name="text" [(ngModel)]="postModel.text"
                   #text="ngModel" required
                   (ngModelChange)="resetServerError()"
                   rows="5"></textarea>
         <span for="text" [hidden]="(text.valid || text.untouched) && !serverError" class="text-danger">
           {{emptyTextStr}}
         </span>
+      </div>
+
+      <div class="mb-3">
+        <label for="imageFiles" class="form-label">{{imageFilesStr}}</label>
+        <input type="file" multiple accept="image/*" name="imageFiles"
+               class="form-control"  [(ngModel)]="postModel.imageFiles"
+               #imageFiles="ngModel" (ngModelChange)="resetServerError()">
       </div>
 
       <button type="button" class="btn btn-primary" (click)="submitForm()">

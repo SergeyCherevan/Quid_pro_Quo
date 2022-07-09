@@ -14,7 +14,7 @@ import { RequestService } from '../../services/request.service';
 })
 export class AddPostPageComponent implements OnInit {
 
-  formData: PostFormApiModel = {
+  postModel: PostFormApiModel = {
     id: 0,
     title: "",
     text: "",
@@ -28,6 +28,7 @@ export class AddPostPageComponent implements OnInit {
 
   titleStr: string = "Заголовок посту";
   textStr: string = "Текст посту";
+  imageFilesStr: string = "Файли зображень";
 
   formSubmitButton: string = "Додати";
 
@@ -51,14 +52,32 @@ export class AddPostPageComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  get addPostFormData(): FormData {
+    let formData: FormData = new FormData();
+
+    formData.append('title', this.postModel.title);
+    formData.append('text', this.postModel.text);
+    formData.append('performServiceInPlace', this.postModel.performServiceInPlace);
+    formData.append('performServiceOnDatesList', new Date(0).toISOString());
+
+    let imageInput: HTMLInputElement = <HTMLInputElement>document.getElementsByName('imageFiles')[0];
+    if (imageInput?.files) {
+      for (let i in imageInput.files) {
+        formData.append('imageFiles', imageInput.files[i]);
+      }
+    }
+
+    return formData;
+  }
+
   submitForm(): void {
     this.requestService
-      .post('/api/post/publish/', this.formData, this.authorizationService.jwtString)
-      .then(() => this.router.navigateByUrl('/'));
+      .postMultipartForm('/api/post/publish/', this.addPostFormData, this.authorizationService.jwtString)
+      .then(() => this.router.navigateByUrl('/'))
+      .catch((err: Error) => this.serverError = err);
   }
 
   resetServerError(): void {
     this.serverError = null;
   }
-
 }

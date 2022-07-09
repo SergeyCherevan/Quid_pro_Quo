@@ -76,7 +76,7 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpPost]
         [Route("publish")]
-        public async Task<ActionResult<PostGetApiModel>> Publish([FromBody] PostFormApiModel model)
+        public async Task<ActionResult<PostGetApiModel>> Publish([FromForm] PostFormApiModel model)
         {
             try
             {

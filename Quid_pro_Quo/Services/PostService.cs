@@ -40,9 +40,8 @@ namespace Quid_pro_Quo.Services
                 fileNames.Add(await _fileRepository.Add("Images", imageFile));
             }
 
-            PostEntity entity = await _UoW.PostRepository.Add(await post.ToPostEntity(_UoW.UserRepository));
+            PostEntity entity = await _UoW.PostRepository.Add(await post.ToPostEntity(_UoW.UserRepository, fileNames));
             PostGetApiModel returnPost = await entity.ToPostGetApiModel(_UoW.UserRepository);
-            returnPost.ImageFileNames = string.Join(";", fileNames);
 
             await _UoW.SaveChanges();
 

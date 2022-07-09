@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,13 +27,13 @@ namespace Quid_pro_Quo.Mappings
                 };
 
 
-        public static async Task<PostEntity> ToPostEntity(this PostFormDTO model, IUserRepository userRepository)
+        public static async Task<PostEntity> ToPostEntity(this PostFormDTO model, IUserRepository userRepository, IEnumerable<string> fileNames)
             => new PostEntity()
                 {
                     Id = model.Id,
                     Title = model.Title,
                     Text = model.Text,
-                    ImageFileNames = String.Join(";", model.ImageFiles.Select(e => e.FileName)),
+                    ImageFileNames = string.Join(";", fileNames),
                     AuthorId = (await userRepository.GetByName(model.AuthorName)).Id,
                     PostedAt = model.PostedAt,
                     IsActual = true,
