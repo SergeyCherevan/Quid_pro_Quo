@@ -8,6 +8,8 @@
 
       <div class="post-text" [innerHtml]="textInnerHTML"></div>
 
+      <br />
+
       <div id="carouselSlides{{postModel.id}}" class="carousel carousel-dark slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button *ngFor="let imageName of imageFileNamesArr; let i = index"
@@ -28,6 +30,22 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">{{nextStr}}</span>
           </button>
+        </div>
+      </div>
+
+      <br />
+
+      <div class="row">
+        <div class="col-6">
+          <p>{{datesStr}}:</p>
+          <ul>
+            <li *ngFor="let dateTime of postModel.performServiceOnDatesList">
+              {{dateTime | date:'dd.MM.YY HH:mm:ss'}}
+            </li>
+          </ul>
+        </div>
+        <div class="col-6 text-end">
+          <a href="https://www.google.com/maps/{{postModel.performServiceInPlace}}">{{placeStr}}</a>
         </div>
       </div>
 

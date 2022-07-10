@@ -29,7 +29,9 @@ export class AddPostPageComponent implements OnInit {
   titleStr: string = "Заголовок посту";
   textStr: string = "Текст посту";
   imageFilesStr: string = "Файли зображень";
+  performServiceOnDatesListStr: string = "Надати послугу у певний час";
 
+  addDateTimeItemButton: string = "Додати час/дату виконання";
   formSubmitButton: string = "Додати";
 
   emptyTitleStr: string = "Відсутній заколовок";
@@ -57,8 +59,6 @@ export class AddPostPageComponent implements OnInit {
 
     formData.append('title', this.postModel.title);
     formData.append('text', this.postModel.text);
-    formData.append('performServiceInPlace', this.postModel.performServiceInPlace);
-    formData.append('performServiceOnDatesList', new Date(0).toISOString());
 
     let imageInput: HTMLInputElement = <HTMLInputElement>document.getElementsByName('imageFiles')[0];
     if (imageInput?.files) {
@@ -67,7 +67,21 @@ export class AddPostPageComponent implements OnInit {
       }
     }
 
+    formData.append('performServiceInPlace', this.postModel.performServiceInPlace);
+
+    for (let date of this.postModel.performServiceOnDatesList) {
+      formData.append('performServiceOnDatesList', <any>date);
+    }
+
     return formData;
+  }
+
+  addDataTimeItem(): void {
+    this.postModel.performServiceOnDatesList.push(new Date());
+  }
+
+  deleteDataTimeItem(index: number): void {
+    this.postModel.performServiceOnDatesList.splice(index, 1);
   }
 
   submitForm(): void {

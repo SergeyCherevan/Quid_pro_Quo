@@ -15,7 +15,7 @@ namespace Quid_pro_Quo.WebApiModels
 
         public IEnumerable<DateTime> PerformServiceOnDatesList { get; set; }
 
-        // In Format: 51°30'26.0"N+0°07'39.0"W
+        // In Format: @39.6192195,-71.7422487,6.99z
         public string PerformServiceInPlace { get; set; }
     }
 }

@@ -31,9 +31,29 @@
       <div class="mb-3">
         <label for="imageFiles" class="form-label">{{imageFilesStr}}</label>
         <input type="file" multiple accept="image/*" name="imageFiles"
-               class="form-control"  [(ngModel)]="postModel.imageFiles"
+               class="form-control" [(ngModel)]="postModel.imageFiles"
                #imageFiles="ngModel" (ngModelChange)="resetServerError()">
       </div>
+
+      <div class="mb-3" *ngFor="let dateTime of postModel.performServiceOnDatesList; let i = index">
+        <label for="performServiceOnDatesList[{{i}}]" class="form-label">{{performServiceOnDatesListStr}} №{{i + 1}}</label>
+        <div class="input-group">
+          <input type="datetime-local" class="form-control" name="performServiceOnDatesList[{{i}}]" [(ngModel)]="postModel.performServiceOnDatesList[i]"
+                 performServiceOnDatesList="ngModel"
+                 (ngModelChange)="resetServerError()">
+          <span class="input-group-btn">
+            <button type="button" class="btn btn-danger" [style.margin]="'0 0 0 .5vw'" (click)="deleteDataTimeItem(i)">
+              <div type="button" class="btn-close btn-close-white" aria-label="Close"></div>
+            </button>
+          </span>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-primary" (click)="addDataTimeItem()">
+        {{addDateTimeItemButton}}
+      </button>
+
+      <br /><br />
 
       <button type="button" class="btn btn-primary" (click)="submitForm()">
         {{formSubmitButton}}

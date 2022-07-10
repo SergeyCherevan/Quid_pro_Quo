@@ -46,6 +46,8 @@ export class PostComponent implements OnInit {
     return this.postModel.text.split('  ').join(' &nbsp;').split('\n').join('<br>');
   }
 
+  datesStr: string = "Дати і час послуги";
+  placeStr: string = "Переглянути місце у Google.Maps";
   prevStr: string = "Попередній";
   nextStr: string = "Наступний";
 
