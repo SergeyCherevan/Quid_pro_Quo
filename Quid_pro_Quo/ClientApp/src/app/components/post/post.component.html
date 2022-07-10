@@ -9,6 +9,13 @@
       <div class="post-text" [innerHtml]="textInnerHTML"></div>
 
       <div id="carouselSlides{{postModel.id}}" class="carousel carousel-dark slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button *ngFor="let imageName of imageFileNamesArr; let i = index"
+                  type="button" attr.data-bs-target="#carouselSlides{{postModel.id}}"
+                  [attr.data-bs-slide-to]="i" [class.active]="currentImageNumber == i"
+                  [attr.aria-current]="currentImageNumber == i" attr.aria-label="Slide {{i}}">
+          </button>
+        </div>
         <div class="carousel-inner">
           <div *ngFor="let imageName of imageFileNamesArr; let i = index" class="carousel-item" [class.active]="currentImageNumber == i">
             <img src="/api/file/image/{{imageName}}" class="rounded mx-auto d-block post-image" [alt]="imageName">
