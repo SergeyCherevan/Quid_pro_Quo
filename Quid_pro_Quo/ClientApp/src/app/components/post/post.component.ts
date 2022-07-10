@@ -20,6 +20,23 @@ export class PostComponent implements OnInit {
     performServiceOnDatesList: [],
     performServiceInPlace: ""
   };
+  currentImageNumber: number = 0;
+
+  get imageFileNamesArr(): string[] {
+    if (this.postModel.imageFileNames == "" || this.postModel.imageFileNames == null) {
+      return [];
+    }
+    return this.postModel.imageFileNames.split(';');
+  }
+  get imageNumbersArr(): number[] {
+    let countImages: number = this.imageFileNamesArr.length;
+    let arr: number[] = [];
+    for (let i = 0; i < countImages; i++) {
+      arr.push(i);
+    }
+
+    return arr;
+  }
 
   get titleInnerHTML() {
     return this.postModel.title.split('  ').join(' &nbsp;');
@@ -28,6 +45,9 @@ export class PostComponent implements OnInit {
   get textInnerHTML() {
     return this.postModel.text.split('  ').join(' &nbsp;').split('\n').join('<br>');
   }
+
+  prevStr: string = "Попередній";
+  nextStr: string = "Наступний";
 
   constructor() { }
 
