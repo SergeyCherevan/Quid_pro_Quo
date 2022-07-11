@@ -30,6 +30,7 @@ export class AddPostPageComponent implements OnInit {
   textStr: string = "Текст посту";
   imageFilesStr: string = "Файли зображень";
   performServiceOnDatesListStr: string = "Надати послугу у певний час";
+  performServiceInPlaceStr: string = "Надати послугу у певному місці";
 
   addDateTimeItemButton: string = "Додати час/дату виконання";
   formSubmitButton: string = "Додати";
