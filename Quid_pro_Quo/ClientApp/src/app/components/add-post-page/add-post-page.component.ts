@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PostFormApiModel } from '../../models/post-form-api.model';
@@ -6,6 +6,7 @@ import { PostFormApiModel } from '../../models/post-form-api.model';
 import { DictionaryService } from '../../services/dictionary.service';
 import { AuthorizationService } from '../../services/authorization.service';
 import { RequestService } from '../../services/request.service';
+import { GoogleMap, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'add-post-page',
@@ -46,14 +47,33 @@ export class AddPostPageComponent implements OnInit {
       : this.emptyTitleStr;
   }
 
+  zoom = 12
+  center: google.maps.LatLngLiteral = <any>{};
+  options: google.maps.MapOptions = {
+    mapTypeId: 'terrain',
+    //zoomControl: false,
+    scrollwheel: true,
+    disableDoubleClickZoom: true,
+    maxZoom: 15,
+    minZoom: 8,
+  };
+
   constructor(
     public router: Router,
     public dictionaryService: DictionaryService,
     public authorizationService: AuthorizationService,
     public requestService: RequestService,
+    public ngZone: NgZone,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    navigator.geolocation.getCurrentPosition((position) => {
+      this.center = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      };
+    });
+  }
 
   get addPostFormData(): FormData {
     let formData: FormData = new FormData();
@@ -83,6 +103,27 @@ export class AddPostPageComponent implements OnInit {
 
   deleteDataTimeItem(index: number): void {
     this.postModel.performServiceOnDatesList.splice(index, 1);
+  }
+
+  @ViewChild(GoogleMap, { static: false }) map: GoogleMap = <any>{};
+  markers: MapMarker[] = [];
+
+  click(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
+    console.log(event)
+
+    let marker: MapMarker = new MapMarker(this.map, this.ngZone);
+    marker.position = {
+      lat: this.center.lat /*+ ((Math.random() - 0.5) * 2) / 10*/,
+      lng: this.center.lng /*+ ((Math.random() - 0.5) * 2) / 10*/,
+    };
+    marker.label = {
+      color: 'red',
+      text: 'Marker label ' + (this.markers.length + 1),
+    };
+    marker.title = 'Marker title ' + (this.markers.length + 1);
+    marker.options = { animation: google.maps.Animation.BOUNCE };
+
+    this.markers.push(marker);
   }
 
   submitForm(): void {

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -48,7 +49,7 @@ const appRoutes: Routes = [
     UserPageComponent,
   ],
   imports: [
-    BrowserModule, FormsModule, RouterModule.forRoot(appRoutes)
+    BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule
   ],
   providers: [ AuthorizationService, RequestService ],
   bootstrap: [ AppComponent ]
