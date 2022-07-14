@@ -55,25 +55,15 @@
 
       <br /><br />
 
-            <div class="mb-3">
-              <label for="imageFiles" class="form-label">{{performServiceInPlaceStr}}</label>
-              <br />
-              <google-map height="500px"
-                          width="100%"
-                          [zoom]="zoom"
-                          [center]="center"
-                          [options]="options"
-                          (mapClick)="click($event)">
-                <map-marker *ngFor="let marker of markers"
-                            [position]="marker.position"
-                            [label]="marker.label"
-                            [title]="marker.title"
-                            [options]="marker.options">
-                </map-marker>
-              </google-map>
-            </div>
+      <div class="mb-3">
+        <label for="imageFiles" class="form-label">{{performServiceInPlaceStr}}</label>
+        <br />
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d325518.6878344305!2d30.252510061496128!3d50.401699044222816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4cf4ee15a4505%3A0x764931d2170146fe!2z0JrQuNC10LIsINCj0LrRgNCw0LjQvdCwLCAwMjAwMA!5e0!3m2!1sru!2sru!4v1657428408777!5m2!1sru!2sru"
+                class="w-100" [style.height]="'50vh'">
+        </iframe>
+      </div>
 
-      <br />
+      <br /><br />
 
       <button type="button" class="btn btn-primary" (click)="submitForm()">
         {{formSubmitButton}}
