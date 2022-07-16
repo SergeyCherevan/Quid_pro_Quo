@@ -11,6 +11,7 @@ import { GoogleMap, MapMarker } from '@angular/google-maps';
 @Component({
   selector: 'add-post-page',
   templateUrl: './add-post-page.component.html',
+  styleUrls: ['./add-post-page.component.scss'],
   providers: [ DictionaryService ],
 })
 export class AddPostPageComponent implements OnInit {
@@ -106,25 +107,8 @@ export class AddPostPageComponent implements OnInit {
   }
 
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap = <any>{};
-  markers: MapMarker[] = [];
 
-  click(event: google.maps.MapMouseEvent | google.maps.IconMouseEvent) {
-    console.log(event)
 
-    let marker: MapMarker = new MapMarker(this.map, this.ngZone);
-    marker.position = {
-      lat: this.center.lat /*+ ((Math.random() - 0.5) * 2) / 10*/,
-      lng: this.center.lng /*+ ((Math.random() - 0.5) * 2) / 10*/,
-    };
-    marker.label = {
-      color: 'red',
-      text: 'Marker label ' + (this.markers.length + 1),
-    };
-    marker.title = 'Marker title ' + (this.markers.length + 1);
-    marker.options = { animation: google.maps.Animation.BOUNCE };
-
-    this.markers.push(marker);
-  }
 
   submitForm(): void {
     this.requestService
