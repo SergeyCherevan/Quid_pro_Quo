@@ -55,21 +55,21 @@
 
       <br /><br />
 
-            <div class="mb-3">
-              <label for="imageFiles" class="form-label">{{performServiceInPlaceStr}}</label>
-              <br />
-              <div class="google-map">
-                <google-map height="500px"
-                            width="100%"
-                            [zoom]="zoom"
-                            [center]="center"
-                            [options]="options">
-                </google-map>
-                <img src="assets/geometka.png" class="google-map-geometka" />
-              </div>
-            </div>
+      <div class="mb-3">
+        <label for="imageFiles" class="form-label">{{performServiceInPlaceStr}}</label>
+        <br />
+        <div class="google-map">
+          <google-map height="500px"
+                      width="100%"
+                      [zoom]="zoom"
+                      [center]="center"
+                      [options]="options">
+          </google-map>
+          <img src="assets/geometka.png" class="google-map-geometka" />
+        </div>
+      </div>
 
-      <br /><br />
+      <br />
 
       <button type="button" class="btn btn-primary" (click)="submitForm()">
         {{formSubmitButton}}
