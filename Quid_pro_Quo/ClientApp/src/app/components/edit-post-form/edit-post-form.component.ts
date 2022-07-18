@@ -20,15 +20,15 @@ export class EditPostFormComponent implements OnInit {
     text: "",
   };
 
-  formTitle: string = "Редактирование заметки";
+  formTitle: string = "Редагування посту";
 
-  titleStr: string = "Заголовок заметки";
-  textStr: string = "Текст заметки";
+  titleStr: string = "Заголовок посту";
+  textStr: string = "Текст посту";
 
-  formSubmitButton: string = "Редактировать";
+  formSubmitButton: string = "Редагувати";
 
-  emptyTitleStr: string = "Отсутствует заколовок";
-  emptyTextStr: string = "Отсутствует текст";
+  emptyTitleStr: string = "Відсутній заколовок";
+  emptyTextStr: string = "Відсутній текст";
 
   serverError: Error | null = null;
   get firstSpanError(): string {

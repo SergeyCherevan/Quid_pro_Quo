@@ -13,10 +13,10 @@ import { PostGetApiModel } from '../../models/post-get-api.model'
 })
 export class PostPageComponent implements OnInit {
 
-  title: string = "Сторінка заметки";
-  idStr: string = "ID заметки: ";
-  authorLabel: string = "Автор заметки: ";
-  deleteStr: string = "Удалить заметку";
+  title: string = "Сторінка посту";
+  idStr: string = "ID посту: ";
+  authorLabel: string = "Автор посту: ";
+  deleteStr: string = "Видалити пост";
 
 
   postModel: PostGetApiModel = {
