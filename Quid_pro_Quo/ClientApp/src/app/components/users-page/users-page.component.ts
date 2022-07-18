@@ -12,7 +12,7 @@ import { AuthorizationService } from '../../services/authorization.service';
 @Component({
   selector: 'users-page',
   templateUrl: './users-page.component.html',
-  styleUrls: [ './user-page.component.scss' ],
+  styleUrls: [ './users-page.component.scss' ],
   providers: [ DictionaryService ],
 })
 export class UsersPageComponent implements OnInit {

@@ -23,7 +23,7 @@
                   #text="ngModel" required
                   (ngModelChange)="resetServerError()"
                   rows="5"></textarea>
-        <span for="text" [hidden]="(text.valid || text.untouched) && !serverError" class="text-danger">
+        <span for="text" [hidden]="(text.valid || text.untouched)" class="text-danger">
           {{emptyTextStr}}
         </span>
       </div>

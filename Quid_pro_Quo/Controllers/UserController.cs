@@ -70,6 +70,31 @@ namespace Quid_pro_Quo.Controllers
                 });
             }
         }
+
+        [HttpGet]
+        [Route("getAvatarByName/{userName}")]
+        public async Task<ActionResult> GetAvatarByName(string userName)
+        {
+            try
+            {
+                UserApiModel user = await _userService.GetUserByName(userName);
+                return Redirect($"/api/file/avatar/{user.AvatarFileName ?? "default_avatar.png"}");
+            }
+            catch (NotFoundAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "User not exists"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
     }
 }
 

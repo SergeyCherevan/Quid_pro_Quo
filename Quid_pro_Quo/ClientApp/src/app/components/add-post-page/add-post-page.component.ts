@@ -48,6 +48,7 @@ export class AddPostPageComponent implements OnInit {
       : this.emptyTitleStr;
   }
 
+  @ViewChild(GoogleMap, { static: false }) map: GoogleMap = <any>{};
   zoom = 12
   center: google.maps.LatLngLiteral = <any>{};
   options: google.maps.MapOptions = {
@@ -76,6 +77,7 @@ export class AddPostPageComponent implements OnInit {
     });
   }
 
+  mapCenter = "";
   get addPostFormData(): FormData {
     let formData: FormData = new FormData();
 
@@ -89,7 +91,8 @@ export class AddPostPageComponent implements OnInit {
       }
     }
 
-    formData.append('performServiceInPlace', this.postModel.performServiceInPlace);
+    let mapCenter: google.maps.LatLng = this.map.getCenter()!;
+    formData.append('performServiceInPlace', mapCenter.toUrlValue());
 
     for (let date of this.postModel.performServiceOnDatesList) {
       formData.append('performServiceOnDatesList', <any>date);
@@ -105,8 +108,6 @@ export class AddPostPageComponent implements OnInit {
   deleteDataTimeItem(index: number): void {
     this.postModel.performServiceOnDatesList.splice(index, 1);
   }
-
-  @ViewChild(GoogleMap, { static: false }) map: GoogleMap = <any>{};
 
 
 

@@ -45,12 +45,19 @@
           </ul>
         </div>
         <div class="col-6 text-end">
-          <a href="https://www.google.com/maps/{{postModel.performServiceInPlace}}">{{placeStr}}</a>
+          <a href="https://www.google.com/maps/@{{postModel.performServiceInPlace}}">{{placeStr}}</a>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-6"><p><i><a routerLink="/userPage/{{postModel.authorName}}">{{postModel.authorName}}</a></i></p></div>
+        <div class="col-6">
+          <p>
+            <a routerLink="/userPage/{{postModel.authorName}}">
+              <img src="/api/user/getAvatarByName/{{postModel.authorName}}" class="avatar-img" />
+              {{postModel.authorName}}
+            </a>
+          </p>
+        </div>
         <div class="col-6 text-end"><p>{{postModel.postedAt | date:'dd.MM.YY HH:mm:ss'}}</p></div>
       </div>
 
