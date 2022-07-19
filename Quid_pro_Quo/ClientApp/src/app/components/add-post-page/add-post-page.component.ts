@@ -92,7 +92,8 @@ export class AddPostPageComponent implements OnInit {
     }
 
     let mapCenter: google.maps.LatLng = this.map.getCenter()!;
-    formData.append('performServiceInPlace', mapCenter.toUrlValue());
+    let mapZoom: number = this.map.getZoom()!;
+    formData.append('performServiceInPlace', `@${mapCenter.toUrlValue()},${mapZoom}z`);
 
     for (let date of this.postModel.performServiceOnDatesList) {
       formData.append('performServiceOnDatesList', <any>date);
