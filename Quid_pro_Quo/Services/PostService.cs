@@ -59,13 +59,13 @@ namespace Quid_pro_Quo.Services
             return await post.ToPostGetApiModel(_UoW.UserRepository);
         }
 
-        public async Task<PostsPageApiModel> GetByFilter(string keywords, int pageNumber, int pageSize)
+        public async Task<PostsPageApiModel> GetByFilter(string keywords, string geomarker, int pageNumber, int pageSize)
             => new PostsPageApiModel()
                 {
-                    Posts = (await _UoW.PostRepository.GetByFilter(keywords, pageNumber, pageSize))
+                    Posts = (await _UoW.PostRepository.GetByFilter(keywords, geomarker, pageNumber, pageSize))
                                         .Select(async e => await e.ToPostGetApiModel(_UoW.UserRepository))
                                         .Select(e => e.Result),
-                    PostsCount = await _UoW.PostRepository.GetCountByFilter(keywords),
+                    PostsCount = await _UoW.PostRepository.GetCountByFilter(keywords, geomarker),
                 };
     }
 }

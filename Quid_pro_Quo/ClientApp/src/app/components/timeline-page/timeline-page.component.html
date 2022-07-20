@@ -34,7 +34,7 @@
       &nbsp;
       <label *ngFor="let i of pageNumbersArr(1, pageCount)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'geomarker': geomarker, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
     </p>
@@ -45,7 +45,7 @@
       &nbsp;
       <label *ngFor="let i of pageNumbersArr(1, 3)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'geomarker': geomarker, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
 
@@ -62,7 +62,7 @@
     <p class="text-center" *ngIf="2 <= pageNumber && pageNumber < pageCount - 2; else unset3">
       &nbsp;
       <label>
-        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': 0}">1</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'geomarker': geomarker, 'pageNumber': 0}">1</a>
         &nbsp;
       </label>
 
@@ -70,14 +70,14 @@
 
       <label *ngFor="let i of pageNumbersArr(pageNumber, pageNumber + 2)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'geomarker': geomarker, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
 
       <label>...</label>&nbsp;
 
       <label>
-        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'geomarker': geomarker, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
         &nbsp;
       </label>
     </p>
@@ -95,7 +95,7 @@
 
       <label *ngFor="let i of pageNumbersArr(pageCount - 2, pageCount)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'geomarker': geomarker, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
     </p>

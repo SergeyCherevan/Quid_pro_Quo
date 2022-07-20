@@ -75,20 +75,22 @@ export class TimelinePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestService
-      .get(`/api/post/getByFilter?keywords=${this.keywords}&geomarker=${this.geomarker}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
+      .get(`/api/post/getByFilter?keywords=${this.keywords}&geomarker=${this.geomarker ?? ''}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
         this.authorizationService.jwtString)
       .then((respObj: PostsPageApiModel) => this.postsData = respObj);
   }
 
   setGeomarker(geomarker: string): void {
     this.geomarker = geomarker;
+    this.search();
   }
 
   deleteGeomarker(): void {
     this.geomarker = undefined;
+    this.search();
   }
 
   search(): void {
-    this.router.navigateByUrl(`?keywords=${this.keywords}&geomarker=${this.geomarker}&pageNumber=${this.pageNumber}`);
+    this.router.navigateByUrl(`?keywords=${this.keywords}&geomarker=${this.geomarker ?? ''}&pageNumber=${this.pageNumber}`);
   }
 }
