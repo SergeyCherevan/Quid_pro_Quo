@@ -1,0 +1,46 @@
+<!-- Modal -->
+<div class="modal fade" id="search-geomarker-form-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{formTitle}}</h5>
+        <button type="button" class="btn-close" id="search-geomarker-form-close-button" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="mb-3">
+          <label for="imageFiles" class="form-label">{{searchServiceInPlaceStr}}</label>
+          <br />
+          <div class="google-map">
+            <google-map height="400px"
+                        width="100%"
+                        [zoom]="zoom"
+                        [center]="center"
+                        [options]="options">
+            </google-map>
+            <img src="assets/geometka.png" class="google-map-geometka" />
+          </div>
+        </div>
+
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="deleteGeomarker()">
+          {{deleteGeomarkerButton}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
+            <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+          </svg>
+        </button>
+        <button type="button" class="btn btn-primary" (click)="setGeomarker()">
+          {{setGeomarkerButton}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+          </svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -88,10 +88,12 @@ export class AuthorizationFormComponent implements OnInit {
     }
 
     promise
-      .then(() => {
-        let closeButton = document.getElementById("authorization-form-close-button");
-        closeButton?.click();
-      })
+      .then(() => this.close())
       .catch((err: Error) => this.serverError = err);
+  }
+
+  close(): void {
+    let closeButton = document.getElementById("authorization-form-close-button");
+    closeButton?.click();
   }
 }

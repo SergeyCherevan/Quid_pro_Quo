@@ -20,6 +20,7 @@ import { EditPostFormComponent } from './components/edit-post-form/edit-post-for
 
 import { AuthorizationService } from './services/authorization.service';
 import { RequestService } from './services/request.service';
+import { SearchGeomarkerFormComponent } from './components/search-geomarker-form/search-geomarker-form.component';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -47,6 +48,7 @@ const appRoutes: Routes = [
     PostPageComponent,
     EditPostFormComponent,
     UserPageComponent,
+    SearchGeomarkerFormComponent,
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule

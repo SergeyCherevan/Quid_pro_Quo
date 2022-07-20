@@ -17,13 +17,24 @@
 
   <br />
 
+  <p class="text-center">
+    <button type="button" class="btn btn-primary"
+            data-bs-toggle="modal" data-bs-target="#search-geomarker-form-modal">
+      <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+        <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+      </svg>
+      <span *ngIf="geomarker">: @{{geomarker}}</span>
+    </button>
+  </p>
+
   <p class="text-center" *ngIf="pageCount == 1; else unset0"></p>
 
   <ng-template #unset0>
     <p class="text-center" *ngIf="pageCount <= 3; else unset1">
+      &nbsp;
       <label *ngFor="let i of pageNumbersArr(1, pageCount)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
     </p>
@@ -31,16 +42,17 @@
 
   <ng-template #unset1>
     <p class="text-center" *ngIf="pageNumber < 2; else unset2">
+      &nbsp;
       <label *ngFor="let i of pageNumbersArr(1, 3)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
 
       <label>...</label>&nbsp;
 
       <label>
-        <a routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
         &nbsp;
       </label>
     </p>
@@ -48,8 +60,9 @@
 
   <ng-template #unset2>
     <p class="text-center" *ngIf="2 <= pageNumber && pageNumber < pageCount - 2; else unset3">
+      &nbsp;
       <label>
-        <a routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': 0}">1</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': 0}">1</a>
         &nbsp;
       </label>
 
@@ -57,14 +70,14 @@
 
       <label *ngFor="let i of pageNumbersArr(pageNumber, pageNumber + 2)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
 
       <label>...</label>&nbsp;
 
       <label>
-        <a routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
         &nbsp;
       </label>
     </p>
@@ -72,8 +85,9 @@
 
   <ng-template #unset3>
     <p class="text-center">
+      &nbsp;
       <label>
-        <a routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': 0}">1</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': 0}">1</a>
         &nbsp;
       </label>
 
@@ -81,7 +95,7 @@
 
       <label *ngFor="let i of pageNumbersArr(pageCount - 2, pageCount)">
         <a [class.text-danger]="i - 1 == pageNumber"
-           routerLink="/postsPage" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
+           routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': i - 1}">{{i}}</a>
         &nbsp;
       </label>
     </p>
@@ -96,5 +110,8 @@
     <br />
 
   </div>
+
+  <search-geomarker-form (onSetGeomarker)="setGeomarker($event)" (onDeleteGeomarker)="deleteGeomarker()">
+  </search-geomarker-form>
 
 </div>

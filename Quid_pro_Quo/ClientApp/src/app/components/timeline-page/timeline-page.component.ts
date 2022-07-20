@@ -36,14 +36,11 @@ export class TimelinePageComponent implements OnInit {
     performServiceInPlace: ""
   };
 
-  getInnerHtmlByString(str: string) {
-    return str.split('  ').join(' &nbsp;').split('\n').join('<br>');
-  }
-
   querySubscription: Subscription;
   keywords: string = '';
+  geomarker?: string = undefined;
   pageNumber: number = 0;
-  pageSize: number = 10;
+  pageSize: number = 3;
 
   get pageCount(): number {
     return Math.floor(this.postsData.postsCount / this.pageSize) +
@@ -69,6 +66,7 @@ export class TimelinePageComponent implements OnInit {
       (queryParam: any) => {
         this.keywords = queryParam['keywords'] ?? '';
         this.pageNumber = Number(queryParam['pageNumber'] ?? 0);
+        this.geomarker = queryParam['geomarker'] ?? undefined;
 
         this.ngOnInit();
       }
@@ -77,12 +75,20 @@ export class TimelinePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestService
-      .get(`/api/post/getByFilter?keywords=${this.keywords}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
+      .get(`/api/post/getByFilter?keywords=${this.keywords}&geomarker=${this.geomarker}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
         this.authorizationService.jwtString)
       .then((respObj: PostsPageApiModel) => this.postsData = respObj);
   }
 
+  setGeomarker(geomarker: string): void {
+    this.geomarker = geomarker;
+  }
+
+  deleteGeomarker(): void {
+    this.geomarker = undefined;
+  }
+
   search(): void {
-    this.router.navigateByUrl(`?keywords=${this.keywords}&pageNumber=${this.pageNumber}`);
+    this.router.navigateByUrl(`?keywords=${this.keywords}&geomarker=${this.geomarker}&pageNumber=${this.pageNumber}`);
   }
 }

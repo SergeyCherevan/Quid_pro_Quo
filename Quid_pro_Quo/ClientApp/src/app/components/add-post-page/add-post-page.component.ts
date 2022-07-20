@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PostFormApiModel } from '../../models/post-form-api.model';
@@ -11,7 +11,7 @@ import { GoogleMap, MapMarker } from '@angular/google-maps';
 @Component({
   selector: 'add-post-page',
   templateUrl: './add-post-page.component.html',
-  styleUrls: ['./add-post-page.component.scss'],
+  styleUrls: [ './add-post-page.component.scss' ],
   providers: [ DictionaryService ],
 })
 export class AddPostPageComponent implements OnInit {
@@ -65,7 +65,6 @@ export class AddPostPageComponent implements OnInit {
     public dictionaryService: DictionaryService,
     public authorizationService: AuthorizationService,
     public requestService: RequestService,
-    public ngZone: NgZone,
   ) { }
 
   ngOnInit() {
