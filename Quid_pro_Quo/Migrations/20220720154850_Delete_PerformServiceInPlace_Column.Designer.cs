@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quid_pro_Quo.Database.Ralational;
 
 namespace Quid_pro_Quo.Migrations
 {
     [DbContext(typeof(QuidProQuoRelationalDbContext))]
-    partial class QuidProQuoRelationalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220720154850_Delete_PerformServiceInPlace_Column")]
+    partial class Delete_PerformServiceInPlace_Column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,11 +127,11 @@ namespace Quid_pro_Quo.Migrations
                     b.ToTable("Proposals");
                 });
 
-            modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.ScalarReturn<int>", b =>
-                {
-                    b.Property<int>("Value")
-                        .HasColumnType("INTEGER");
-                });
+            //modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.ScalarReturn<int>", b =>
+            //    {
+            //        b.Property<int>("Value")
+            //            .HasColumnType("INTEGER");
+            //    });
 
             modelBuilder.Entity("Quid_pro_Quo.Database.Ralational.UserEntity", b =>
                 {

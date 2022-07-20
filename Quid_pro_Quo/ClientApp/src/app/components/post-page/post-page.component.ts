@@ -28,7 +28,9 @@ export class PostPageComponent implements OnInit {
     postedAt: new Date(),
     isActual: false,
     performServiceOnDatesList: [],
-    performServiceInPlace: ""
+    performServiceInPlaceLat: 0,
+    performServiceInPlaceLng: 0,
+    performServiceInPlaceZoom: 15,
   };
 
   subscription: Subscription;

@@ -22,7 +22,9 @@ export class AddPostPageComponent implements OnInit {
     text: "",
     imageFiles: [],
     performServiceOnDatesList: [],
-    performServiceInPlace: "",
+    performServiceInPlaceLat: 0,
+    performServiceInPlaceLng: 0,
+    performServiceInPlaceZoom: 15,
   };
 
 
@@ -92,7 +94,9 @@ export class AddPostPageComponent implements OnInit {
 
     let mapCenter: google.maps.LatLng = this.map.getCenter()!;
     let mapZoom: number = this.map.getZoom()!;
-    formData.append('performServiceInPlace', `@${mapCenter.toUrlValue()},${mapZoom}z`);
+    formData.append('performServiceInPlaceLat', mapCenter.lat().toString());
+    formData.append('performServiceInPlaceLng', mapCenter.lng().toString());
+    formData.append('performServiceInPlaceZoom', mapZoom.toString());
 
     for (let date of this.postModel.performServiceOnDatesList) {
       formData.append('performServiceOnDatesList', <any>date);

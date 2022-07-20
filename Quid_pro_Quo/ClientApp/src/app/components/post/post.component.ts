@@ -18,7 +18,9 @@ export class PostComponent implements OnInit {
     postedAt: new Date(),
     isActual: false,
     performServiceOnDatesList: [],
-    performServiceInPlace: ""
+    performServiceInPlaceLat: 0,
+    performServiceInPlaceLng: 0,
+    performServiceInPlaceZoom: 15,
   };
   currentImageNumber: number = 0;
 

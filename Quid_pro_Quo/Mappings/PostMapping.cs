@@ -23,7 +23,9 @@ namespace Quid_pro_Quo.Mappings
                     PostedAt = postedAt,
                     IsActual = true,
                     PerformServiceOnDatesList = model.PerformServiceOnDatesList,
-                    PerformServiceInPlace = model.PerformServiceInPlace,
+                    PerformServiceInPlaceLat = model.PerformServiceInPlaceLat,
+                    PerformServiceInPlaceLng = model.PerformServiceInPlaceLng,
+                    PerformServiceInPlaceZoom = model.PerformServiceInPlaceZoom,
                 };
 
 
@@ -38,7 +40,9 @@ namespace Quid_pro_Quo.Mappings
                     PostedAt = model.PostedAt,
                     IsActual = true,
                     PerformServiceOnDatesList = String.Join(";", model.PerformServiceOnDatesList.Select(e => e.ToString())),
-                    PerformServiceInPlace = model.PerformServiceInPlace,
+                    PerformServiceInPlaceLat = model.PerformServiceInPlaceLat,
+                    PerformServiceInPlaceLng = model.PerformServiceInPlaceLng,
+                    PerformServiceInPlaceZoom = model.PerformServiceInPlaceZoom,
                 };
 
         public static async Task<PostGetApiModel> ToPostGetApiModel(this PostEntity entity, IUserRepository userRepository)
@@ -57,7 +61,9 @@ namespace Quid_pro_Quo.Mappings
                        new DateTime[] {}
                        :
                        entity.PerformServiceOnDatesList.Split(";").Select(s => DateTime.Parse(s)),
-                   PerformServiceInPlace = entity.PerformServiceInPlace,
+                    PerformServiceInPlaceLat = entity.PerformServiceInPlaceLat,
+                    PerformServiceInPlaceLng = entity.PerformServiceInPlaceLng,
+                    PerformServiceInPlaceZoom = entity.PerformServiceInPlaceZoom,
                };
     }
 }

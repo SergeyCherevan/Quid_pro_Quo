@@ -26,44 +26,31 @@ namespace Quid_pro_Quo.Repositories
 
             if (keywords != "")
             {
-                conditions.Add("WHERE " + String.Join(" AND ", keywords.Split(" ").Select(e =>
+                conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
                     $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    )")));
+            }
+
+            if (geomarker != "")
+            {
+                string lat = geomarker.Split(",")[0],
+                       lng = geomarker.Split(",")[1];
+
+                conditions.Add($@"
+                    ([PerformServiceInPlaceLat] - {lat}) * ([PerformServiceInPlaceLat] - {lat})
+                    +
+                    ([PerformServiceInPlaceLng] - {lng}) * ([PerformServiceInPlaceLng] - {lng})
+                    <= 1"
+                );
+            }
+
+            if (conditions.Count > 0)
+            {
+                conditions[0] = "WHERE " + conditions[0];
             }
 
             string sqlQuery = $"SELECT * FROM [Posts] {String.Join(" AND ", conditions)} LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
 
-            IEnumerable<PostEntity> returnedPosts = _db.Posts.FromSqlRaw(sqlQuery);
-
-
-
-            if (geomarker != "")
-            {
-                Console.WriteLine();
-                Console.WriteLine("lat: " + geomarker.Split(",")[0]);
-                Console.WriteLine("lng: " + geomarker.Split(",")[1]);
-
-                double lat = Double.Parse(geomarker.Split(",")[0], CultureInfo.InvariantCulture),
-                       lng = Double.Parse(geomarker.Split(",")[1], CultureInfo.InvariantCulture);
-
-                returnedPosts = returnedPosts.Where(post =>
-                {
-                    Console.WriteLine("pLat: " + post.PerformServiceInPlace.Replace("@", "").Split(",")[0]);
-                    Console.WriteLine("pLng: " + post.PerformServiceInPlace.Replace("@", "").Split(",")[1]);
-
-                    double pLat = Double.Parse(
-                        post.PerformServiceInPlace.Replace("@", "").Split(",")[0],
-                        CultureInfo.InvariantCulture
-                    );
-                    double pLng = Double.Parse(
-                        post.PerformServiceInPlace.Replace("@", "").Split(",")[1],
-                        CultureInfo.InvariantCulture
-                    );
-
-                    return Math.Sqrt((lat - pLat) * (lat - pLat) + (lng - pLng) * (lng - pLng)) <= 1;
-                });
-            }
-
-            return returnedPosts;
+            return _db.Posts.FromSqlRaw(sqlQuery);
         }
         public async Task<int> GetCountByFilter(string keywords, string geomarker)
         {
@@ -73,38 +60,34 @@ namespace Quid_pro_Quo.Repositories
 
             if (keywords != "")
             {
-                conditions.Add("WHERE " + String.Join(" AND ", keywords.Split(" ").Select(e =>
+                conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
                     $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    )")));
+            }
+
+            if (geomarker != "")
+            {
+                string lat = geomarker.Split(",")[0],
+                       lng = geomarker.Split(",")[1];
+
+                conditions.Add($@"
+                    ([PerformServiceInPlaceLat] - {lat}) * ([PerformServiceInPlaceLat] - {lat})
+                    +
+                    ([PerformServiceInPlaceLng] - {lng}) * ([PerformServiceInPlaceLng] - {lng})
+                    <= 1"
+                );
+            }
+
+            if (conditions.Count > 0)
+            {
+                conditions[0] = "WHERE " + conditions[0];
             }
 
             string sqlQuery = $"SELECT COUNT(*) AS Value FROM [Posts] {String.Join(" AND ", conditions)}";
 
-            int result = _db.Set<ScalarReturn<int>>()
+            return _db.Set<ScalarReturn<int>>()
                 .FromSqlRaw(sqlQuery)
                 .AsEnumerable()
                 .First().Value;
-
-
-
-            //if (geomarker != "")
-            //{
-            //    double lat = Double.Parse(geomarker.Split(",")[0]),
-            //           lng = Double.Parse(geomarker.Split(",")[1]);
-
-            //    result -= returnedPosts.Sum(post =>
-            //    {
-            //        double pLat = Double.Parse(
-            //            post.PerformServiceInPlace.Substring(0, post.PerformServiceInPlace.IndexOf(",") - 1)
-            //        );
-            //        double pLng = Double.Parse(
-            //            post.PerformServiceInPlace.Substring(post.PerformServiceInPlace.IndexOf(",") + 1, post.PerformServiceInPlace.LastIndexOf(","))
-            //        );
-
-            //        return Math.Sqrt((lat - pLat) * (lat - pLat) + (lng - pLng) * (lng - pLng)) <= 1;
-            //    });
-            //}
-
-            return result;
         }
     }
 }

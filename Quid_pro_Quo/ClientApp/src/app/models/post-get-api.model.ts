@@ -7,5 +7,7 @@ export interface PostGetApiModel {
   postedAt: Date;
   isActual: boolean;
   performServiceOnDatesList: Date[];
-  performServiceInPlace: string;
+  performServiceInPlaceLat: number;
+  performServiceInPlaceLng: number;
+  performServiceInPlaceZoom: number;
 }

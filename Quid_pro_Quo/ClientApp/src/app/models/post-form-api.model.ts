@@ -4,5 +4,7 @@ export interface PostFormApiModel {
   text: string;
   imageFiles: Blob[];
   performServiceOnDatesList: Date[];
-  performServiceInPlace: string;
+  performServiceInPlaceLat: number;
+  performServiceInPlaceLng: number;
+  performServiceInPlaceZoom: number;
 }

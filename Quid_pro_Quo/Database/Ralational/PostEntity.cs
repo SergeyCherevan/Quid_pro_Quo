@@ -15,8 +15,9 @@ namespace Quid_pro_Quo.Database.Ralational
 
         public string PerformServiceOnDatesList { get; set; }
 
-        // In Format: @39.6192195,-71.7422487,6.99z
-        public string PerformServiceInPlace { get; set; }
+        public double PerformServiceInPlaceLat { get; set; }
+        public double PerformServiceInPlaceLng { get; set; }
+        public double PerformServiceInPlaceZoom { get; set; }
 
 
 
