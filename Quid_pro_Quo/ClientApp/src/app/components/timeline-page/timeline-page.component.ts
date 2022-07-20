@@ -41,6 +41,7 @@ export class TimelinePageComponent implements OnInit {
   querySubscription: Subscription;
   keywords: string = '';
   geomarker?: string = undefined;
+  performServiceOnDate?: Date = undefined;
   pageNumber: number = 0;
   pageSize: number = 3;
 
