@@ -22,9 +22,7 @@ export class AddPostPageComponent implements OnInit {
     text: "",
     imageFiles: [],
     performServiceOnDatesList: [],
-    performServiceInPlaceLat: 0,
-    performServiceInPlaceLng: 0,
-    performServiceInPlaceZoom: 15,
+    performServiceInPlace: "",
   };
 
 
@@ -78,7 +76,6 @@ export class AddPostPageComponent implements OnInit {
     });
   }
 
-  mapCenter = "";
   get addPostFormData(): FormData {
     let formData: FormData = new FormData();
 
@@ -87,16 +84,14 @@ export class AddPostPageComponent implements OnInit {
 
     let imageInput: HTMLInputElement = <HTMLInputElement>document.getElementsByName('imageFiles')[0];
     if (imageInput?.files) {
-      for (let i in imageInput.files) {
+      for (let i = 0; i < imageInput.files.length; i++) {
         formData.append('imageFiles', imageInput.files[i]);
       }
     }
 
     let mapCenter: google.maps.LatLng = this.map.getCenter()!;
     let mapZoom: number = this.map.getZoom()!;
-    formData.append('performServiceInPlaceLat', mapCenter.lat().toString());
-    formData.append('performServiceInPlaceLng', mapCenter.lng().toString());
-    formData.append('performServiceInPlaceZoom', mapZoom.toString());
+    formData.append('performServiceInPlace', `${mapCenter.lat()},${mapCenter.lng()},${mapZoom}`);
 
     for (let date of this.postModel.performServiceOnDatesList) {
       formData.append('performServiceOnDatesList', <any>date);

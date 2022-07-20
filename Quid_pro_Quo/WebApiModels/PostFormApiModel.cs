@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Quid_pro_Quo.WebApiModels
 {
@@ -13,9 +14,6 @@ namespace Quid_pro_Quo.WebApiModels
         public IEnumerable<IFormFile> ImageFiles { get; set; }
 
         public IEnumerable<DateTime> PerformServiceOnDatesList { get; set; }
-
-        public double PerformServiceInPlaceLat { get; set; }
-        public double PerformServiceInPlaceLng { get; set; }
-        public double PerformServiceInPlaceZoom { get; set; }
+        public string PerformServiceInPlace { get; set; }
     }
 }

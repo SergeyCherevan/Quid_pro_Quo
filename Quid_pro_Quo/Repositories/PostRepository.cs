@@ -6,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 using Quid_pro_Quo.Repositories.Interfaces;
 using Quid_pro_Quo.Database.Ralational;
-using System.Globalization;
 
 namespace Quid_pro_Quo.Repositories
 {

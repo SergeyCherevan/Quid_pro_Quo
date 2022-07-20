@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,10 +24,10 @@ namespace Quid_pro_Quo.Mappings
                     PostedAt = postedAt,
                     IsActual = true,
                     PerformServiceOnDatesList = model.PerformServiceOnDatesList,
-                    PerformServiceInPlaceLat = model.PerformServiceInPlaceLat,
-                    PerformServiceInPlaceLng = model.PerformServiceInPlaceLng,
-                    PerformServiceInPlaceZoom = model.PerformServiceInPlaceZoom,
-                };
+                    PerformServiceInPlaceLat = Double.Parse(model.PerformServiceInPlace.Split(",")[0], CultureInfo.InvariantCulture),
+                    PerformServiceInPlaceLng = Double.Parse(model.PerformServiceInPlace.Split(",")[1], CultureInfo.InvariantCulture),
+                    PerformServiceInPlaceZoom = Double.Parse(model.PerformServiceInPlace.Split(",")[2], CultureInfo.InvariantCulture),
+            };
 
 
         public static async Task<PostEntity> ToPostEntity(this PostFormDTO model, IUserRepository userRepository, IEnumerable<string> fileNames)

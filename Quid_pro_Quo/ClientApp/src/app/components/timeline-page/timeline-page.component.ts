@@ -93,6 +93,6 @@ export class TimelinePageComponent implements OnInit {
   }
 
   search(): void {
-    this.router.navigateByUrl(`?keywords=${this.keywords}&geomarker=${this.geomarker ?? ''}&pageNumber=${this.pageNumber}`);
+    this.router.navigateByUrl(`?keywords=${this.keywords}&geomarker=${this.geomarker ?? ''}&pageNumber=0`);
   }
 }
