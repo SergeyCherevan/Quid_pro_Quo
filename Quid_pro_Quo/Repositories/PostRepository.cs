@@ -26,7 +26,7 @@ namespace Quid_pro_Quo.Repositories
             if (keywords != "")
             {
                 conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
-                    $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    )")));
+                    $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    OR    LOWER(U.[UserName]) LIKE LOWER(\"%{e}%\")    )")));
             }
 
             if (geomarker != "")
@@ -47,7 +47,7 @@ namespace Quid_pro_Quo.Repositories
                 conditions[0] = "WHERE " + conditions[0];
             }
 
-            string sqlQuery = $"SELECT * FROM [Posts] {String.Join(" AND ", conditions)} LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+            string sqlQuery = $"SELECT P.* FROM [Posts] AS P INNER JOIN [Users] AS U ON P.[AuthorId] = U.[Id] {String.Join(" AND ", conditions)} ORDER BY [PostedAt] DESC LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
 
             return _db.Posts.FromSqlRaw(sqlQuery);
         }
