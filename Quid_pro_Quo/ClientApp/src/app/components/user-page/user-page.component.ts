@@ -7,6 +7,7 @@ import { RequestService } from '../../services/request.service';
 
 import { UserApiModel } from '../../models/user-api.model'
 import { PostGetApiModel } from '../../models/post-get-api.model'
+import { PostsPageApiModel } from '../../models/posts-page-api-model';
 
 @Component({
   selector: 'user-page',
@@ -20,6 +21,7 @@ export class UserPageComponent implements OnInit {
   usernameStr: string = "Ім'я користувача:";
   biographiStr: string = "Біографія:";
   editAccountStr: string = "Редагувати аккаунт";
+  postsTitle: string = "Пости користувача";
 
 
   subscription: Subscription;
@@ -31,7 +33,6 @@ export class UserPageComponent implements OnInit {
     biographi: "",
     role: "",
   };
-  postItems: PostGetApiModel[] = [];
 
   getInnerHtmlByString(str: string) {
     return str.split('  ').join(' &nbsp;').split('\n').join('<br>');
@@ -44,6 +45,45 @@ export class UserPageComponent implements OnInit {
   get isMyPage(): boolean {
     return this.userModel.userName === this.myUsername;
   }
+
+
+
+  postsData: PostsPageApiModel = {
+    posts: [],
+    postsCount: 0,
+  };
+  post: PostGetApiModel = {
+    id: "",
+    title: "",
+    text: "",
+    imageFileNames: "",
+    authorName: "",
+    postedAt: new Date(),
+    isActual: false,
+    performServiceOnDatesList: [],
+    performServiceInPlaceLat: 0,
+    performServiceInPlaceLng: 0,
+    performServiceInPlaceZoom: 15,
+  };
+  i: number = 0;
+
+  pageNumber: number = 0;
+  pageSize: number = 3;
+
+  get pageCount(): number {
+    return Math.floor(this.postsData.postsCount / this.pageSize) +
+      (this.postsData.postsCount % this.pageSize > 0 ? 1 : 0);
+  }
+
+  pageNumbersArr(begin: number, end: number) {
+    let arr = [];
+    for (let i = begin; i <= end; i++) {
+      arr.push(i);
+    }
+    return arr;
+  }
+
+
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -67,8 +107,8 @@ export class UserPageComponent implements OnInit {
 
   downloadPosts(): void {
     this.requestService
-      .get(`/api/post/getByUserId/${this.userModel.id}`)
-      .then(respObj => this.postItems = respObj);
+      .get(`/api/post/getByAuthor/${this.userModel.userName}?pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`)
+      .then(respObj => this.postsData = respObj);
   }
 
   goPostPage(id: string): void {

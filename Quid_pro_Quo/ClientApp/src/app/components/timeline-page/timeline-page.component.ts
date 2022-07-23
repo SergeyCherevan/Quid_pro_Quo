@@ -23,7 +23,6 @@ export class TimelinePageComponent implements OnInit {
     posts: [],
     postsCount: 0,
   };
-
   post: PostGetApiModel = {
     id: "",
     title: "",
