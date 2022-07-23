@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +18,7 @@ using Quid_pro_Quo.Repositories.Interfaces;
 using Quid_pro_Quo.Repositories;
 using Quid_pro_Quo.Services;
 using Quid_pro_Quo.Services.Interfaces;
+using Quid_pro_Quo.SignalRHubs;
 
 namespace Quid_pro_Quo
 {
@@ -56,6 +59,24 @@ namespace Quid_pro_Quo
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+
+
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                    builder =>
+                    {
+                        builder.AllowAnyOrigin()
+                               .AllowAnyHeader()
+                               .AllowAnyMethod();
+                    });
+            });
+            
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
             });
 
 
@@ -116,6 +137,8 @@ namespace Quid_pro_Quo
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapHub<MessagingHub>("/messaging");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "api/{controller}/{action}/{id?}");
