@@ -137,7 +137,7 @@ namespace Quid_pro_Quo
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<MessagingHub>("/messaging");
+                endpoints.MapHub<MessagingHub>("/messagings");
 
                 endpoints.MapControllerRoute(
                     name: "default",

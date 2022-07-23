@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 
-@Injectable({ providedIn: 'root' })
-export class SignalRService {
+@Injectable()
+export class MessagingsSignalRService {
 
   constructor() { }
 
@@ -10,9 +10,9 @@ export class SignalRService {
 
   startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('/messaging', {
+      .withUrl('/messagings', {
         skipNegotiation: true,
-        transport: signalR.HttpTransportType.WebSockets
+        transport: signalR.HttpTransportType.WebSockets,
       })
       .build();
 
