@@ -17,7 +17,7 @@ namespace Quid_pro_Quo.Repositories
 
 
         public async Task<IEnumerable<PostEntity>> GetByAuthorId(int id)
-            => await Task.Run(() => _db.Posts.Where(e => e.Id == id));
+            => await Task.Run(() => _db.Posts.Where(e => e.AuthorId == id));
         public async Task<IEnumerable<PostEntity>> GetByFilter(GetPostByFilterApiModel model)
         {
             await Task.Run(() => { });
@@ -101,11 +101,6 @@ namespace Quid_pro_Quo.Repositories
             if (conditions.Count > 0)
             {
                 conditions[0] = "WHERE " + conditions[0];
-            }
-
-            if (model.pageSize != 0)
-            {
-                limits = $"LIMIT {model.pageSize} OFFSET {model.pageNumber * model.pageSize}";
             }
 
             string sqlQuery = $"SELECT COUNT(*) AS Value FROM [Posts] AS P INNER JOIN [Users] AS U ON P.[AuthorId] = U.[Id] {String.Join(" AND ", conditions)}";

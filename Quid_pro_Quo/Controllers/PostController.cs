@@ -67,6 +67,30 @@ namespace Quid_pro_Quo.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("getByAuthor/{authorName}")]
+        public async Task<ActionResult<PostsPageApiModel>> GetByAuthor([FromRoute] string authorName)
+        {
+            try
+            {
+                return await _postService.GetByAuthor(authorName);
+            }
+            catch (NotFoundAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "Post not exists"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
         [HttpPost]
         [Route("publish")]
         public async Task<ActionResult<PostGetApiModel>> Publish([FromForm] PostFormApiModel model)

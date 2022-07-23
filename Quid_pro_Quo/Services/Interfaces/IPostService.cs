@@ -10,5 +10,6 @@ namespace Quid_pro_Quo.Services.Interfaces
         Task<PostGetApiModel> Publish(PostFormDTO post);
         Task<PostGetApiModel> GetById(int id);
         Task<PostsPageApiModel> GetByFilter(GetPostByFilterApiModel model);
+        Task<PostsPageApiModel> GetByAuthor(string authorName);
     }
 }
