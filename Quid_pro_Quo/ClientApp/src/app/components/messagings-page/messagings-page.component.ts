@@ -1,19 +1,17 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+
 import { MessagingsSignalRService } from '../../services/messagings-signalR.service'
 
 @Component({
   selector: 'messagings-page',
   templateUrl: './messagings-page.component.html',
   styleUrls: ['./messagings-page.component.scss'],
-  providers: [ MessagingsSignalRService ],
 })
 export class MessagingsPageComponent implements OnInit, OnDestroy {
 
   constructor(
-    public messagingsService: MessagingsSignalRService
-  ) {
-    messagingsService.startConnection()
-  }
+    public messagingsService: MessagingsSignalRService,
+  ) { }
 
   intervalId: number = -1;
 

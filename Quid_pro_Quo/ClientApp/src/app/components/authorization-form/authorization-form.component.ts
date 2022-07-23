@@ -4,6 +4,7 @@ import { LoginApiModel } from '../../models/login-api.model';
 
 import { DictionaryService } from '../../services/dictionary.service';
 import { AuthorizationService } from '../../services/authorization.service';
+import { MessagingsSignalRService } from '../../services/messagings-signalR.service'
 
 
 
@@ -63,7 +64,11 @@ export class AuthorizationFormComponent implements OnInit {
 
 
 
-  constructor(public dictionaryService: DictionaryService, public authorizationService: AuthorizationService) {
+  constructor(
+    public dictionaryService: DictionaryService,
+    public authorizationService: AuthorizationService,
+    public messagingsService: MessagingsSignalRService,
+  ) {
 
     dictionaryService.dictionary = new Map<string, string>([
       [ "User already exist", "Такий користувач вже існує" ],
@@ -88,6 +93,8 @@ export class AuthorizationFormComponent implements OnInit {
     }
 
     promise
+      .then(() => this.messagingsService.abortConnection())
+      .then(() => this.messagingsService.startConnection())
       .then(() => this.close())
       .catch((err: Error) => this.serverError = err);
   }

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { AuthorizationService } from '../../services/authorization.service';
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -19,7 +21,7 @@ export class FooterComponent implements OnInit {
     return `© 2022 ${this.title}, Inc. All rights reserved.`;
   }
 
-  constructor() { }
+  constructor(public authorizationService: AuthorizationService) { }
 
   ngOnInit(): void {
   }

@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@aspnet/signalr';
 
+import { AuthorizationService } from './authorization.service';
+
 @Injectable()
 export class MessagingsSignalRService {
 
-  constructor() { }
+  constructor(
+    public authorizationService: AuthorizationService,
+  ) { }
 
   hubConnection?: signalR.HubConnection;
 
@@ -13,6 +17,7 @@ export class MessagingsSignalRService {
       .withUrl('/messagings', {
         skipNegotiation: true,
         transport: signalR.HttpTransportType.WebSockets,
+        accessTokenFactory: () => this.authorizationService.jwtString!,
       })
       .build();
 
@@ -22,6 +27,13 @@ export class MessagingsSignalRService {
         console.log('Hub Connection Started!');
       })
       .catch(err => console.log('Error while starting connection: ' + err))
+  }
+
+  abortConnection() {
+    this.hubConnection?.stop()
+      .then(() => {
+        console.log('Hub Connection Stoped!');
+      });
   }
 
   sendToServer(i: number) {

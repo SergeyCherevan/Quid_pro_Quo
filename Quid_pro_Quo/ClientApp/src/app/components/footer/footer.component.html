@@ -20,7 +20,7 @@
               </a>
             </li>
 
-            <li class="nav-item mb-2">
+            <li class="nav-item mb-2" *ngIf="authorizationService.userName">
               <a routerLink="/addPostPage" class="nav-link p-0 text-muted">
                 {{publishPageStr}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -39,7 +39,7 @@
               </a>
             </li>
 
-            <li class="nav-item mb-2">
+            <li class="nav-item mb-2" *ngIf="authorizationService.userName">
               <a routerLink="/usersPage" class="nav-link p-0 text-muted">
                 {{proposalsPageStr}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
@@ -50,7 +50,7 @@
               </a>
             </li>
 
-            <li class="nav-item mb-2">
+            <li class="nav-item mb-2" *ngIf="authorizationService.userName">
               <a routerLink="/messagingsPage" class="nav-link p-0 text-muted">
                 {{messagingsPageStr}}
                 <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">

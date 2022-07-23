@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../../services/authorization.service';
 import { RequestService } from '../../services/request.service';
 import { DictionaryService } from '../../services/dictionary.service';
+import { MessagingsSignalRService } from '../../services/messagings-signalR.service';
 
 import { UserApiModel } from '../../models/user-api.model';
 import { AccountFormApiModel } from '../../models/account-form-api.model';
@@ -111,6 +112,7 @@ export class AccountPageComponent implements OnInit {
     public authorizationService: AuthorizationService,
     public requestService: RequestService,
     public dictionaryService: DictionaryService,
+    public messagingsService: MessagingsSignalRService,
   ) {
     dictionaryService.dictionary = new Map<string, string>([
       //["User already exist", "Такий користувач вже існує"],
@@ -130,6 +132,7 @@ export class AccountPageComponent implements OnInit {
 
   logout(): void {
     this.authorizationService.logout();
+    this.messagingsService.abortConnection();
     this.router.navigateByUrl('/');
   }
 

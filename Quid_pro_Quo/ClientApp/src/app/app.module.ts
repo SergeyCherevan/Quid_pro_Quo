@@ -22,6 +22,7 @@ import { EditPostFormComponent } from './components/edit-post-form/edit-post-for
 
 import { AuthorizationService } from './services/authorization.service';
 import { RequestService } from './services/request.service';
+import { MessagingsSignalRService } from './services/messagings-signalR.service'
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -56,7 +57,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule
   ],
-  providers: [AuthorizationService, RequestService],
-  bootstrap: [AppComponent]
+  providers: [AuthorizationService, RequestService, MessagingsSignalRService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
