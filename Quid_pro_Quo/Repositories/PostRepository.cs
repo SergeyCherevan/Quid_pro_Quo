@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 using Quid_pro_Quo.Repositories.Interfaces;
 using Quid_pro_Quo.Database.Ralational;
+using Quid_pro_Quo.WebApiModels;
 
 namespace Quid_pro_Quo.Repositories
 {
@@ -17,30 +18,30 @@ namespace Quid_pro_Quo.Repositories
 
         public async Task<IEnumerable<PostEntity>> GetByAuthorId(int id)
             => await Task.Run(() => _db.Posts.Where(e => e.Id == id));
-        public async Task<IEnumerable<PostEntity>> GetByFilter(string keywords, string date, string geomarker, int pageNumber, int pageSize)
+        public async Task<IEnumerable<PostEntity>> GetByFilter(GetPostByFilterApiModel model)
         {
             await Task.Run(() => { });
 
             List<string> conditions = new List<string>();
             string limits = "";
 
-            if (keywords != "")
+            if (model.keywords != "")
             {
-                conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
+                conditions.Add(String.Join(" AND ", model.keywords.Split(" ").Select(e =>
                     $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    OR    LOWER(U.[UserName]) LIKE LOWER(\"%{e}%\")    )")));
             }
 
-            if (date != "")
+            if (model.date != "")
             {
                 conditions.Add(
-                    $"(    LOWER([PerformServiceOnDatesList]) LIKE LOWER(\"%{date}%\")    OR    LOWER([PostedAt]) LIKE LOWER(\"%{date}%\")    )"
+                    $"(    LOWER([PerformServiceOnDatesList]) LIKE LOWER(\"%{model.date}%\")    OR    LOWER([PostedAt]) LIKE LOWER(\"%{model.date}%\")    )"
                 );
             }
 
-            if (geomarker != "")
+            if (model.geomarker != "")
             {
-                string lat = geomarker.Split(",")[0],
-                       lng = geomarker.Split(",")[1];
+                string lat = model.geomarker.Split(",")[0],
+                       lng = model.geomarker.Split(",")[1];
 
                 conditions.Add($@"
                     ([PerformServiceInPlaceLat] - {lat}) * ([PerformServiceInPlaceLat] - {lat})
@@ -55,38 +56,39 @@ namespace Quid_pro_Quo.Repositories
                 conditions[0] = "WHERE " + conditions[0];
             }
 
-            if (pageSize != 0)
+            if (model.pageSize != 0)
             {
-                limits = $"LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+                limits = $"LIMIT {model.pageSize} OFFSET {model.pageNumber * model.pageSize}";
             }
 
             string sqlQuery = $"SELECT P.* FROM [Posts] AS P INNER JOIN [Users] AS U ON P.[AuthorId] = U.[Id] {String.Join(" AND ", conditions)} ORDER BY [PostedAt] DESC {limits}";
 
             return _db.Posts.FromSqlRaw(sqlQuery);
         }
-        public async Task<int> GetCountByFilter(string keywords, string date, string geomarker)
+        public async Task<int> GetCountByFilter(GetPostByFilterApiModel model)
         {
             await Task.Run(() => { });
 
             List<string> conditions = new List<string>();
+            string limits = "";
 
-            if (keywords != "")
+            if (model.keywords != "")
             {
-                conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
-                    $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    )")));
+                conditions.Add(String.Join(" AND ", model.keywords.Split(" ").Select(e =>
+                    $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    OR    LOWER(U.[UserName]) LIKE LOWER(\"%{e}%\")    )")));
             }
 
-            if (date != "")
+            if (model.date != "")
             {
                 conditions.Add(
-                    $"(    LOWER([PerformServiceOnDatesList]) LIKE LOWER(\"%{date}%\")    OR    LOWER([PostedAt]) LIKE LOWER(\"%{date}%\")    )"
+                    $"(    LOWER([PerformServiceOnDatesList]) LIKE LOWER(\"%{model.date}%\")    OR    LOWER([PostedAt]) LIKE LOWER(\"%{model.date}%\")    )"
                 );
             }
 
-            if (geomarker != "")
+            if (model.geomarker != "")
             {
-                string lat = geomarker.Split(",")[0],
-                       lng = geomarker.Split(",")[1];
+                string lat = model.geomarker.Split(",")[0],
+                       lng = model.geomarker.Split(",")[1];
 
                 conditions.Add($@"
                     ([PerformServiceInPlaceLat] - {lat}) * ([PerformServiceInPlaceLat] - {lat})
@@ -101,7 +103,12 @@ namespace Quid_pro_Quo.Repositories
                 conditions[0] = "WHERE " + conditions[0];
             }
 
-            string sqlQuery = $"SELECT COUNT(*) AS Value FROM [Posts] {String.Join(" AND ", conditions)}";
+            if (model.pageSize != 0)
+            {
+                limits = $"LIMIT {model.pageSize} OFFSET {model.pageNumber * model.pageSize}";
+            }
+
+            string sqlQuery = $"SELECT COUNT(*) AS Value FROM [Posts] AS P INNER JOIN [Users] AS U ON P.[AuthorId] = U.[Id] {String.Join(" AND ", conditions)}";
 
             return _db.Set<ScalarReturn<int>>()
                 .FromSqlRaw(sqlQuery)
