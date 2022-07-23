@@ -69,11 +69,12 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpGet]
         [Route("getByAuthor/{authorName}")]
-        public async Task<ActionResult<PostsPageApiModel>> GetByAuthor([FromRoute] string authorName)
+        public async Task<ActionResult<PostsPageApiModel>> GetByAuthor
+            ([FromRoute] string authorName, [FromQuery] int pageNumber, [FromQuery] int pageSize)
         {
             try
             {
-                return await _postService.GetByAuthor(authorName);
+                return await _postService.GetByAuthor(authorName, pageNumber, pageSize);
             }
             catch (NotFoundAppException)
             {

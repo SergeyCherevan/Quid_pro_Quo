@@ -16,8 +16,15 @@ namespace Quid_pro_Quo.Repositories
 
 
 
-        public async Task<IEnumerable<PostEntity>> GetByAuthorId(int id)
-            => await Task.Run(() => _db.Posts.Where(e => e.AuthorId == id));
+        public async Task<IEnumerable<PostEntity>> GetByAuthorId(int authorId, int pageNumber, int pageSize)
+            => await Task.Run(() => _db.Posts
+                                        .Where(p => p.AuthorId == authorId)
+                                        .OrderByDescending(p => p.PostedAt)
+                                        .Skip(pageNumber * pageSize).Take(pageSize)
+            );
+        public async Task<int> GetCountByAuthorId(int authorId)
+            => await Task.Run(() => _db.Posts.Where(p => p.AuthorId == authorId).Count());
+
         public async Task<IEnumerable<PostEntity>> GetByFilter(GetPostByFilterApiModel model)
         {
             await Task.Run(() => { });

@@ -68,16 +68,16 @@ namespace Quid_pro_Quo.Services
                     PostsCount = await _UoW.PostRepository.GetCountByFilter(model),
                 };
 
-        public async Task<PostsPageApiModel> GetByAuthor(string authorName)
+        public async Task<PostsPageApiModel> GetByAuthor(string authorName, int pageNumber, int pageSize)
         {
             UserEntity author = await _UoW.UserRepository.GetByName(authorName);
-
-            IEnumerable<PostEntity> posts = await _UoW.PostRepository.GetByAuthorId(author.Id);
+            IEnumerable<PostEntity> posts = await _UoW.PostRepository.GetByAuthorId(author.Id, pageNumber, pageSize);
+            int postsCount = await _UoW.PostRepository.GetCountByAuthorId(author.Id);
 
             return new PostsPageApiModel()
             {
                 Posts = posts.Select(async e => await e.ToPostGetApiModel(_UoW.UserRepository)).Select(e => e.Result),
-                PostsCount = posts.Count(),
+                PostsCount = postsCount,
             };
         }
     }
