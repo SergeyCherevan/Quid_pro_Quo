@@ -50,9 +50,9 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpGet]
         [Route("getByFilter")]
-        public async Task<ActionResult<PostsPageApiModel>> GetByFilter(string keywords, string geomarker, int pageNumber, int pageSize)
+        public async Task<ActionResult<PostsPageApiModel>> GetByFilter(string keywords, string date, string geomarker, int pageNumber, int pageSize)
         {
-            keywords ??= ""; geomarker ??= "";
+            keywords ??= ""; geomarker ??= ""; date ??= "";
 
             if (pageSize == 0)
             {
@@ -64,7 +64,7 @@ namespace Quid_pro_Quo.Controllers
 
             try
             {
-                return await _postService.GetByFilter(keywords, geomarker, pageNumber, pageSize);
+                return await _postService.GetByFilter(keywords, date, geomarker, pageNumber, pageSize);
             }
             catch (Exception exp)
             {

@@ -40,7 +40,7 @@ namespace Quid_pro_Quo.Mappings
                     AuthorId = (await userRepository.GetByName(model.AuthorName)).Id,
                     PostedAt = model.PostedAt,
                     IsActual = true,
-                    PerformServiceOnDatesList = String.Join(";", model.PerformServiceOnDatesList.Select(e => e.ToString())),
+                    PerformServiceOnDatesList = String.Join(";", model.PerformServiceOnDatesList.Select(e => e.ToString("yyyy-MM-dd hh:mm:ss"))),
                     PerformServiceInPlaceLat = model.PerformServiceInPlaceLat,
                     PerformServiceInPlaceLng = model.PerformServiceInPlaceLng,
                     PerformServiceInPlaceZoom = model.PerformServiceInPlaceZoom,

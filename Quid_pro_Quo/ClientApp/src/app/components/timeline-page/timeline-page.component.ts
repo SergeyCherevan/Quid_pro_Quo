@@ -41,7 +41,7 @@ export class TimelinePageComponent implements OnInit {
   querySubscription: Subscription;
   keywords: string = '';
   geomarker?: string = undefined;
-  performServiceOnDate?: Date = undefined;
+  date?: string = undefined;
   pageNumber: number = 0;
   pageSize: number = 3;
 
@@ -68,8 +68,9 @@ export class TimelinePageComponent implements OnInit {
     this.querySubscription = activateRoute.queryParams.subscribe(
       (queryParam: any) => {
         this.keywords = queryParam['keywords'] ?? '';
-        this.pageNumber = Number(queryParam['pageNumber'] ?? 0);
+        this.date = queryParam['date'] ?? '';
         this.geomarker = queryParam['geomarker'] ?? undefined;
+        this.pageNumber = Number(queryParam['pageNumber'] ?? 0);
 
         this.ngOnInit();
       }
@@ -78,7 +79,7 @@ export class TimelinePageComponent implements OnInit {
 
   ngOnInit(): void {
     this.requestService
-      .get(`/api/post/getByFilter?keywords=${this.keywords}&geomarker=${this.geomarker ?? ''}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
+      .get(`/api/post/getByFilter?keywords=${this.keywords}&date=${this.date ?? ''}&geomarker=${this.geomarker ?? ''}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
         this.authorizationService.jwtString)
       .then((respObj: PostsPageApiModel) => this.postsData = respObj);
   }
@@ -94,6 +95,7 @@ export class TimelinePageComponent implements OnInit {
   }
 
   search(): void {
-    this.router.navigateByUrl(`?keywords=${this.keywords}&geomarker=${this.geomarker ?? ''}&pageNumber=0`);
+    console.log(this.date);
+    this.router.navigateByUrl(`?keywords=${this.keywords}&date=${this.date ?? ''}&geomarker=${this.geomarker ?? ''}&pageNumber=0`);
   }
 }

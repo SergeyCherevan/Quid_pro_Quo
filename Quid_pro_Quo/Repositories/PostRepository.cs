@@ -17,7 +17,7 @@ namespace Quid_pro_Quo.Repositories
 
         public async Task<IEnumerable<PostEntity>> GetByAuthorId(int id)
             => await Task.Run(() => _db.Posts.Where(e => e.Id == id));
-        public async Task<IEnumerable<PostEntity>> GetByFilter(string keywords, string geomarker, int pageNumber, int pageSize)
+        public async Task<IEnumerable<PostEntity>> GetByFilter(string keywords, string date, string geomarker, int pageNumber, int pageSize)
         {
             await Task.Run(() => { });
 
@@ -27,6 +27,13 @@ namespace Quid_pro_Quo.Repositories
             {
                 conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
                     $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    OR    LOWER(U.[UserName]) LIKE LOWER(\"%{e}%\")    )")));
+            }
+
+            if (date != "")
+            {
+                conditions.Add(
+                    $"(    LOWER([PerformServiceOnDatesList]) LIKE LOWER(\"%{date}%\")    OR    LOWER([PostedAt]) LIKE LOWER(\"%{date}%\")    )"
+                );
             }
 
             if (geomarker != "")
@@ -51,7 +58,7 @@ namespace Quid_pro_Quo.Repositories
 
             return _db.Posts.FromSqlRaw(sqlQuery);
         }
-        public async Task<int> GetCountByFilter(string keywords, string geomarker)
+        public async Task<int> GetCountByFilter(string keywords, string date, string geomarker)
         {
             await Task.Run(() => { });
 
@@ -61,6 +68,13 @@ namespace Quid_pro_Quo.Repositories
             {
                 conditions.Add(String.Join(" AND ", keywords.Split(" ").Select(e =>
                     $"(    LOWER([Title]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Text]) LIKE LOWER(\"%{e}%\")    )")));
+            }
+
+            if (date != "")
+            {
+                conditions.Add(
+                    $"(    LOWER([PerformServiceOnDatesList]) LIKE LOWER(\"%{date}%\")    OR    LOWER([PostedAt]) LIKE LOWER(\"%{date}%\")    )"
+                );
             }
 
             if (geomarker != "")
