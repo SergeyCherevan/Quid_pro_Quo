@@ -54,14 +54,6 @@ namespace Quid_pro_Quo.Controllers
         {
             keywords ??= ""; geomarker ??= ""; date ??= "";
 
-            if (pageSize == 0)
-            {
-                return BadRequest(new
-                {
-                    Error = "Page size can't be equal 0"
-                });
-            }
-
             try
             {
                 return await _postService.GetByFilter(keywords, date, geomarker, pageNumber, pageSize);

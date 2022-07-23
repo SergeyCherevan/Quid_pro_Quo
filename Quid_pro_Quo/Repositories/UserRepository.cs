@@ -33,8 +33,14 @@ namespace Quid_pro_Quo.Repositories
                     $"(    LOWER([UserName]) LIKE LOWER(\"%{e}%\")    OR    LOWER([Biographi]) LIKE LOWER(\"%{e}%\")    )"))
                 :
                     "";
+            string limits = "";
 
-            string sqlQuery = $"SELECT * FROM [Users] {condition} LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+            if (pageSize != 0)
+            {
+                limits = $"LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+            }
+
+            string sqlQuery = $"SELECT * FROM [Users] {condition} {limits}";
 
             return _db.Users.FromSqlRaw(sqlQuery);
         }

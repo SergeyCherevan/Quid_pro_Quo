@@ -22,6 +22,7 @@ namespace Quid_pro_Quo.Repositories
             await Task.Run(() => { });
 
             List<string> conditions = new List<string>();
+            string limits = "";
 
             if (keywords != "")
             {
@@ -54,7 +55,12 @@ namespace Quid_pro_Quo.Repositories
                 conditions[0] = "WHERE " + conditions[0];
             }
 
-            string sqlQuery = $"SELECT P.* FROM [Posts] AS P INNER JOIN [Users] AS U ON P.[AuthorId] = U.[Id] {String.Join(" AND ", conditions)} ORDER BY [PostedAt] DESC LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+            if (pageSize != 0)
+            {
+                limits = $"LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+            }
+
+            string sqlQuery = $"SELECT P.* FROM [Posts] AS P INNER JOIN [Users] AS U ON P.[AuthorId] = U.[Id] {String.Join(" AND ", conditions)} ORDER BY [PostedAt] DESC {limits}";
 
             return _db.Posts.FromSqlRaw(sqlQuery);
         }

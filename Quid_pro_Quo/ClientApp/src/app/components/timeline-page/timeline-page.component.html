@@ -62,7 +62,7 @@
       <label>...</label>&nbsp;
 
       <label>
-        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'date': date, 'geomarker': geomarker, 'pageNumber': pageCount - 1}">{{pageCount}}</a>
         &nbsp;
       </label>
     </p>
@@ -97,7 +97,7 @@
     <p class="text-center">
       &nbsp;
       <label>
-        <a routerLink="/" [queryParams]="{'keywords': keywords, 'pageNumber': 0}">1</a>
+        <a routerLink="/" [queryParams]="{'keywords': keywords, 'date': date, 'geomarker': geomarker, 'pageNumber': 0}">1</a>
         &nbsp;
       </label>
 
