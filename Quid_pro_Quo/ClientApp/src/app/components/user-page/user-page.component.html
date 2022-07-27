@@ -45,7 +45,8 @@
       <p class="text-center" *ngIf="pageCount <= 3; else unset1">
         &nbsp;
         <label *ngFor="let i of pageNumbersArr(1, pageCount)">
-          <a [class.text-danger]="i - 1 == pageNumber" (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
+          <a class="link" [class.text-danger]="i - 1 == pageNumber" [style.cursor]="'pointer'"
+             (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
           &nbsp;
         </label>
       </p>
@@ -55,14 +56,16 @@
       <p class="text-center" *ngIf="pageNumber < 2; else unset2">
         &nbsp;
         <label *ngFor="let i of pageNumbersArr(1, 3)">
-          <a [class.text-danger]="i - 1 == pageNumber" (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
+          <a class="link" [class.text-danger]="i - 1 == pageNumber" [style.cursor]="'pointer'"
+             (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
           &nbsp;
         </label>
 
         <label>...</label>&nbsp;
 
         <label>
-          <a (click)="pageNumber = pageCount - 1; downloadPosts()">{{pageCount}}</a>
+          <a class="link" [style.cursor]="'pointer'"
+             (click)="pageNumber = pageCount - 1; downloadPosts()">{{pageCount}}</a>
           &nbsp;
         </label>
       </p>
@@ -72,21 +75,24 @@
       <p class="text-center" *ngIf="2 <= pageNumber && pageNumber < pageCount - 2; else unset3">
         &nbsp;
         <label>
-          <a (click)="pageNumber = 0; downloadPosts()">1</a>
+          <a class="link" [style.cursor]="'pointer'"
+             (click)="pageNumber = 0; downloadPosts()">1</a>
           &nbsp;
         </label>
 
         <label>...</label>&nbsp;
 
         <label *ngFor="let i of pageNumbersArr(pageNumber, pageNumber + 2)">
-          <a [class.text-danger]="i - 1 == pageNumber" (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
+          <a class="link" [class.text-danger]="i - 1 == pageNumber" [style.cursor]="'pointer'"
+             (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
           &nbsp;
         </label>
 
         <label>...</label>&nbsp;
 
         <label>
-          <a (click)="pageNumber = pageCount - 1; downloadPosts()">{{pageCount}}</a>
+          <a class="link" [style.cursor]="'pointer'"
+             (click)="pageNumber = pageCount - 1; downloadPosts()">{{pageCount}}</a>
           &nbsp;
         </label>
       </p>
@@ -96,14 +102,16 @@
       <p class="text-center">
         &nbsp;
         <label>
-          <a (click)="pageNumber = i - 1; downloadPosts()">1</a>
+          <a class="link" [style.cursor]="'pointer'"
+             (click)="pageNumber = i - 1; downloadPosts()">1</a>
           &nbsp;
         </label>
 
         <label>...</label>&nbsp;
 
         <label *ngFor="let i of pageNumbersArr(pageCount - 2, pageCount)">
-          <a [class.text-danger]="i - 1 == pageNumber" (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
+          <a class="link" [class.text-danger]="i - 1 == pageNumber" [style.cursor]="'pointer'"
+             (click)="pageNumber = i - 1; downloadPosts()">{{i}}</a>
           &nbsp;
         </label>
       </p>

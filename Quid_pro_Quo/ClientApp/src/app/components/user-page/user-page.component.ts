@@ -68,7 +68,7 @@ export class UserPageComponent implements OnInit {
   i: number = 0;
 
   pageNumber: number = 0;
-  pageSize: number = 3;
+  pageSize: number = 2;
 
   get pageCount(): number {
     return Math.floor(this.postsData.postsCount / this.pageSize) +
