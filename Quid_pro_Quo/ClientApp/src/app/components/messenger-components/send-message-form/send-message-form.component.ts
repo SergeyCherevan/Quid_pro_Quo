@@ -37,6 +37,7 @@ export class SendMessageFormComponent implements OnInit {
   }
 
   sendMessage(): void {
+    console.log(this);
     this.messengerService.sendMessage(this.message /*this.sendMessageFormData*/);
   }
 

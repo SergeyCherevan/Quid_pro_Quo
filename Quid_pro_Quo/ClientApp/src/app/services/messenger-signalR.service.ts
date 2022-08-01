@@ -7,7 +7,7 @@ import { SendMessageApiModel } from '../models/send-message-api.model';
 
 import { AuthorizationService } from './authorization.service';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class MessengerSignalRService {
 
   constructor(
