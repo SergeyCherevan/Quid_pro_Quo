@@ -94,7 +94,6 @@ export class TimelinePageComponent implements OnInit {
   }
 
   search(): void {
-    console.log(this.date);
     this.router.navigateByUrl(`?keywords=${this.keywords}&date=${this.date ?? ''}&geomarker=${this.geomarker ?? ''}&pageNumber=0`);
   }
 }

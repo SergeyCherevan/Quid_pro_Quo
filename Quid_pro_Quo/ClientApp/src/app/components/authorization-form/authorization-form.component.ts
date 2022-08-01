@@ -4,7 +4,7 @@ import { LoginApiModel } from '../../models/login-api.model';
 
 import { DictionaryService } from '../../services/dictionary.service';
 import { AuthorizationService } from '../../services/authorization.service';
-import { MessagingsSignalRService } from '../../services/messagings-signalR.service'
+import { MessengerSignalRService } from '../../services/messenger-signalR.service'
 
 
 
@@ -67,7 +67,7 @@ export class AuthorizationFormComponent implements OnInit {
   constructor(
     public dictionaryService: DictionaryService,
     public authorizationService: AuthorizationService,
-    public messagingsService: MessagingsSignalRService,
+    public messagingsService: MessengerSignalRService,
   ) {
 
     dictionaryService.dictionary = new Map<string, string>([

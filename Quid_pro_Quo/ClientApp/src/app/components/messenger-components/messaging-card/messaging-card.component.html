@@ -1,0 +1,13 @@
+<div class="container border border-primary rounded overflow-hidden messaging-card"
+     [class.selected]="destinationName == messagingCard.userName"
+     (click)="goToMessagingWith(messagingCard.userName)">
+
+  <img src="/api/user/getAvatarByName/{{messagingCard.userName}}" class="avatar-img" />
+  &nbsp;
+  <label>{{messagingCard.userName}}</label>
+  &nbsp;
+  <span *ngIf="messagingCard.countOfNotViewedMessages > 0" class="badge bg-primary">
+    {{messagingCard.countOfNotViewedMessages}}
+  </span>
+
+</div>

@@ -1,0 +1,18 @@
+<div class="message-block container border border-primary rounded overflow-hidden"
+     [class.my-message]="message.authorNumber == false"
+     [class.companion-message]="message.authorNumber == true">
+  <div class="row align-items-start">
+
+    <div class="col">
+      <a routerLink="/userPage/{{authorName}}" class="fst-italic">
+        {{authorName}}
+      </a>:
+      {{message.text}}
+    </div>
+
+    <div class="col text-end">
+      <label class="fst-italic text-muted">{{message.postedAt | date:'dd.MM.YY HH:mm:ss'}}</label>
+    </div>
+
+  </div>
+</div>

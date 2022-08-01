@@ -14,7 +14,7 @@ import { PostPageComponent } from './components/post-page/post-page.component';
 import { AddPostPageComponent } from './components/add-post-page/add-post-page.component';
 import { UsersPageComponent } from './components/users-page/users-page.component';
 import { UserPageComponent } from './components/user-page/user-page.component';
-import { MessagingsPageComponent } from './components/messagings-page/messagings-page.component';
+import { MessengerPageComponent } from './components/messenger-components/messenger-page/messenger-page.component';
 import { AuthorizationFormComponent } from './components/authorization-form/authorization-form.component';
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
@@ -22,7 +22,12 @@ import { EditPostFormComponent } from './components/edit-post-form/edit-post-for
 
 import { AuthorizationService } from './services/authorization.service';
 import { RequestService } from './services/request.service';
-import { MessagingsSignalRService } from './services/messagings-signalR.service'
+import { MessengerSignalRService } from './services/messenger-signalR.service';
+import { MessagingCardsListComponent } from './components/messenger-components/messaging-cards-list/messaging-cards-list.component';
+import { MessagingCardComponent } from './components/messenger-components/messaging-card/messaging-card.component';
+import { MessagingAreaComponent } from './components/messenger-components/messaging-area/messaging-area.component';
+import { MessageBlockComponent } from './components/messenger-components/message-block/message-block.component';
+import { SendMessageFormComponent } from './components/messenger-components/send-message-form/send-message-form.component'
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -30,7 +35,7 @@ const appRoutes: Routes = [
   { path: 'addPostPage', component: AddPostPageComponent },
   { path: 'usersPage', component: UsersPageComponent },
   { path: 'userPage/:userName', component: UserPageComponent },
-  { path: 'messagingsPage', component: MessagingsPageComponent },
+  { path: 'messengerPage', component: MessengerPageComponent },
   { path: 'accountPage', component: AccountPageComponent },
   { path: 'postPage/:id', component: PostPageComponent },
   { path: '**', component: NotFoundPageComponent },
@@ -52,12 +57,17 @@ const appRoutes: Routes = [
     EditPostFormComponent,
     UserPageComponent,
     SearchGeomarkerFormComponent,
-    MessagingsPageComponent,
+    MessengerPageComponent,
+    MessagingCardsListComponent,
+    MessagingCardComponent,
+    MessagingAreaComponent,
+    MessageBlockComponent,
+    SendMessageFormComponent,
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule
   ],
-  providers: [AuthorizationService, RequestService, MessagingsSignalRService ],
+  providers: [AuthorizationService, RequestService, MessengerSignalRService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

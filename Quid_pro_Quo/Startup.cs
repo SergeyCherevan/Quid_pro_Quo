@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
+using Microsoft.AspNetCore.SignalR;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,7 +74,8 @@ namespace Quid_pro_Quo
                                .AllowAnyMethod();
                     });
             });
-            
+
+            services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
             services.AddSignalR(options =>
             {
                 options.EnableDetailedErrors = true;
@@ -85,6 +87,7 @@ namespace Quid_pro_Quo
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPostService, PostService>();
+            services.AddScoped<IMessagingService, MessagingService>();
 
 
 
@@ -137,7 +140,7 @@ namespace Quid_pro_Quo
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapHub<MessagingHub>("/messagings");
+                endpoints.MapHub<MessengerHub>("/messenger");
 
                 endpoints.MapControllerRoute(
                     name: "default",

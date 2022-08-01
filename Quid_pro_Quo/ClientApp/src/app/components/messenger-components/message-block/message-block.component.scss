@@ -1,0 +1,11 @@
+.message-block {
+  margin-bottom: 0.5vw;
+
+  &.my-message {
+    background-color: #cfe2ff;
+  }
+
+  &.companion-message {
+    background-color: white;
+  }
+}

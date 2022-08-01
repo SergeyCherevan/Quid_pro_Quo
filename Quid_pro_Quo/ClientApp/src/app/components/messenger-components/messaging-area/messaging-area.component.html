@@ -1,0 +1,8 @@
+<div class="messages-box container border border-primary rounded">
+
+  <message-block *ngFor="let message of messaging.messagesList"
+                 [message]="message"
+                 [authorName]="message.authorNumber ? messaging.user1Name : messaging.user2Name">
+  </message-block>
+
+</div>

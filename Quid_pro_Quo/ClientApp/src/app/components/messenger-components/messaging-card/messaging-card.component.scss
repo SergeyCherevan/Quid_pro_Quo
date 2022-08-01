@@ -1,0 +1,28 @@
+.messaging-card {
+  padding: 0.5vw;
+  margin-bottom: 0.5vw;
+  color: #007bff;
+
+  label {
+    text-decoration: underline;
+    transition: 0.6s;
+  }
+
+  &:hover label {
+    font-size: 110%;
+    cursor: pointer;
+  }
+
+  cursor: pointer;
+
+  &.selected {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .avatar-img {
+    width: 3vw;
+    height: 3vw;
+    border-radius: 1.5vw;
+  }
+}

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { AuthorizationService } from './services/authorization.service';
-import { MessagingsSignalRService } from './services/messagings-signalR.service'
+import { MessengerSignalRService } from './services/messenger-signalR.service'
 
 @Component({
   selector: 'app',
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public authorizationService: AuthorizationService,
-    public messagingsService: MessagingsSignalRService,
+    public messagingsService: MessengerSignalRService,
   ) { }
 
   ngOnInit(): void {

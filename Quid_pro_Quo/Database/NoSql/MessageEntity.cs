@@ -12,6 +12,10 @@ namespace Quid_pro_Quo.Database.NoSql
         [BsonId]
         public new int Id { get; set; }
 
+        // 0 or 1
+        [BsonElement("authorNumber")]
+        public bool AuthorNumber { get; set; }
+
         [BsonElement("text")]
         public string Text { get; set; }
 
@@ -21,13 +25,10 @@ namespace Quid_pro_Quo.Database.NoSql
         [BsonElement("fileName")]
         public string FileName { get; set; }
 
-        [BsonElement("authorId")]
-        public int AuthorId { get; set; }
-
         [BsonElement("postedAt")]
         public DateTime PostedAt { get; set; }
 
         [BsonElement("viewed")]
-        public bool Viewed { get; set; }
+        public bool? NotViewed { get; set; }
     }
 }

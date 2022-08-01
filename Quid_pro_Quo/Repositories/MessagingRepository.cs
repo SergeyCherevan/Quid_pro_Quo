@@ -24,14 +24,14 @@ namespace Quid_pro_Quo.Repositories
             _userRepository = userRepository;
         }
 
-        public async Task<MessagingEntity> GetById(int id1, int id2)
+        public async Task<MessagingEntity> GetByUsersId(int id1, int id2)
             => (await _db.Messagings.FindAsync(
                 e => e.User1Id == id1 && e.User2Id == id2 || e.User1Id == id2 && e.User2Id == id1
-            )).FirstOrDefault();
+            )).FirstOrDefault().OrderByMyAndCompanion(id1, id2);
 
-        public async Task<ICollection<MessagingCardApiModel>> GetListOfCompanions(int id)
+        public async Task<IEnumerable<MessagingCardApiModel>> GetMessagingCardsOfCompanions(int id)
         {
-            var messagings = (ICollection<MessagingEntity>)await _db.Messagings.FindAsync(
+            IEnumerable<MessagingEntity> messagings = (IEnumerable<MessagingEntity>)await _db.Messagings.FindAsync(
                 e => e.User1Id == id || e.User2Id == id
             );
 
@@ -41,31 +41,36 @@ namespace Quid_pro_Quo.Repositories
                 .Select(e => e.Result);
 
 
-            return (ICollection<MessagingCardApiModel>)messagingCards;
+            return messagingCards;
         }
 
-        public async Task<IQueryable<MessagingEntity>> GetByPredicate(Expression<Func<MessagingEntity, bool>> predicate)
-            => (IQueryable<MessagingEntity>)await _db.Messagings.FindAsync(
-                predicate ?? (e => true)
-            );
+        public async Task<IEnumerable<MessageEntity>> GetNewMessagesInMessaging(int id1, int id2)
+            => (await _db.Messagings.FindAsync(
+                e => e.User1Id == id1 && e.User2Id == id2 || e.User1Id == id2 && e.User2Id == id1
+            )).FirstOrDefault().OrderByMyAndCompanion(id1, id2)
+            .MessagesList.Where(e => e.NotViewed ?? false);
+
+
 
         public async Task<MessagingEntity> Add(int id1, int id2, MessageEntity message)
         {
             MessagingEntity messaging;
 
-            if ((messaging = await GetById(id1, id2)) == null)
+            if ((messaging = await GetByUsersId(id1, id2)) == null)
             {
-                 messaging = new MessagingEntity()
-                 {
-                     User1Id = id1,
-                     User2Id = id2,
-                     MessagesList = new List<MessageEntity>() { message }
-                 };
+                message.Id = 1;
+                messaging = new MessagingEntity()
+                {
+                    User1Id = id1,
+                    User2Id = id2,
+                    MessagesList = new List<MessageEntity>() { message }
+                };
 
-                 _db.Messagings.InsertOne(messaging);
+                _db.Messagings.InsertOne(messaging);
             }
             else
             {
+                message.Id = messaging.MessagesList.Last().Id + 1;
                 messaging.MessagesList.Add(message);
             }
 
@@ -77,9 +82,31 @@ namespace Quid_pro_Quo.Repositories
             return messaging;
         }
 
+        public async Task<MessagingEntity> SetViewed(int id1, int id2, int idMessage)
+        {
+            var messaging = await GetByUsersId(id1, id2);
+            var message = messaging.MessagesList.FirstOrDefault(e => e.Id == idMessage);
+
+            message.NotViewed = null;
+
+            _db.Messagings.UpdateOne(
+                e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id,
+                BsonDocument.Create(messaging)
+            );
+
+            return messaging;
+        }
+
+
+
+        public async Task<IQueryable<MessagingEntity>> GetByPredicate(Expression<Func<MessagingEntity, bool>> predicate)
+            => (IQueryable<MessagingEntity>)await _db.Messagings.FindAsync(
+                predicate ?? (e => true)
+            );
+
         public async Task<MessagingEntity> Delete(int id1, int id2)
         {
-            var messaging = await GetById(id1, id2);
+            var messaging = await GetByUsersId(id1, id2);
 
             _db.Messagings.DeleteOne(
                 e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id
@@ -90,24 +117,10 @@ namespace Quid_pro_Quo.Repositories
 
         public async Task<MessagingEntity> Delete(int id1, int id2, int idMessage)
         {
-            var messaging = await GetById(id1, id2);
+            var messaging = await GetByUsersId(id1, id2);
             var message = messaging.MessagesList.FirstOrDefault(e => e.Id == idMessage);
 
             messaging.MessagesList.Remove(message);
-
-            _db.Messagings.UpdateOne(
-                e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id,
-                BsonDocument.Create(messaging)
-            );
-
-            return messaging;
-        }
-
-        public async Task<MessagingEntity> SetViewed(int id1, int id2)
-        {
-            var messaging = await GetById(id1, id2);
-
-            messaging.MessagesList = messaging.MessagesList.Select(m => { m.Viewed = true; return m; }).ToList();
 
             _db.Messagings.UpdateOne(
                 e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id,

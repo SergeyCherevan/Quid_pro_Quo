@@ -21,6 +21,7 @@ export class UserPageComponent implements OnInit {
   usernameStr: string = "Ім'я користувача:";
   biographiStr: string = "Біографія:";
   editAccountStr: string = "Редагувати аккаунт";
+  sendMessageStr: string = "Відправити повідомлення";
   postsTitle: string = "Пости користувача";
 
 

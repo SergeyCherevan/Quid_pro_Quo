@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 using System;
 using System.Threading.Tasks;
@@ -92,6 +93,7 @@ namespace Quid_pro_Quo.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         [Route("publish")]
         public async Task<ActionResult<PostGetApiModel>> Publish([FromForm] PostFormApiModel model)

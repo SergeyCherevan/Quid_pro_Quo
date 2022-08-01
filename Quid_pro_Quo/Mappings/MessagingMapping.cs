@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 using Quid_pro_Quo.Database.NoSql;
@@ -13,12 +14,62 @@ namespace Quid_pro_Quo.Mappings
         {
             var messagingCard = new MessagingCardApiModel()
             {
-                CompanionId = CompanionId,
                 UserName = (await userRepository.GetById(CompanionId)).UserName,
-                Viewed = entity.MessagesList.All(m => m.Viewed)
+                CountOfNotViewedMessages = entity.MessagesList.Sum(m => (m.NotViewed ?? false) ? 0 : 1)
             };
 
             return messagingCard;
+        }
+
+        public static async Task<MessagingApiModel> ToMessagingApiModel(this MessagingEntity entity, IUserRepository userRepository)
+           => new MessagingApiModel()
+           {
+               User1Name = (await userRepository.GetById(entity.User1Id)).UserName,
+               User2Name = (await userRepository.GetById(entity.User2Id)).UserName,
+               MessagesList = entity.MessagesList.Select(m => m.ToMessageApiModel()),
+           };
+
+        public static MessageApiModel ToMessageApiModel(this MessageEntity entity)
+           => new MessageApiModel()
+           {
+               Id = entity.Id,
+               AuthorNumber = entity.AuthorNumber,
+               Text = entity.Text,
+               ImageFileName = entity.ImageFileName,
+               FileName = entity.FileName,
+               PostedAt = entity.PostedAt,
+           };
+
+        public static MessageEntity ToMessageEntity(this SendMessageApiModel model, DateTime postedAt)
+           => new MessageEntity()
+           {
+               Id = 0,
+               AuthorNumber = false,
+               Text = model.Text,
+               ImageFileName = model.ImageFile.FileName,
+               FileName = model.File.FileName,
+               PostedAt = postedAt,
+           };
+
+        public static MessagingEntity OrderByMyAndCompanion(this MessagingEntity messaging, int myId, int companionId)
+        {
+            bool haveToRevert = messaging.User1Id != myId;
+
+            if (haveToRevert)
+            {
+                return new MessagingEntity
+                {
+                    User1Id = myId,
+                    User2Id = companionId,
+                    MessagesList = messaging.MessagesList.Select(message =>
+                    {
+                        message.AuthorNumber = !message.AuthorNumber;
+                        return message;
+                    }).ToList(),
+                };
+            }
+
+            return messaging;
         }
     }
 }
