@@ -25,15 +25,29 @@ namespace Quid_pro_Quo.Repositories
         }
 
         public async Task<MessagingEntity> GetByUsersId(int id1, int id2)
-            => (await _db.Messagings.FindAsync(
+        {
+            MessagingEntity messaging = (await _db.Messagings.FindAsync(
                 e => e.User1Id == id1 && e.User2Id == id2 || e.User1Id == id2 && e.User2Id == id1
-            )).FirstOrDefault().OrderByMyAndCompanion(id1, id2);
+            )).FirstOrDefault();
+
+            if (messaging is null)
+            {
+                return new MessagingEntity
+                {
+                    User1Id = id1,
+                    User2Id = id2,
+                    MessagesList = new List<MessageEntity>(),
+                };
+            }
+
+            return messaging.OrderByMyAndCompanion(id1, id2);
+        }
 
         public async Task<IEnumerable<MessagingCardApiModel>> GetMessagingCardsOfCompanions(int id)
         {
-            IEnumerable<MessagingEntity> messagings = (IEnumerable<MessagingEntity>)await _db.Messagings.FindAsync(
+            IEnumerable<MessagingEntity> messagings = (await _db.Messagings.FindAsync(
                 e => e.User1Id == id || e.User2Id == id
-            );
+            )).ToEnumerable();
 
             IEnumerable<MessagingCardApiModel> messagingCards
                 = messagings
@@ -99,10 +113,10 @@ namespace Quid_pro_Quo.Repositories
 
 
 
-        public async Task<IQueryable<MessagingEntity>> GetByPredicate(Expression<Func<MessagingEntity, bool>> predicate)
-            => (IQueryable<MessagingEntity>)await _db.Messagings.FindAsync(
+        public async Task<IEnumerable<MessagingEntity>> GetByPredicate(Expression<Func<MessagingEntity, bool>> predicate)
+            => (await _db.Messagings.FindAsync(
                 predicate ?? (e => true)
-            );
+            )).ToEnumerable();
 
         public async Task<MessagingEntity> Delete(int id1, int id2)
         {

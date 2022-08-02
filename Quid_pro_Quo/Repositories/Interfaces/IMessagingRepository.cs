@@ -18,7 +18,7 @@ namespace Quid_pro_Quo.Repositories.Interfaces
         Task<MessagingEntity> Add(int id1, int id2, MessageEntity message);
         Task<MessagingEntity> SetViewed(int id1, int id2, int idMessage);
 
-        Task<IQueryable<MessagingEntity>> GetByPredicate(Expression<Func<MessagingEntity, bool>> predicate);
+        Task<IEnumerable<MessagingEntity>> GetByPredicate(Expression<Func<MessagingEntity, bool>> predicate);
         Task<MessagingEntity> Delete(int id1, int id2);
         Task<MessagingEntity> Delete(int id1, int id2, int idMessage);
     }

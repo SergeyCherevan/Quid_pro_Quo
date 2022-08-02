@@ -32,6 +32,11 @@ namespace Quid_pro_Quo.Services
 
         public async Task<IEnumerable<MessagingCardApiModel>> GetMessagingCards(string userName)
         {
+            if (string.IsNullOrEmpty(userName))
+            {
+                throw new ArgumentException($"{nameof(userName)} not specified");
+            }
+
             UserEntity user = await _UoW.UserRepository.GetByName(userName);
 
             return await _UoW.MessagingRepository.GetMessagingCardsOfCompanions(user.Id);
@@ -39,6 +44,20 @@ namespace Quid_pro_Quo.Services
 
         public async Task<MessagingApiModel> GetMessaging(string user1Name, string user2Name)
         {
+            if (string.IsNullOrEmpty(user1Name))
+            {
+                throw new ArgumentException($"{nameof(user1Name)} not specified");
+            }
+            if (string.IsNullOrEmpty(user2Name))
+            {
+                return new MessagingApiModel()
+                {
+                    User1Name = user1Name,
+                    User2Name = user2Name,
+                    MessagesList = new List<MessageApiModel>(),
+                };
+            }
+
             UserEntity user1 = await _UoW.UserRepository.GetByName(user1Name),
                        user2 = await _UoW.UserRepository.GetByName(user2Name);
 
