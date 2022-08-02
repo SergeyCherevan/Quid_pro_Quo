@@ -7,7 +7,7 @@ namespace Quid_pro_Quo.SignalRHubs
     {
         public virtual string GetUserId(HubConnectionContext connection)
         {
-            return connection.User?.Identity.Name;
+            return connection.User?.Identity?.Name;
         }
     }
 }

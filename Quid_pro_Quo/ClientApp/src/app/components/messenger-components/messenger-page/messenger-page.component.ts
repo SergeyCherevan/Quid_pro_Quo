@@ -24,11 +24,6 @@ export class MessengerPageComponent implements OnInit, OnDestroy {
         this.messengerService.getMessagingCards();
         this.messengerService.getMessaging(this.messengerService.messaging.user2Name);
 
-        //this.messengerService.messagingCards = [{
-        //  userName: "Ageris",
-        //  countOfNotViewedMessages: 1,
-        //}];
-
         this.ngOnInit();
       }
     );
