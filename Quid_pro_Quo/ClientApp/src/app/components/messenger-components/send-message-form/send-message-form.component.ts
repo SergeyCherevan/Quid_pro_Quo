@@ -31,14 +31,15 @@ export class SendMessageFormComponent implements OnInit {
     let formData: FormData = new FormData();
 
     formData.append('text', this.message.text);
+    formData.append('imageFile', "");
+    formData.append('file', "");
     formData.append('destinationName', this.message.destinationName);
 
     return formData;
   }
 
   sendMessage(): void {
-    console.log(this);
-    this.messengerService.sendMessage(this.message /*this.sendMessageFormData*/);
+    this.messengerService.sendMessage(this.sendMessageFormData);
   }
 
 }

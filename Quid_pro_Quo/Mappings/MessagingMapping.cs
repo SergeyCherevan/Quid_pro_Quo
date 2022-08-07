@@ -15,7 +15,7 @@ namespace Quid_pro_Quo.Mappings
             var messagingCard = new MessagingCardApiModel()
             {
                 UserName = (await userRepository.GetById(CompanionId)).UserName,
-                CountOfNotViewedMessages = entity.MessagesList.Sum(m => (m.NotViewed ?? false) ? 0 : 1)
+                CountOfNotViewedMessages = entity.MessagesList.Sum(m => (m.NotViewed ?? false) ? 1 : 0)
             };
 
             return messagingCard;
@@ -26,7 +26,7 @@ namespace Quid_pro_Quo.Mappings
            {
                User1Name = (await userRepository.GetById(entity.User1Id)).UserName,
                User2Name = (await userRepository.GetById(entity.User2Id)).UserName,
-               MessagesList = entity.MessagesList.Select(m => m.ToMessageApiModel()),
+               MessagesList = entity.MessagesList.ToList().Select(m => m.ToMessageApiModel()),
            };
 
         public static MessageApiModel ToMessageApiModel(this MessageEntity entity)
@@ -46,9 +46,10 @@ namespace Quid_pro_Quo.Mappings
                Id = 0,
                AuthorNumber = false,
                Text = model.Text,
-               ImageFileName = model.ImageFile.FileName,
-               FileName = model.File.FileName,
+               ImageFileName = model.ImageFile?.FileName,
+               FileName = model.File?.FileName,
                PostedAt = postedAt,
+               NotViewed = true,
            };
 
         public static MessagingEntity OrderByMyAndCompanion(this MessagingEntity messaging, int myId, int companionId)
@@ -61,7 +62,7 @@ namespace Quid_pro_Quo.Mappings
                 {
                     User1Id = myId,
                     User2Id = companionId,
-                    MessagesList = messaging.MessagesList.Select(message =>
+                    MessagesList = messaging.MessagesList.ToList().Select(message =>
                     {
                         message.AuthorNumber = !message.AuthorNumber;
                         return message;

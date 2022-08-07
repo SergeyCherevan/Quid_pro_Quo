@@ -43,7 +43,7 @@ namespace Quid_pro_Quo.SignalRHubs
             await Clients.Caller.SendAsync("GetMessagingResponse", messaging);
         }
 
-        public async Task SendMessage(/*[FromForm]*/ SendMessageApiModel message)
+        public async Task SendMessage([FromForm] SendMessageApiModel message)
         {
             string userName = Context.User.Identity.Name;
 

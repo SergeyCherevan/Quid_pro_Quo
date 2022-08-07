@@ -39,6 +39,10 @@ namespace Quid_pro_Quo.Repositories
                     MessagesList = new List<MessageEntity>(),
                 };
             }
+            else
+            {
+                messaging.MessagesList = messaging.MessagesList.ToList();
+            }
 
             return messaging.OrderByMyAndCompanion(id1, id2);
         }
@@ -47,7 +51,7 @@ namespace Quid_pro_Quo.Repositories
         {
             IEnumerable<MessagingEntity> messagings = (await _db.Messagings.FindAsync(
                 e => e.User1Id == id || e.User2Id == id
-            )).ToEnumerable();
+            )).ToList();
 
             IEnumerable<MessagingCardApiModel> messagingCards
                 = messagings
@@ -59,39 +63,40 @@ namespace Quid_pro_Quo.Repositories
         }
 
         public async Task<IEnumerable<MessageEntity>> GetNewMessagesInMessaging(int id1, int id2)
-            => (await _db.Messagings.FindAsync(
-                e => e.User1Id == id1 && e.User2Id == id2 || e.User1Id == id2 && e.User2Id == id1
-            )).FirstOrDefault().OrderByMyAndCompanion(id1, id2)
-            .MessagesList.Where(e => e.NotViewed ?? false);
+        {
+            MessagingEntity messaging = await GetByUsersId(id1, id2);
+            
+            IEnumerable<MessageEntity> messages = messaging.MessagesList.ToList().Where(e => e.NotViewed ?? false).ToList();
+
+            return messages;
+        }
 
 
 
         public async Task<MessagingEntity> Add(int id1, int id2, MessageEntity message)
         {
-            MessagingEntity messaging;
+            MessagingEntity messaging = await GetByUsersId(id1, id2);
 
-            if ((messaging = await GetByUsersId(id1, id2)) == null)
+            if (messaging.MessagesList.Count() == 0)
             {
-                message.Id = 1;
-                messaging = new MessagingEntity()
-                {
-                    User1Id = id1,
-                    User2Id = id2,
-                    MessagesList = new List<MessageEntity>() { message }
-                };
+                message.Id = 0;
+                messaging.MessagesList = new List<MessageEntity>() { message };
 
                 _db.Messagings.InsertOne(messaging);
             }
             else
             {
-                message.Id = messaging.MessagesList.Last().Id + 1;
+                message.Id = messaging.MessagesList.Any() ? messaging.MessagesList.Last().Id + 1 : 0;
                 messaging.MessagesList.Add(message);
-            }
 
-            _db.Messagings.UpdateOne(
-                e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id,
-                BsonDocument.Create(messaging)
-            );
+                _db.Messagings.ReplaceOne(
+                    new BsonDocument {
+                        { "user1Id", messaging.User1Id },
+                        { "user2Id", messaging.User2Id },
+                    },
+                    messaging
+                );
+            }
 
             return messaging;
         }
@@ -103,9 +108,12 @@ namespace Quid_pro_Quo.Repositories
 
             message.NotViewed = null;
 
-            _db.Messagings.UpdateOne(
-                e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id,
-                BsonDocument.Create(messaging)
+            _db.Messagings.ReplaceOne(
+                new BsonDocument {
+                    { "user1Id", messaging.User1Id },
+                    { "user2Id", messaging.User2Id },
+                },
+                messaging
             );
 
             return messaging;

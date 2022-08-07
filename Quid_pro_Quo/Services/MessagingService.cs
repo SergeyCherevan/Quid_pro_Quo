@@ -78,7 +78,7 @@ namespace Quid_pro_Quo.Services
             }
             if (message.File is not null)
             {
-                entity.FileName = await _fileRepository.Add("Files", message.ImageFile);
+                entity.FileName = await _fileRepository.Add("Files", message.File);
             }
 
             await _UoW.MessagingRepository.Add(user1.Id, user2.Id, entity);

@@ -3,14 +3,15 @@ import * as signalR from '@aspnet/signalr';
 import { MessageApiModel } from '../models/message-api.model';
 import { MessagingApiModel } from '../models/messaging-api.model';
 import { MessagingCardApiModel } from '../models/messaging-card-api.model';
-import { SendMessageApiModel } from '../models/send-message-api.model';
 
+import { RequestService } from './request.service';
 import { AuthorizationService } from './authorization.service';
 
 @Injectable({ providedIn: 'root' })
 export class MessengerSignalRService {
 
   constructor(
+    public requestService: RequestService,
     public authorizationService: AuthorizationService,
   ) { }
 
@@ -89,8 +90,9 @@ export class MessengerSignalRService {
     );
   }
 
-  sendMessage(message: SendMessageApiModel /*FormData*/) {
-    this.hubConnection?.invoke("SendMessage", message)
+  sendMessage(message: FormData) {
+    this.requestService
+      .postMultipartForm('/api/messenger/sendMessage', message, this.authorizationService.jwtString)
       .catch(err => console.error(err));
   }
 
@@ -117,12 +119,15 @@ export class MessengerSignalRService {
     this.hubConnection?.on("GetNewMessagesResponse",
       (messages: MessageApiModel[]) => {
         this.messaging.messagesList.push(...messages);
+        if (messages[0].authorNumber == true || this.messaging.user1Name == this.messaging.user2Name) {
+          this.messagesIsViewed(this.messaging.user2Name, messages.map(m => m.id));
+        }
       }
     );
   }
 
   messagesIsViewed(userName: string, messagesIDs: number[]) {
-    this.hubConnection?.invoke("GetNewMessagesRequest", userName, messagesIDs)
+    this.hubConnection?.invoke("MessagesIsViewed", userName, messagesIDs)
       .catch(err => console.error(err));
   }
 }

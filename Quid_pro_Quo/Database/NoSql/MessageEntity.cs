@@ -9,9 +9,6 @@ namespace Quid_pro_Quo.Database.NoSql
 {
     public class MessageEntity : BaseEntity<int>
     {
-        [BsonId]
-        public new int Id { get; set; }
-
         // 0 or 1
         [BsonElement("authorNumber")]
         public bool AuthorNumber { get; set; }
@@ -28,7 +25,8 @@ namespace Quid_pro_Quo.Database.NoSql
         [BsonElement("postedAt")]
         public DateTime PostedAt { get; set; }
 
-        [BsonElement("viewed")]
+        [BsonIgnoreIfNull]
+        [BsonElement("notViewed")]
         public bool? NotViewed { get; set; }
     }
 }
