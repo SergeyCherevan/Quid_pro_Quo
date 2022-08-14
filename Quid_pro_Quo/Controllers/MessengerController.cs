@@ -33,13 +33,15 @@ namespace Quid_pro_Quo.Controllers
             string userName = User.Identity.Name;
 
             await _messagingService.SendMessage(userName, message, DateTime.Now);
-            IEnumerable<MessagingCardApiModel> messagingCards
-                = await _messagingService.GetMessagingCards(message.DestinationName);
+            IEnumerable<MessagingCardApiModel> messagingCards;
 
             if (userName != message.DestinationName)
             {
+                messagingCards = await _messagingService.GetMessagingCards(userName);
                 await _messengerContext.Clients.User(userName).SendAsync("MessagingsIsUpdated", messagingCards);
             }
+
+            messagingCards = await _messagingService.GetMessagingCards(message.DestinationName);
             await _messengerContext.Clients.User(message.DestinationName).SendAsync("MessagingsIsUpdated", messagingCards);
 
             return Ok(new

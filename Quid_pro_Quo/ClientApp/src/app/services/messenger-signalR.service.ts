@@ -73,6 +73,15 @@ export class MessengerSignalRService {
     this.hubConnection?.on("GetMessagingCardsResponse",
       (cards: MessagingCardApiModel[]) => {
         this.messagingCards = cards;
+
+        if (this.messaging.user2Name && !this.messagingCards.find(
+          card => card.userName == this.messaging.user2Name
+        )) {
+          this.messagingCards.unshift({
+            userName: this.messaging.user2Name,
+            countOfNotViewedMessages: 0
+          })
+        }
       }
     );
   }
@@ -86,6 +95,17 @@ export class MessengerSignalRService {
     this.hubConnection?.on("GetMessagingResponse",
       (messaging: MessagingApiModel) => {
         this.messaging = messaging;
+
+        let viewedMessageIDs: number[] = [];
+        for (let mes of this.messaging.messagesList) {
+          if (mes.authorNumber == true && mes.notViewed) {
+            viewedMessageIDs.push(mes.id);
+          }
+        }
+
+        if (viewedMessageIDs.length > 0 || this.messaging.user1Name == this.messaging.user2Name) {
+          this.messagesIsViewed(this.messaging.user2Name, viewedMessageIDs);
+        }
       }
     );
   }
@@ -119,8 +139,16 @@ export class MessengerSignalRService {
     this.hubConnection?.on("GetNewMessagesResponse",
       (messages: MessageApiModel[]) => {
         this.messaging.messagesList.push(...messages);
-        if (messages[0].authorNumber == true || this.messaging.user1Name == this.messaging.user2Name) {
-          this.messagesIsViewed(this.messaging.user2Name, messages.map(m => m.id));
+
+        let viewedMessageIDs: number[] = [];
+        for (let mes of messages) {
+          if (mes.authorNumber == true) {
+            viewedMessageIDs.push(mes.id);
+          }
+        }
+
+        if (viewedMessageIDs.length > 0 || this.messaging.user1Name == this.messaging.user2Name) {
+          this.messagesIsViewed(this.messaging.user2Name, viewedMessageIDs);
         }
       }
     );

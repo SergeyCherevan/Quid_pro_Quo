@@ -16,5 +16,7 @@ namespace Quid_pro_Quo.WebApiModels
         public string FileName { get; set; }
 
         public DateTime PostedAt { get; set; }
+
+        public bool NotViewed { get; set; }
     }
 }

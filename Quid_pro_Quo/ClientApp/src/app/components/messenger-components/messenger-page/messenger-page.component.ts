@@ -30,17 +30,6 @@ export class MessengerPageComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.messengerService.getMessagingCards();
     this.messengerService.getMessaging(this.messengerService.messaging.user2Name);
-
-    setTimeout(() => {
-      if (this.messengerService.messaging.user2Name && !this.messengerService.messagingCards.find(
-        card => card.userName == this.messengerService.messaging.user2Name
-      )) {
-        this.messengerService.messagingCards.unshift({
-          userName: this.messengerService.messaging.user2Name,
-          countOfNotViewedMessages: 0
-        })
-      }
-    }, 100);
   }
 
   ngOnDestroy(): void { }

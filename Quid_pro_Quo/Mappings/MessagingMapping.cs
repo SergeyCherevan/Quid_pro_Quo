@@ -38,6 +38,7 @@ namespace Quid_pro_Quo.Mappings
                ImageFileName = entity.ImageFileName,
                FileName = entity.FileName,
                PostedAt = entity.PostedAt,
+               NotViewed = entity.NotViewed ?? false,
            };
 
         public static MessageEntity ToMessageEntity(this SendMessageApiModel model, DateTime postedAt)

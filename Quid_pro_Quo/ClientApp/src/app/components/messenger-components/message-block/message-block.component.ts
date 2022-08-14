@@ -15,6 +15,7 @@ export class MessageBlockComponent implements OnInit {
     imageFileName: "",
     fileName: "",
     postedAt: new Date(),
+    notViewed: false,
   };
   @Input() authorName: string = "";
 

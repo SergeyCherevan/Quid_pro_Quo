@@ -43,17 +43,6 @@ namespace Quid_pro_Quo.SignalRHubs
             await Clients.Caller.SendAsync("GetMessagingResponse", messaging);
         }
 
-        public async Task SendMessage([FromForm] SendMessageApiModel message)
-        {
-            string userName = Context.User.Identity.Name;
-
-            await _messagingService.SendMessage(userName, message, DateTime.Now);
-            IEnumerable<MessagingCardApiModel> messagingCards
-                = await _messagingService.GetMessagingCards(message.DestinationName);
-
-            await Clients.Caller.SendAsync("MessagingsIsUpdated", messagingCards);
-            await Clients.User(message.DestinationName).SendAsync("MessagingsIsUpdated", messagingCards);
-        }
 
         public async Task GetNewMessagesRequest(string companionName)
         {
@@ -70,10 +59,12 @@ namespace Quid_pro_Quo.SignalRHubs
             string userName = Context.User.Identity.Name;
 
             await _messagingService.MessagesIsViewed(userName, companionName, messageIDs);
-            IEnumerable<MessagingCardApiModel> messagingCards
-                = await _messagingService.GetMessagingCards(companionName);
+            IEnumerable<MessagingCardApiModel> messagingCards;
 
+            messagingCards = await _messagingService.GetMessagingCards(userName);
             await Clients.Caller.SendAsync("MessagingsIsUpdated", messagingCards);
+
+            messagingCards = await _messagingService.GetMessagingCards(companionName);
             await Clients.User(companionName).SendAsync("MessagingsIsUpdated", messagingCards);
         }
     }

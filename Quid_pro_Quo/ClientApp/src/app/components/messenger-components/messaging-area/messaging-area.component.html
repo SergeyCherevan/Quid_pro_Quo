@@ -2,7 +2,7 @@
 
   <message-block *ngFor="let message of messaging.messagesList"
                  [message]="message"
-                 [authorName]="message.authorNumber ? messaging.user1Name : messaging.user2Name">
+                 [authorName]="message.authorNumber == false ? messaging.user1Name : messaging.user2Name">
   </message-block>
 
 </div>

@@ -5,4 +5,5 @@ export interface MessageApiModel {
   imageFileName: string;
   fileName: string;
   postedAt: Date;
+  notViewed: boolean;
 }

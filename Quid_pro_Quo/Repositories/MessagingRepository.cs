@@ -87,14 +87,16 @@ namespace Quid_pro_Quo.Repositories
             else
             {
                 message.Id = messaging.MessagesList.Any() ? messaging.MessagesList.Last().Id + 1 : 0;
-                messaging.MessagesList.Add(message);
 
-                _db.Messagings.ReplaceOne(
-                    new BsonDocument {
-                        { "user1Id", messaging.User1Id },
-                        { "user2Id", messaging.User2Id },
-                    },
-                    messaging
+                var builder = Builders<MessagingEntity>.Filter;
+                var filter =
+                    builder.Eq("user1Id", id1) & builder.Eq("user2Id", id2)
+                    |
+                    builder.Eq("user1Id", id2) & builder.Eq("user2Id", id1);
+
+                _db.Messagings.UpdateOne(
+                    filter,
+                    Builders<MessagingEntity>.Update.Push("messagesList", message)
                 );
             }
 
@@ -107,14 +109,17 @@ namespace Quid_pro_Quo.Repositories
             var message = messaging.MessagesList.FirstOrDefault(e => e.Id == idMessage);
 
             message.NotViewed = null;
+            messaging.MessagesList[message.Id] = message;
 
-            _db.Messagings.ReplaceOne(
-                new BsonDocument {
-                    { "user1Id", messaging.User1Id },
-                    { "user2Id", messaging.User2Id },
-                },
-                messaging
-            );
+            var builder = Builders<MessagingEntity>.Filter;
+            var filter =
+                builder.Eq("user1Id", id1) & builder.Eq("user2Id", id2)
+                |
+                builder.Eq("user1Id", id2) & builder.Eq("user2Id", id1);
+
+            _db.Messagings.UpdateOne(
+                    filter,
+                    Builders<MessagingEntity>.Update.Set("messagesList", messaging.MessagesList));
 
             return messaging;
         }
@@ -131,7 +136,10 @@ namespace Quid_pro_Quo.Repositories
             var messaging = await GetByUsersId(id1, id2);
 
             _db.Messagings.DeleteOne(
-                e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id
+                e =>
+                    e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id
+                    ||
+                    e.User1Id == messaging.User2Id && e.User2Id == messaging.User1Id
             );
 
             return messaging;
@@ -144,10 +152,13 @@ namespace Quid_pro_Quo.Repositories
 
             messaging.MessagesList.Remove(message);
 
-            _db.Messagings.UpdateOne(
-                e => e.User1Id == messaging.User1Id && e.User2Id == messaging.User2Id,
-                BsonDocument.Create(messaging)
-            );
+            var builder = Builders<MessagingEntity>.Filter;
+            var filter =
+                builder.Eq("user1Id", id1) & builder.Eq("user2Id", id2)
+                |
+                builder.Eq("user1Id", id2) & builder.Eq("user2Id", id1);
+
+            _db.Messagings.ReplaceOne(filter, messaging);
 
             return messaging;
         }
