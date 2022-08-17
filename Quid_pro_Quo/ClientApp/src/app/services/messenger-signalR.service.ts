@@ -178,12 +178,10 @@ export class MessengerSignalRService {
           card.countOfNotViewedMessages = 0;
         }
 
-        if (companionName != this.messaging.user2Name) {
-          return;
-        }
-
-        for (let id of messageIDs) {
-          this.messaging.messagesList[id].notViewed = false;
+        if (companionName == this.messaging.user2Name) {
+          for (let id of messageIDs) {
+            this.messaging.messagesList[id].notViewed = false;
+          }
         }
       }
     );

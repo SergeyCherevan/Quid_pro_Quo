@@ -29,7 +29,13 @@ export class SendMessageFormComponent implements OnInit {
 
   attachImageFile(): void {
     let imageInput: HTMLInputElement = <HTMLInputElement>document.getElementById("image-input");
-    imageInput.click();
+
+    if (!this.message.imageFile) {
+      imageInput.click();
+    } else {
+      this.message.imageFile = <any>undefined;
+      imageInput.value = '';
+    }
   }
 
   onSelectImageFile(event: any): void { // called each time file input changes
@@ -46,7 +52,13 @@ export class SendMessageFormComponent implements OnInit {
 
   attachFile(): void {
     let fileInput: HTMLInputElement = <HTMLInputElement>document.getElementById("file-input");
-    fileInput.click();
+
+    if (!this.message.file) {
+      fileInput.click();
+    } else {
+      this.message.file = <any>undefined;
+      fileInput.value = '';
+    }
   }
 
   onSelectFile(event: any): void { // called each time file input changes
