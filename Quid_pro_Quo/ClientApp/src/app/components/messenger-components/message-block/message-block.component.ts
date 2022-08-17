@@ -17,7 +17,7 @@ export class MessageBlockComponent implements OnInit {
     postedAt: new Date(),
     notViewed: false,
   };
-  @Input() companionName: string = "";
+  @Input() myName: string = "";
 
   constructor() { }
 

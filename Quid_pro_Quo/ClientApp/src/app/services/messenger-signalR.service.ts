@@ -171,15 +171,15 @@ export class MessengerSignalRService {
   messagesIsViewedListener() {
     this.hubConnection?.on("MessagesIsViewedResponse",
       (companionName: string, messageIDs: number[]) => {
-        if (companionName != this.messaging.user2Name) {
-          return;
-        }
-
         let card: MessagingCardApiModel | undefined
           = this.messagingCards.find(card => card.userName == companionName);
 
         if (card) {
           card.countOfNotViewedMessages = 0;
+        }
+
+        if (companionName != this.messaging.user2Name) {
+          return;
         }
 
         for (let id of messageIDs) {

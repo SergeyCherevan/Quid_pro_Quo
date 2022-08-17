@@ -6,7 +6,10 @@
   &nbsp;
   <label>{{messagingCard.userName}}</label>
   &nbsp;
-  <span *ngIf="messagingCard.countOfNotViewedMessages > 0" class="badge bg-primary">
+  <span *ngIf="messagingCard.countOfNotViewedMessages > 0" class="badge"
+        [class.bg-primary]="destinationName != messagingCard.userName"
+        [class.bg-white]="destinationName == messagingCard.userName"
+        [class.text-primary]="destinationName == messagingCard.userName">
     {{messagingCard.countOfNotViewedMessages}}
   </span>
 
