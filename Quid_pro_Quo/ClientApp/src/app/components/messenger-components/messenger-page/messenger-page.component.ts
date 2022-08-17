@@ -18,10 +18,12 @@ export class MessengerPageComponent implements OnInit, OnDestroy {
     public activateRoute: ActivatedRoute,
     public messengerService: MessengerSignalRService,
   ) {
+    messengerService.resetData();
+
     this.querySubscription = activateRoute.queryParams.subscribe(
       (queryParam: any) => {
+        this.messengerService.resetData();
         this.messengerService.messaging.user2Name = queryParam['companionName'] ?? '';
-
         this.ngOnInit();
       }
     );
@@ -32,5 +34,7 @@ export class MessengerPageComponent implements OnInit, OnDestroy {
     this.messengerService.getMessaging(this.messengerService.messaging.user2Name);
   }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {
+    this.messengerService.resetData();
+  }
 }

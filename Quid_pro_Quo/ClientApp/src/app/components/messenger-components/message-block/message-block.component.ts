@@ -10,14 +10,14 @@ export class MessageBlockComponent implements OnInit {
 
   @Input() message: MessageApiModel = {
     id: 0,
-    authorNumber: false,
+    authorName: "",
     text: "",
     imageFileName: "",
     fileName: "",
     postedAt: new Date(),
     notViewed: false,
   };
-  @Input() authorName: string = "";
+  @Input() companionName: string = "";
 
   constructor() { }
 

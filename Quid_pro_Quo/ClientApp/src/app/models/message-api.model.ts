@@ -1,6 +1,6 @@
 export interface MessageApiModel {
   id: number;
-  authorNumber: boolean;
+  authorName: string;
   text: string;
   imageFileName: string;
   fileName: string;

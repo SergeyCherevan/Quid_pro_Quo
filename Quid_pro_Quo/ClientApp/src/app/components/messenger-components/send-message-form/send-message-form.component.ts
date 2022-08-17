@@ -17,15 +17,12 @@ export class SendMessageFormComponent implements OnInit {
     file: new Blob(),
     destinationName: "",
   };
-  @Input() destinationName: string = "";
 
   constructor(
     public messengerService: MessengerSignalRService,
   ) { }
 
-  ngOnInit(): void {
-    this.message.destinationName = this.destinationName;
-  }
+  ngOnInit(): void { }
 
   get sendMessageFormData(): FormData {
     let formData: FormData = new FormData();
@@ -33,7 +30,7 @@ export class SendMessageFormComponent implements OnInit {
     formData.append('text', this.message.text);
     formData.append('imageFile', "");
     formData.append('file', "");
-    formData.append('destinationName', this.message.destinationName);
+    formData.append('destinationName', this.messengerService.messaging.user2Name);
 
     return formData;
   }

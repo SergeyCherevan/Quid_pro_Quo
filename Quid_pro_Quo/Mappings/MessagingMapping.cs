@@ -26,14 +26,16 @@ namespace Quid_pro_Quo.Mappings
            {
                User1Name = (await userRepository.GetById(entity.User1Id)).UserName,
                User2Name = (await userRepository.GetById(entity.User2Id)).UserName,
-               MessagesList = entity.MessagesList.ToList().Select(m => m.ToMessageApiModel()),
+               MessagesList = entity.MessagesList.ToList()
+                   .Select(async m => await m.ToMessageApiModel(userRepository))
+                   .Select(t => t.Result).ToList(),
            };
 
-        public static MessageApiModel ToMessageApiModel(this MessageEntity entity)
+        public static async Task<MessageApiModel> ToMessageApiModel(this MessageEntity entity, IUserRepository userRepository)
            => new MessageApiModel()
            {
                Id = entity.Id,
-               AuthorNumber = entity.AuthorNumber,
+               AuthorName = (await userRepository.GetById(entity.AuthorId)).UserName,
                Text = entity.Text,
                ImageFileName = entity.ImageFileName,
                FileName = entity.FileName,
@@ -41,11 +43,11 @@ namespace Quid_pro_Quo.Mappings
                NotViewed = entity.NotViewed ?? false,
            };
 
-        public static MessageEntity ToMessageEntity(this SendMessageApiModel model, DateTime postedAt)
+        public static async Task<MessageEntity> ToMessageEntity(this SendMessageApiModel model, IUserRepository userRepository, string userName, DateTime postedAt)
            => new MessageEntity()
            {
                Id = 0,
-               AuthorNumber = false,
+               AuthorId = (await userRepository.GetByName(userName)).Id,
                Text = model.Text,
                ImageFileName = model.ImageFile?.FileName,
                FileName = model.File?.FileName,
@@ -63,12 +65,8 @@ namespace Quid_pro_Quo.Mappings
                 {
                     User1Id = myId,
                     User2Id = companionId,
-                    MessagesList = messaging.MessagesList.ToList().Select(message =>
-                    {
-                        message.AuthorNumber = !message.AuthorNumber;
-                        return message;
-                    }).ToList(),
-                };
+                    MessagesList = messaging.MessagesList.ToList(),
+                };  
             }
 
             return messaging;

@@ -70,7 +70,7 @@ namespace Quid_pro_Quo.Services
             UserEntity user1 = await _UoW.UserRepository.GetByName(authorName),
                        user2 = await _UoW.UserRepository.GetByName(message.DestinationName);
 
-            MessageEntity entity = message.ToMessageEntity(postedAt);
+            MessageEntity entity = await message.ToMessageEntity(_UoW.UserRepository, authorName, postedAt);
 
             if (message.ImageFile is not null)
             {
@@ -90,7 +90,8 @@ namespace Quid_pro_Quo.Services
                        user2 = await _UoW.UserRepository.GetByName(user2Name);
 
             return (await _UoW.MessagingRepository.GetNewMessagesInMessaging(user1.Id, user2.Id))
-                .Select(m => m.ToMessageApiModel());
+                .Select(async m => await m.ToMessageApiModel(_UoW.UserRepository))
+                .Select(t => t.Result);
         }
 
         public async Task MessagesIsViewed(string user1Name, string user2Name, IList<int> messageIDs)

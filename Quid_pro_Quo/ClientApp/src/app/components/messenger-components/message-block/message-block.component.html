@@ -1,11 +1,11 @@
 <div class="message-block container border border-primary rounded overflow-hidden"
-     [class.my-message]="message.authorNumber == false"
-     [class.companion-message]="message.authorNumber == true">
+     [class.companion-message]="message.authorName == companionName"
+     [class.my-message]="message.authorName != companionName">
   <div class="row align-items-start">
 
     <div class="col">
-      <a routerLink="/userPage/{{authorName}}" class="fst-italic">
-        {{authorName}}
+      <a routerLink="/userPage/{{message.authorName}}" class="fst-italic">
+        {{message.authorName}}
       </a>:
       {{message.text}}
     </div>
@@ -16,3 +16,4 @@
 
   </div>
 </div>
+

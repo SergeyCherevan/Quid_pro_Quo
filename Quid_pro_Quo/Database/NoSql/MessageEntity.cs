@@ -10,8 +10,8 @@ namespace Quid_pro_Quo.Database.NoSql
     public class MessageEntity : BaseEntity<int>
     {
         // 0 or 1
-        [BsonElement("authorNumber")]
-        public bool AuthorNumber { get; set; }
+        [BsonElement("authorId")]
+        public int AuthorId { get; set; }
 
         [BsonElement("text")]
         public string Text { get; set; }

@@ -54,18 +54,14 @@ namespace Quid_pro_Quo.SignalRHubs
             await Clients.Caller.SendAsync("GetNewMessagesResponse", messages);
         }
 
-        public async Task MessagesIsViewed(string companionName, IList<int> messageIDs)
+        public async Task MessagesIsViewedRequest(string companionName, IList<int> messageIDs)
         {
             string userName = Context.User.Identity.Name;
 
             await _messagingService.MessagesIsViewed(userName, companionName, messageIDs);
-            IEnumerable<MessagingCardApiModel> messagingCards;
 
-            messagingCards = await _messagingService.GetMessagingCards(userName);
-            await Clients.Caller.SendAsync("MessagingsIsUpdated", messagingCards);
-
-            messagingCards = await _messagingService.GetMessagingCards(companionName);
-            await Clients.User(companionName).SendAsync("MessagingsIsUpdated", messagingCards);
+            await Clients.Caller.SendAsync("MessagesIsViewedResponse", companionName, messageIDs);
+            await Clients.User(companionName).SendAsync("MessagesIsViewedResponse", userName, messageIDs);
         }
     }
 }

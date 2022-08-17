@@ -38,18 +38,14 @@ export class MessengerSignalRService {
         console.log('Hub Connection Started!');
       })
       .then(() => {
-        this.messagingCards = [];
-        this.messaging = {
-          user1Name: this.authorizationService.userName!,
-          user2Name: "",
-          messagesList: [],
-        };
+        this.resetData();
       })
       .then(() => {
         this.getMessagingCardsListener();
         this.getMessagingListener();
         this.messagingsIsUpdatedListener();
         this.getNewMessagesListener();
+        this.messagesIsViewedListener();
       })
       .then(() => {
         this.getMessagingCards();
@@ -62,6 +58,15 @@ export class MessengerSignalRService {
       .then(() => {
         console.log('Hub Connection Stoped!');
       });
+  }
+
+  resetData() {
+    this.messagingCards = [];
+    this.messaging = {
+      user1Name: this.authorizationService.userName!,
+      user2Name: "",
+      messagesList: [],
+    };
   }
 
   getMessagingCards() {
@@ -97,13 +102,16 @@ export class MessengerSignalRService {
         this.messaging = messaging;
 
         let viewedMessageIDs: number[] = [];
-        for (let mes of this.messaging.messagesList) {
-          if (mes.authorNumber == true && mes.notViewed) {
+        for (let mes of messaging.messagesList) {
+          if (mes.id >= this.messaging.messagesList.length) {
+            this.messaging.messagesList.push(mes);
+          }
+          if (mes.authorName == this.messaging.user2Name) {
             viewedMessageIDs.push(mes.id);
           }
         }
 
-        if (viewedMessageIDs.length > 0 || this.messaging.user1Name == this.messaging.user2Name) {
+        if (viewedMessageIDs.length > 0) {
           this.messagesIsViewed(this.messaging.user2Name, viewedMessageIDs);
         }
       }
@@ -138,16 +146,17 @@ export class MessengerSignalRService {
   getNewMessagesListener() {
     this.hubConnection?.on("GetNewMessagesResponse",
       (messages: MessageApiModel[]) => {
-        this.messaging.messagesList.push(...messages);
-
         let viewedMessageIDs: number[] = [];
         for (let mes of messages) {
-          if (mes.authorNumber == true) {
+          if (mes.id >= this.messaging.messagesList.length) {
+            this.messaging.messagesList.push(mes);
+          }
+          if (mes.authorName == this.messaging.user2Name) {
             viewedMessageIDs.push(mes.id);
           }
         }
 
-        if (viewedMessageIDs.length > 0 || this.messaging.user1Name == this.messaging.user2Name) {
+        if (viewedMessageIDs.length > 0) {
           this.messagesIsViewed(this.messaging.user2Name, viewedMessageIDs);
         }
       }
@@ -155,7 +164,28 @@ export class MessengerSignalRService {
   }
 
   messagesIsViewed(userName: string, messagesIDs: number[]) {
-    this.hubConnection?.invoke("MessagesIsViewed", userName, messagesIDs)
+    this.hubConnection?.invoke("MessagesIsViewedRequest", userName, messagesIDs)
       .catch(err => console.error(err));
+  }
+
+  messagesIsViewedListener() {
+    this.hubConnection?.on("MessagesIsViewedResponse",
+      (companionName: string, messageIDs: number[]) => {
+        if (companionName != this.messaging.user2Name) {
+          return;
+        }
+
+        let card: MessagingCardApiModel | undefined
+          = this.messagingCards.find(card => card.userName == companionName);
+
+        if (card) {
+          card.countOfNotViewedMessages = 0;
+        }
+
+        for (let id of messageIDs) {
+          this.messaging.messagesList[id].notViewed = false;
+        }
+      }
+    );
   }
 }

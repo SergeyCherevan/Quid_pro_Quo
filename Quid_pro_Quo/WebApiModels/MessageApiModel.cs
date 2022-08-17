@@ -6,8 +6,7 @@ namespace Quid_pro_Quo.WebApiModels
     {
         public int Id { get; set; }
 
-        // 0 or 1
-        public bool AuthorNumber { get; set; }
+        public string AuthorName { get; set; }
 
         public string Text { get; set; }
 
