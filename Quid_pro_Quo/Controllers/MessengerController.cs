@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using Quid_pro_Quo.SignalRHubs;
 using Quid_pro_Quo.Services.Interfaces;
 using Quid_pro_Quo.WebApiModels;
+using Quid_pro_Quo.Services;
 
 namespace Quid_pro_Quo.Controllers
 {
@@ -20,10 +22,11 @@ namespace Quid_pro_Quo.Controllers
     {
         IHubContext<MessengerHub> _messengerContext { get; set; }
         IMessagingService _messagingService { get; set; }
-        public MessengerController(IHubContext<MessengerHub> messengerContext, IMessagingService messagingService)
+        public MessengerController(IHubContext<MessengerHub> messengerContext, IMessagingService messagingService, IWebHostEnvironment env)
         {
             _messengerContext = messengerContext;
             _messagingService = messagingService;
+            (_messagingService as MessagingService).SetProperties(this, env);
         }
 
         [HttpPost]

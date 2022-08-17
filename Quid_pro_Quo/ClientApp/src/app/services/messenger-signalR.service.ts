@@ -118,8 +118,8 @@ export class MessengerSignalRService {
     );
   }
 
-  sendMessage(message: FormData) {
-    this.requestService
+  sendMessage(message: FormData): Promise<any> {
+    return this.requestService
       .postMultipartForm('/api/messenger/sendMessage', message, this.authorizationService.jwtString)
       .catch(err => console.error(err));
   }

@@ -37,7 +37,6 @@
   <ItemGroup>
     <Folder Include="AppData\" />
     <Folder Include="FileStorage\Avatars\" />
-    <Folder Include="FileStorage\Files\" />
     <Folder Include="FileStorage\Images\" />
   </ItemGroup>
 

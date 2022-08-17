@@ -19,6 +19,8 @@ export class MessageBlockComponent implements OnInit {
   };
   @Input() myName: string = "";
 
+  attachedFileStr: string = "Прикріплений файл";
+
   constructor() { }
 
   ngOnInit(): void {

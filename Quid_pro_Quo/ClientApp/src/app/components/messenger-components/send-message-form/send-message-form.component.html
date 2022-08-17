@@ -1,11 +1,41 @@
 <div class="container send-message-box">
+  <div class="form-block">
 
-  <form class="d-flex">
+    <form class="d-flex">
 
-    <input class="form-control me-2" type="text" name="text" [(ngModel)]="message.text">
+      <input class="form-control me-2" type="text" name="text" [(ngModel)]="message.text">
 
-    <button class="btn btn-outline-success" type="submit" (click)="sendMessage()">Send</button>
+      <input type="file" accept="image/*" id="image-input"
+             name="imageFile" (change)="onSelectImageFile($event)">
+      <input type="file" accept="*/*" id="file-input"
+             name="file" (change)="onSelectFile($event)">
 
-  </form>
+      <button class="btn btn-outline-primary" type="submit" (click)="attachImageFile()"
+              [style.margin]="'0 .5vw 0 0'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-image" viewBox="0 0 16 16">
+          <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+          <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z" />
+        </svg>
+      </button>
 
+      <button class="btn btn-outline-primary" type="submit" (click)="attachFile()"
+              [style.margin]="'0 .5vw 0 0'">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+          <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
+        </svg>
+      </button>
+
+      <button class="btn btn-outline-success" type="submit" (click)="sendMessage()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
+          <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z" />
+        </svg>
+      </button>
+
+    </form>
+
+    <a href="javascript:;" *ngIf="message.imageFile" (click)="attachImageFile()">{{attachedImage}}</a>
+    &nbsp;
+    <a href="javascript:;" *ngIf="message.file" (click)="attachFile()">{{attachedFile}}</a>
+
+  </div>
 </div>
