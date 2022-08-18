@@ -5,7 +5,7 @@ namespace Quid_pro_Quo.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProposalController : ControllerBase
+    public class ExchangeOfServicesController : ControllerBase
     {
     }
 }

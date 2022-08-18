@@ -9,7 +9,7 @@ namespace Quid_pro_Quo.Database.Ralational
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<LoginInfoEntity> LoginInfos { get; set; }
         public DbSet<PostEntity> Posts { get; set; }
-        public DbSet<ProposalEntity> Proposals { get; set; }
+        public DbSet<ExchangeOfServicesEntity> ExchangesOfServicess { get; set; }
         public DbSet<ComplaintEntity> Complaints { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)

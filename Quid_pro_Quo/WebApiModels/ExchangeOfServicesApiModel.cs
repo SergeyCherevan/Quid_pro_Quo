@@ -2,7 +2,7 @@
 
 namespace Quid_pro_Quo.WebApiModels
 {
-    public class ProposalApiModel
+    public class ExchangeOfServicesApiModel
     {
         public int RequestingPost { get; set; }
         public int RequestedPost { get; set; }

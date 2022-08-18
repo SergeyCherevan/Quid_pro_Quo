@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Quid_pro_Quo.Database.Ralational
 {
-    [Table("Proposals")]
-    public class ProposalEntity : BaseEntity<int>
+    [Table("ExchangesOfServices")]
+    public class ExchangeOfServicesEntity : BaseEntity<int>
     {
         public int RequestingPostId { get; set; }
         public int RequestedPostId { get; set; }

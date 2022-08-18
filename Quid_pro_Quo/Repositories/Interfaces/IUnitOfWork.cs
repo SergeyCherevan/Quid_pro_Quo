@@ -12,7 +12,7 @@ namespace Quid_pro_Quo.Repositories.Interfaces
     {
         IUserRepository UserRepository { get; }
         IPostRepository PostRepository { get; }
-        IProposalRepository ProposalRepository { get; }
+        IExchangeOfServicesRepository ExchangeOfServicesRepository { get; }
         IComplaintRepository ComplaintRepository { get; }
         IMessagingRepository MessagingRepository { get; }
         ICommentRepository CommentRepository { get; }
