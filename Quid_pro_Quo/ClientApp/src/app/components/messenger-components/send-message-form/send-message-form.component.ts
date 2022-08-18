@@ -96,6 +96,11 @@ export class SendMessageFormComponent implements OnInit {
   sendMessage(): void {
     this.messengerService.sendMessage(this.sendMessageFormData)
       .then(() => this.resetData());
+
+    setTimeout(() => {
+      let messagingArea: HTMLInputElement = <HTMLInputElement>document.getElementById("messaging-area");
+      messagingArea.scrollTop = messagingArea.scrollHeight;
+    }, 100);
   }
 
   resetData(): void {

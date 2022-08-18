@@ -106,7 +106,7 @@ export class MessengerSignalRService {
           if (mes.id >= this.messaging.messagesList.length) {
             this.messaging.messagesList.push(mes);
           }
-          if (mes.authorName == this.messaging.user2Name) {
+          if (mes.authorName == this.messaging.user2Name && mes.notViewed) {
             viewedMessageIDs.push(mes.id);
           }
         }
@@ -151,7 +151,7 @@ export class MessengerSignalRService {
           if (mes.id >= this.messaging.messagesList.length) {
             this.messaging.messagesList.push(mes);
           }
-          if (mes.authorName == this.messaging.user2Name) {
+          if (mes.authorName == this.messaging.user2Name && mes.notViewed) {
             viewedMessageIDs.push(mes.id);
           }
         }

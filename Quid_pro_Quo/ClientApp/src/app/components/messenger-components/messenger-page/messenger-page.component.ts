@@ -30,8 +30,8 @@ export class MessengerPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.messengerService.getMessagingCards();
     this.messengerService.getMessaging(this.messengerService.messaging.user2Name);
+    this.messengerService.getMessagingCards();
 
     setTimeout(() => {
       let messagingArea: HTMLInputElement = <HTMLInputElement>document.getElementById("messaging-area");
