@@ -2,15 +2,15 @@
      [class.selected]="destinationName == messagingCard.userName"
      (click)="goToMessagingWith(messagingCard.userName)">
 
-  <img src="/api/user/getAvatarByName/{{messagingCard.userName}}" class="avatar-img" />
+  <span class="position-relative">
+    <img src="/api/user/getAvatarByName/{{messagingCard.userName}}" class="avatar-img" />
+    <span *ngIf="messagingCard.countOfNotViewedMessages > 0"
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+      {{messagingCard.countOfNotViewedMessages}}
+      <span class="visually-hidden">unread messages</span>
+    </span>
+  </span>
   &nbsp;
   <label>{{messagingCard.userName}}</label>
-  &nbsp;
-  <span *ngIf="messagingCard.countOfNotViewedMessages > 0" class="badge"
-        [class.bg-primary]="destinationName != messagingCard.userName"
-        [class.bg-white]="destinationName == messagingCard.userName"
-        [class.text-primary]="destinationName == messagingCard.userName">
-    {{messagingCard.countOfNotViewedMessages}}
-  </span>
 
 </div>
