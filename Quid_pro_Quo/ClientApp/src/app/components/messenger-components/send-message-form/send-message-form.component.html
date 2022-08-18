@@ -51,7 +51,7 @@
       </svg>
     </a>
     &nbsp;
-    <a href="javascript:;" *ngIf="message.file" (click)="downloadFile()">{{attachedFile}} &#11123;</a>
+    <a [attr.href]="message.file" [attr.download]="nameForDownloadFile()" *ngIf="message.file">{{attachedFile}} &#11123;</a>
 
   </div>
 </div>
