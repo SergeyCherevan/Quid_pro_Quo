@@ -24,7 +24,7 @@ namespace Quid_pro_Quo.Repositories
                                      WHERE post.AuthorId = {senderId}
                                      LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
 
-            return _db.ExchangeOfServicess.FromSqlRaw(sqlQuery);
+            return _db.ExchangesOfServicess.FromSqlRaw(sqlQuery);
 
             //return _db.ExchangeOfServicess.Include(e => e.RequestingPostId).Where(e => e.RequestingPost.Id == senderId);
         }
@@ -38,7 +38,7 @@ namespace Quid_pro_Quo.Repositories
                                      WHERE post.AuthorId = {destinationId}
                                      LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
 
-            return _db.ExchangeOfServicess.FromSqlRaw(sqlQuery);
+            return _db.ExchangesOfServicess.FromSqlRaw(sqlQuery);
 
             //return _db.ExchangeOfServicess.Include(e => e.RequestedPostId).Where(e => e.RequestedPost.Id == destinationId);
         }
