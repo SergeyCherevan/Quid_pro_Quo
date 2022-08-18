@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { MessengerSignalRService } from '../../../services/messenger-signalR.service'
+import { MessengerSignalRService } from '../../../services/messenger-signalR.service';
 
 @Component({
   selector: 'messenger-page',

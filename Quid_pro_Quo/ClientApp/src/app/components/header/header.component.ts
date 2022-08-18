@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import { AuthorizationService } from '../../services/authorization.service';
+import { MessengerSignalRService } from '../../services/messenger-signalR.service';
+
 
 @Component({
   selector: 'app-header',
@@ -22,7 +24,22 @@ export class HeaderComponent implements OnInit {
     return this.authorizationService.userName;
   }
 
-  constructor(public authorizationService: AuthorizationService) { }
+  get countOfUnreadMessagings(): number {
+    let count: number = 0
+
+    this.messengerService.messagingCards.forEach(card => {
+      if (card.countOfNotViewedMessages > 0) {
+        count++;
+      }
+    });
+
+    return count;
+  }
+
+  constructor(
+    public authorizationService: AuthorizationService,
+    public messengerService: MessengerSignalRService,
+  ) { }
 
   ngOnInit(): void { }
 }

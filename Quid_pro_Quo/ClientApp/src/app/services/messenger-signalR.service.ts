@@ -61,7 +61,6 @@ export class MessengerSignalRService {
   }
 
   resetData() {
-    this.messagingCards = [];
     this.messaging = {
       user1Name: this.authorizationService.userName!,
       user2Name: "",
