@@ -8,12 +8,14 @@ namespace Quid_pro_Quo.Database.Ralational
     {
         public int RequestingPostId { get; set; }
         public int RequestedPostId { get; set; }
+        public int DateNumberOfRequestedPost { get; set; }
+        public int DateNumberOfRequestingPost { get; set; }
         public string Text { get; set; }
         public DateTime Time { get; set; }
 
         [ForeignKey("RequestingPostId")]
-        public virtual UserEntity RequestingPost { get; set; }
+        public virtual PostEntity RequestingPost { get; set; }
         [ForeignKey("RequestedPostId")]
-        public virtual UserEntity RequestedPost { get; set; }
+        public virtual PostEntity RequestedPost { get; set; }
     }
 }
