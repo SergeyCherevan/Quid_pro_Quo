@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quid_pro_Quo.Database.Ralational;
 
 namespace Quid_pro_Quo.Migrations
 {
     [DbContext(typeof(QuidProQuoRelationalDbContext))]
-    partial class QuidProQuoRelationalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220818181717_Add_Status_Columns")]
+    partial class Add_Status_Columns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
