@@ -19,7 +19,7 @@ export class SendMessageFormComponent implements OnInit {
   };
 
   attachedFile: string = "Прикріплений файл";
-  attachedImage: string = "Прикрілене зображення"
+  attachedImage: string = "Прикріплене зображення"
 
   constructor(
     public messengerService: MessengerSignalRService,
@@ -50,6 +50,11 @@ export class SendMessageFormComponent implements OnInit {
     }
   }
 
+  showImage(): void {
+    let showModalButton: HTMLInputElement = <HTMLInputElement>document.getElementById("show-modal");
+    showModalButton.click()
+  }
+
   attachFile(): void {
     let fileInput: HTMLInputElement = <HTMLInputElement>document.getElementById("file-input");
 
@@ -71,6 +76,10 @@ export class SendMessageFormComponent implements OnInit {
         this.message.file = <any>event?.target?.result;
       }
     }
+  }
+
+  downloadFile(): void {
+
   }
 
   get sendMessageFormData(): FormData {
