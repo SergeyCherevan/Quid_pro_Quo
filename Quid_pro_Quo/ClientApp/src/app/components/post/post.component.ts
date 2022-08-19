@@ -24,6 +24,8 @@ export class PostComponent implements OnInit {
   };
   currentImageNumber: number = 0;
 
+  @Input() symbolOnCenter: string = "change";
+
   get imageFileNamesArr(): string[] {
     if (this.postModel.imageFileNames == "" || this.postModel.imageFileNames == null) {
       return [];
