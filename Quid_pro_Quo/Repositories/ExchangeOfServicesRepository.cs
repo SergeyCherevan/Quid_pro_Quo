@@ -15,32 +15,42 @@ namespace Quid_pro_Quo.Repositories
 
 
 
-        public async Task<IEnumerable<ExchangeOfServicesEntity>> GetBySender(int senderId, int pageNumber, int pageSize)
+        public async Task<IEnumerable<ExchangeOfServicesEntity>> GetBySender(int senderId, StatusEnum proposalStatus)
         {
             await Task.Run(() => { });
 
-            string sqlQuery = $@"SELECT * FROM [ExchangesOfServices] AS prop
-                                     INNER JOIN [Posts] AS post ON prop.RequestingPost = post.Id
-                                     WHERE post.AuthorId = {senderId}
-                                     LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
-
-            return _db.ExchangesOfServicess.FromSqlRaw(sqlQuery);
-
-            //return _db.ExchangesOfServices.Include(e => e.RequestingPostId).Where(e => e.RequestingPost.Id == senderId);
+            return _db.ExchangesOfServicess
+                .Include(e => e.RequestingPost)
+                .Where(e => e.RequestingPost.AuthorId == senderId && e.ProposalStatus == proposalStatus);
         }
-
-        public async Task<IEnumerable<ExchangeOfServicesEntity>> GetByDestination(int destinationId, int pageNumber, int pageSize)
+        public async Task<IEnumerable<ExchangeOfServicesEntity>> GetByDestination(int destinationId, StatusEnum proposalStatus)
         {
             await Task.Run(() => { });
 
-            string sqlQuery = $@"SELECT * FROM [ExchangesOfServices] AS prop
-                                     INNER JOIN [Posts] AS post ON prop.RequestedPost = post.Id
-                                     WHERE post.AuthorId = {destinationId}
-                                     LIMIT {pageSize} OFFSET {pageNumber * pageSize}";
+            return _db.ExchangesOfServicess
+                .Include(e => e.RequestedPost)
+                .Where(e => e.RequestedPost.AuthorId == destinationId && e.ProposalStatus == proposalStatus);
+        }
+        public async Task<IEnumerable<ExchangeOfServicesEntity>> GetConfirmed(int userId, StatusEnum doneStatus)
+        {
+            await Task.Run(() => { });
 
-            return _db.ExchangesOfServicess.FromSqlRaw(sqlQuery);
+            return _db.ExchangesOfServicess
+                .Include(e => e.RequestedPost)
+                .Where(e => e.RequestingPost.AuthorId == userId || e.RequestedPost.AuthorId == userId)
+                .ToList()
+                .Where(e =>
+                {
+                    Predicate<ExchangeOfServicesEntity> pred = doneStatus switch
+                    {
+                        StatusEnum.NoInfo => (e => (e.DoneStatus1 == StatusEnum.NoInfo || e.DoneStatus1 == StatusEnum.NoInfo) &&
+                            (e.DoneStatus1 != StatusEnum.No && e.DoneStatus1 != StatusEnum.No)),
+                        StatusEnum.Yes => (e => e.DoneStatus1 == StatusEnum.Yes && e.DoneStatus1 == StatusEnum.Yes),
+                        StatusEnum.No => (e => e.DoneStatus1 == StatusEnum.No || e.DoneStatus1 == StatusEnum.No),
+                    };
 
-            //return _db.ExchangesOfServices.Include(e => e.RequestedPostId).Where(e => e.RequestedPost.Id == destinationId);
+                    return pred(e);
+                });
         }
     }
 }

@@ -7,7 +7,8 @@ namespace Quid_pro_Quo.Repositories.Interfaces
 {
     public interface IExchangeOfServicesRepository : IBaseRepository<ExchangeOfServicesEntity, int>
     {
-        Task<IEnumerable<ExchangeOfServicesEntity>> GetBySender(int senderId, int pageNumber, int pageSize);
-        Task<IEnumerable<ExchangeOfServicesEntity>> GetByDestination(int destinationId, int pageNumber, int pageSize);
+        Task<IEnumerable<ExchangeOfServicesEntity>> GetBySender(int senderId, StatusEnum proposalStatus);
+        Task<IEnumerable<ExchangeOfServicesEntity>> GetByDestination(int destinationId, StatusEnum proposalStatus);
+        Task<IEnumerable<ExchangeOfServicesEntity>> GetConfirmed(int userId, StatusEnum doneStatus);
     }
 }
