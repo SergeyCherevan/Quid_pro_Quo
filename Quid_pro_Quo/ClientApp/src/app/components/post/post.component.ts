@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { PostGetApiModel } from '../../models/post-get-api.model';
 
@@ -10,7 +10,7 @@ import { PostGetApiModel } from '../../models/post-get-api.model';
 export class PostComponent implements OnInit {
 
   @Input() postModel: PostGetApiModel = {
-    id: "",
+    id: 0,
     title: "",
     text: "",
     imageFileNames: "",
@@ -25,6 +25,7 @@ export class PostComponent implements OnInit {
   currentImageNumber: number = 0;
 
   @Input() symbolOnCenter: string = "change";
+  @Input() isChoosed: boolean = false;
 
   get imageFileNamesArr(): string[] {
     if (this.postModel.imageFileNames == "" || this.postModel.imageFileNames == null) {
@@ -58,5 +59,11 @@ export class PostComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void { }
+
+  @Output() onCircleButtonClick = new EventEmitter<number>();
+
+  clickCircleButton() {
+    this.onCircleButtonClick.emit(this.postModel.id);
+  }
 
 }

@@ -20,7 +20,7 @@ export class PostPageComponent implements OnInit {
 
 
   postModel: PostGetApiModel = {
-    id: "",
+    id: 0,
     title: "",
     text: "",
     imageFileNames: "",

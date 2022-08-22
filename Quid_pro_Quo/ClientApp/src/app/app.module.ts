@@ -19,15 +19,18 @@ import { AuthorizationFormComponent } from './components/authorization-form/auth
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { EditPostFormComponent } from './components/edit-post-form/edit-post-form.component';
+import { ChooseServiceToChangeComponent } from './components/exchange-of-service-components/choose-service-to-change/choose-service-to-change.component';
+import { ChooseTimeOfServiceComponentForm } from './components/exchange-of-service-components/choose-time-of-service-form/choose-time-of-service-form.component';
 
-import { AuthorizationService } from './services/authorization.service';
-import { RequestService } from './services/request.service';
-import { MessengerSignalRService } from './services/messenger-signalR.service';
 import { MessagingCardsListComponent } from './components/messenger-components/messaging-cards-list/messaging-cards-list.component';
 import { MessagingCardComponent } from './components/messenger-components/messaging-card/messaging-card.component';
 import { MessagingAreaComponent } from './components/messenger-components/messaging-area/messaging-area.component';
 import { MessageBlockComponent } from './components/messenger-components/message-block/message-block.component';
-import { SendMessageFormComponent } from './components/messenger-components/send-message-form/send-message-form.component'
+import { SendMessageFormComponent } from './components/messenger-components/send-message-form/send-message-form.component';
+
+import { AuthorizationService } from './services/authorization.service';
+import { RequestService } from './services/request.service';
+import { MessengerSignalRService } from './services/messenger-signalR.service';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -38,6 +41,8 @@ const appRoutes: Routes = [
   { path: 'messengerPage', component: MessengerPageComponent },
   { path: 'accountPage', component: AccountPageComponent },
   { path: 'postPage/:id', component: PostPageComponent },
+  { path: 'postPage/:id', component: PostPageComponent },
+  { path: 'chooseMyServiceToChange/:id', component: ChooseServiceToChangeComponent },
   { path: '**', component: NotFoundPageComponent },
 ];
 
@@ -57,12 +62,14 @@ const appRoutes: Routes = [
     EditPostFormComponent,
     UserPageComponent,
     SearchGeomarkerFormComponent,
+    ChooseServiceToChangeComponent,
     MessengerPageComponent,
     MessagingCardsListComponent,
     MessagingCardComponent,
     MessagingAreaComponent,
     MessageBlockComponent,
     SendMessageFormComponent,
+    ChooseTimeOfServiceComponentForm,
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule

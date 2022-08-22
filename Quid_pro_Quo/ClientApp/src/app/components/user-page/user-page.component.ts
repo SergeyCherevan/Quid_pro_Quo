@@ -54,7 +54,7 @@ export class UserPageComponent implements OnInit {
     postsCount: 0,
   };
   post: PostGetApiModel = {
-    id: "",
+    id: 0,
     title: "",
     text: "",
     imageFileNames: "",

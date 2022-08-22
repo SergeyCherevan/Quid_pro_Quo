@@ -1,0 +1,33 @@
+<br />
+
+<div class="container">
+
+  <h1 class="text-center">{{changeOutherService}}</h1>
+
+  <br />
+
+  <post [postModel]="outherServicePost" [symbolOnCenter]="''" (onCircleButtonClick)="chooseMyServiceToChange($event)"></post>
+
+  <hr class="bg-danger border-2 border-top border-danger">
+
+  <br />
+
+  <h1 class="text-center">{{changeMyService}}</h1>
+
+  <div *ngFor="let post of myPostsData.posts">
+
+    <post [postModel]="post" [symbolOnCenter]="'ok'"
+          (onCircleButtonClick)="chooseMyServiceToChange($event)" [isChoosed]="post.id == choosedNumberId"></post>
+
+    <br />
+
+  </div>
+
+</div>
+
+<button type="button" class="d-none" id="button-show-choose-time-of-service-form"
+        data-bs-toggle="modal" data-bs-target="#choose-time-of-service-form-modal"></button>
+
+<choose-time-of-service-form [myPost]="myServicePost" [outherPost]="outherServicePost">
+
+</choose-time-of-service-form>

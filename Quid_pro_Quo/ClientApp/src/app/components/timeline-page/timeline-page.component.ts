@@ -24,7 +24,7 @@ export class TimelinePageComponent implements OnInit {
     postsCount: 0,
   };
   post: PostGetApiModel = {
-    id: "",
+    id: 0,
     title: "",
     text: "",
     imageFileNames: "",
@@ -81,6 +81,10 @@ export class TimelinePageComponent implements OnInit {
       .get(`/api/post/getByFilter?keywords=${this.keywords}&date=${this.date ?? ''}&geomarker=${this.geomarker ?? ''}&pageNumber=${this.pageNumber}&pageSize=${this.pageSize}`,
         this.authorizationService.jwtString)
       .then((respObj: PostsPageApiModel) => this.postsData = respObj);
+  }
+
+  chooseOutherServiceToChange(postId: number): void {
+    this.router.navigateByUrl(`/chooseMyServiceToChange/${postId}`);
   }
 
   setGeomarker(geomarker: string): void {

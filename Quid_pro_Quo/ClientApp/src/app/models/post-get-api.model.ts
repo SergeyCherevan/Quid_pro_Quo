@@ -1,5 +1,5 @@
 export interface PostGetApiModel {
-  id: string;
+  id: number;
   title: string;
   text: string;
   imageFileNames: string;

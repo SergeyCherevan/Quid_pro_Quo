@@ -115,7 +115,7 @@
 
   <div *ngFor="let post of postsData.posts">
 
-    <post [postModel]="post"></post>
+    <post [postModel]="post" (onCircleButtonClick)="chooseOutherServiceToChange($event)"></post>
 
     <br />
 
