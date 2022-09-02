@@ -5,7 +5,7 @@ import { PostGetApiModel } from '../../models/post-get-api.model';
 @Component({
   selector: 'post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss', '../users-page/users-page.component.scss' ],
+  styleUrls: [ './post.component.scss', '../users-page/users-page.component.scss' ],
 })
 export class PostComponent implements OnInit {
 

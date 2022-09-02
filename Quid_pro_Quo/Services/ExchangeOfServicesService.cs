@@ -47,13 +47,13 @@ namespace Quid_pro_Quo.Services
 
         public async Task<ExchangeOfServicesApiModel> SendProposal(SendProposalToExchangeApiModel model)
         {
-            ExchangeOfServicesApiModel exchange =
-                (await _UoW.ExchangeOfServicesRepository.Add(model.ToExchangeOfServicesEntity(DateTime.Now)))
-                .ToExchangeOfServicesApiModel();
+            ExchangeOfServicesEntity entity
+                = await _UoW.ExchangeOfServicesRepository.Add(model.ToExchangeOfServicesEntity(DateTime.Now));
+            ExchangeOfServicesApiModel returnedModel = entity.ToExchangeOfServicesApiModel();
 
             await _UoW.SaveChanges();
 
-            return exchange;
+            return returnedModel;
         }
     }
 }

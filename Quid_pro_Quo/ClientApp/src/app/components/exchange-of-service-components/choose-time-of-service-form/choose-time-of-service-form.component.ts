@@ -1,10 +1,15 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { PostGetApiModel } from '../../../models/post-get-api.model';
+import { SendProposalToExchangeApiModel } from '../../../models/send-proposal-to-exchange-api.model';
+
+import { RequestService } from '../../../services/request.service';
+import { AuthorizationService } from '../../../services/authorization.service';
 
 @Component({
   selector: 'choose-time-of-service-form',
   templateUrl: './choose-time-of-service-form.component.html',
-  styleUrls: ['./choose-time-of-service-form.component.css']
+  styleUrls: [ './choose-time-of-service-form.component.scss', ]
 })
 export class ChooseTimeOfServiceComponentForm implements OnInit {
 
@@ -39,10 +44,29 @@ export class ChooseTimeOfServiceComponentForm implements OnInit {
     performServiceInPlaceZoom: 15,
   };
 
-  constructor() { }
+  proposalModel: SendProposalToExchangeApiModel = {
+    requestedPostId: 0,
+    requestingPostId: 0,
+    dateNumberOfRequestedPost: 0,
+    dateNumberOfRequestingPost: 0,
+    text: "",
+  };
+
+  constructor(
+    public requestService: RequestService,
+    public authorizationService: AuthorizationService,
+  ) {
+    
+  }
 
   ngOnInit(): void {
-
+    this.proposalModel = {
+      requestedPostId: this.outherPost.id,
+      requestingPostId: this.myPost!.id,
+      dateNumberOfRequestedPost: 0,
+      dateNumberOfRequestingPost: 0,
+      text: "",
+    }
   }
 
   close(): void {
@@ -51,7 +75,12 @@ export class ChooseTimeOfServiceComponentForm implements OnInit {
   }
 
   sendProposal() {
+    this.proposalModel.requestingPostId = this.myPost!.id;
 
+    return this.requestService
+      .post('/api/ExchangeOfServices/sendProposal',
+        <SendProposalToExchangeApiModel>this.proposalModel, this.authorizationService.jwtString)
+      .then(responseObject => this.close());
   }
 
 }

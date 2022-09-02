@@ -16,7 +16,11 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col">
-                  Послуга користувача {{outherPost.authorName}}
+                  Послуга користувача
+                  <a routerLink="/userPage/{{outherPost.authorName}}" (click)="close()">
+                    {{outherPost.authorName}}
+                    <img src="/api/user/getAvatarByName/{{outherPost.authorName}}" class="avatar-img" />
+                  </a>
                 </th>
                 <th scope="col">
                   Моя послуга
@@ -43,7 +47,7 @@
                   <div class="form-check" *ngFor="let dateTime of outherPost.performServiceOnDatesList; let i = index">
                     <input class="form-check-input" type="radio"
                            name="dateOfOutherService" id="outher-datetime-radio{{i}}"
-                           [attr.value]="i" checked>
+                           [(ngModel)]="proposalModel.dateNumberOfRequestedPost" [value]="i">
                     <label class="form-check-label" for="dateOfOutherService">
                       {{dateTime | date:'dd.MM.YY HH:mm:ss'}}
                     </label>
@@ -53,9 +57,8 @@
                   <div class="form-check" *ngFor="let dateTime of myPost?.performServiceOnDatesList; let i = index">
                     <input class="form-check-input" type="radio"
                            name="dateOfMyService" id="my-datetime-radio{{i}}"
-                           [attr.value]="i" checked>
-                    <label class="form-check-label" for="dateOfMyService"
-                           >
+                           [(ngModel)]="proposalModel.dateNumberOfRequestingPost" [value]="i">
+                    <label class="form-check-label" for="dateOfMyService">
                       {{dateTime | date:'dd.MM.YY HH:mm:ss'}}
                     </label>
                   </div>
@@ -63,6 +66,8 @@
               </tr>
             </tbody>
           </table>
+
+          <input class="form-control me-2" type="text" name="text" [(ngModel)]="proposalModel.text">
         </div>
 
       </div>

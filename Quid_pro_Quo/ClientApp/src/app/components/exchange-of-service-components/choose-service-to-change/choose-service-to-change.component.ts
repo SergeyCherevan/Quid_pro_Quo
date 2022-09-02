@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -40,15 +40,26 @@ export class ChooseServiceToChangeComponent implements OnInit {
   };
 
   choosedNumberId?: number = undefined;
-  get myServicePost(): PostGetApiModel | undefined {
-    return this.myPostsData.posts.find(post => post.id == this.choosedNumberId);
-  }
+  myServicePost: PostGetApiModel = {
+    id: 0,
+    title: "",
+    text: "",
+    imageFileNames: "",
+    authorName: "",
+    postedAt: new Date(),
+    isActual: false,
+    performServiceOnDatesList: [],
+    performServiceInPlaceLat: 0,
+    performServiceInPlaceLng: 0,
+    performServiceInPlaceZoom: 15,
+  };
 
   constructor(
     public activateRoute: ActivatedRoute,
     public router: Router,
     public authorizationService: AuthorizationService,
     public requestService: RequestService,
+    public ref: ChangeDetectorRef
   ) {
     this.subscription = activateRoute.params.subscribe(params => {
       this.outherServicePost.id = params['id'];
@@ -73,6 +84,9 @@ export class ChooseServiceToChangeComponent implements OnInit {
 
   chooseMyServiceToChange(postId: number): void {
     this.choosedNumberId = postId;
+    this.myServicePost = this.myPostsData.posts.find(post => post.id == this.choosedNumberId)!;
+
+    this.ref.markForCheck();
 
     let showFormButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("button-show-choose-time-of-service-form");
     showFormButton.click();

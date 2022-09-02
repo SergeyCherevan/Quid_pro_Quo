@@ -1,6 +1,6 @@
 export interface SendProposalToExchangeApiModel {
-  requestingPostId: number;
   requestedPostId: number;
+  requestingPostId: number;
   dateNumberOfRequestedPost: number;
   dateNumberOfRequestingPost: number;
   text: string;
