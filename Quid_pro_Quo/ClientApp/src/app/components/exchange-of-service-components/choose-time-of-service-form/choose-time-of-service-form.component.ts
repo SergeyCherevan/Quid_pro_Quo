@@ -17,6 +17,11 @@ export class ChooseTimeOfServiceFormComponent implements OnInit {
   sendProposalButton: string = "Відправити пропозицію на обмін";
   cancelButton: string = "Відміна";
 
+  userServiceStr: string = "Послуга користувача";
+  myServiceStr: string = "Моя послуга";
+  idServiceTitleStr: string = "(Id) Назва послуги";
+  chooseDateTimeStr = "Оберіть час виконання послуги";
+
   @Input() outherPost: PostGetApiModel = {
     id: 0,
     title: "",

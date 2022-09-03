@@ -16,20 +16,20 @@
               <tr>
                 <th scope="col"></th>
                 <th scope="col">
-                  Послуга користувача
+                  {{userServiceStr}}
                   <a routerLink="/userPage/{{outherPost.authorName}}" (click)="close()">
                     {{outherPost.authorName}}
                     <img src="/api/user/getAvatarByName/{{outherPost.authorName}}" class="avatar-img" />
                   </a>
                 </th>
                 <th scope="col">
-                  Моя послуга
+                  {{myServiceStr}}
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">(Id) Назва послуги</th>
+                <th scope="row">{{idServiceTitleStr}}</th>
                 <td>
                   <a routerLink="/postPage/{{outherPost.id}}" (click)="close()">
                     (Id: {{outherPost.id}}) {{outherPost.title}}
@@ -42,7 +42,7 @@
                 </td>
               </tr>
               <tr>
-                <th scope="row">Оберіть час виконання послуги</th>
+                <th scope="row">{{chooseDateTimeStr}}</th>
                 <td>
                   <div class="form-check" *ngFor="let dateTime of outherPost.performServiceOnDatesList; let i = index">
                     <input class="form-check-input" type="radio"
