@@ -9,14 +9,14 @@ import { AuthorizationService } from '../../../services/authorization.service';
 import { RequestService } from '../../../services/request.service';
 
 @Component({
-  selector: 'choose-service-to-change',
-  templateUrl: './choose-service-to-change.component.html',
-  styleUrls: ['./choose-service-to-change.component.scss']
+  selector: 'choose-my-service-to-change-page',
+  templateUrl: './choose-my-service-to-change-page.component.html',
+  styleUrls: ['./choose-my-service-to-change-page.component.scss']
 })
-export class ChooseServiceToChangeComponent implements OnInit {
+export class ChooseMyServiceToChangePageComponent implements OnInit {
 
-  changeOutherService: string = "Обміняти послугу:";
-  changeMyService: string = "На мою послугу:";
+  changeOutherServiceStr: string = "Обміняти послугу:";
+  changeMyServiceStr: string = "На мою послугу:";
 
   subscription: Subscription;
 

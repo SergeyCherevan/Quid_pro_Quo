@@ -19,8 +19,9 @@ import { AuthorizationFormComponent } from './components/authorization-form/auth
 import { AccountPageComponent } from './components/account-page/account-page.component';
 import { NotFoundPageComponent } from './components/not-found-page/not-found-page.component';
 import { EditPostFormComponent } from './components/edit-post-form/edit-post-form.component';
-import { ChooseServiceToChangeComponent } from './components/exchange-of-service-components/choose-service-to-change/choose-service-to-change.component';
-import { ChooseTimeOfServiceComponentForm } from './components/exchange-of-service-components/choose-time-of-service-form/choose-time-of-service-form.component';
+import { ChooseMyServiceToChangePageComponent } from './components/exchange-of-service-components/choose-my-service-to-change-page/choose-my-service-to-change-page.component';
+import { ChooseTimeOfServiceFormComponent } from './components/exchange-of-service-components/choose-time-of-service-form/choose-time-of-service-form.component';
+import { ChangingProposalsPageComponent } from './components/exchange-of-service-components/changing-proposals-page/changing-proposals-page.component';
 
 import { MessagingCardsListComponent } from './components/messenger-components/messaging-cards-list/messaging-cards-list.component';
 import { MessagingCardComponent } from './components/messenger-components/messaging-card/messaging-card.component';
@@ -42,7 +43,8 @@ const appRoutes: Routes = [
   { path: 'accountPage', component: AccountPageComponent },
   { path: 'postPage/:id', component: PostPageComponent },
   { path: 'postPage/:id', component: PostPageComponent },
-  { path: 'chooseMyServiceToChange/:id', component: ChooseServiceToChangeComponent },
+  { path: 'chooseMyServiceToChange/:id', component: ChooseMyServiceToChangePageComponent },
+  { path: 'changingProposalsPage/:direction', component: ChangingProposalsPageComponent },
   { path: '**', component: NotFoundPageComponent },
 ];
 
@@ -62,14 +64,15 @@ const appRoutes: Routes = [
     EditPostFormComponent,
     UserPageComponent,
     SearchGeomarkerFormComponent,
-    ChooseServiceToChangeComponent,
+    ChooseMyServiceToChangePageComponent,
     MessengerPageComponent,
     MessagingCardsListComponent,
     MessagingCardComponent,
     MessagingAreaComponent,
     MessageBlockComponent,
     SendMessageFormComponent,
-    ChooseTimeOfServiceComponentForm,
+    ChooseTimeOfServiceFormComponent,
+    ChangingProposalsPageComponent,
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule

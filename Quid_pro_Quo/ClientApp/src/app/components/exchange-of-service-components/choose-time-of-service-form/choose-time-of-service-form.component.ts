@@ -11,7 +11,7 @@ import { AuthorizationService } from '../../../services/authorization.service';
   templateUrl: './choose-time-of-service-form.component.html',
   styleUrls: [ './choose-time-of-service-form.component.scss', ]
 })
-export class ChooseTimeOfServiceComponentForm implements OnInit {
+export class ChooseTimeOfServiceFormComponent implements OnInit {
 
   formTitle: string = "Вибір дати та часу для послуг";
   sendProposalButton: string = "Відправити пропозицію на обмін";
