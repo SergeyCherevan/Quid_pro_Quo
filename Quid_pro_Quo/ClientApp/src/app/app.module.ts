@@ -32,6 +32,7 @@ import { SendMessageFormComponent } from './components/messenger-components/send
 import { AuthorizationService } from './services/authorization.service';
 import { RequestService } from './services/request.service';
 import { MessengerSignalRService } from './services/messenger-signalR.service';
+import { SmallPostComponent } from './components/exchange-of-service-components/small-post/small-post.component';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -73,6 +74,7 @@ const appRoutes: Routes = [
     SendMessageFormComponent,
     ChooseTimeOfServiceFormComponent,
     ChangingProposalsPageComponent,
+    SmallPostComponent,
   ],
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule

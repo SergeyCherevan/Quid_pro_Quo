@@ -1,0 +1,79 @@
+<div class="border border-2 border-primary position-relative p-2">
+
+  <i>ID: {{postModel.id}}</i>
+
+  <a routerLink="/postPage/{{postModel.id}}">
+    <h3 class="text-center">{{postModel.title}}</h3>
+  </a>
+
+  <div class="post-text">{{postModel.text}}</div>
+
+  <br />
+
+  <div id="carouselSlides{{postModel.id}}" class="carousel carousel-dark slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button *ngFor="let imageName of postModel.imageFileNames.split(';'); let i = index"
+              type="button" attr.data-bs-target="#carouselSlides{{postModel.id}}"
+              [attr.data-bs-slide-to]="i" [class.active]="currentImageNumber == i"
+              [attr.aria-current]="currentImageNumber == i" attr.aria-label="Slide {{i}}">
+      </button>
+    </div>
+    <div class="carousel-inner">
+      <div *ngFor="let imageName of postModel.imageFileNames.split(';'); let i = index" class="carousel-item" [class.active]="currentImageNumber == i">
+        <img src="/api/file/image/{{imageName}}" class="rounded mx-auto d-block post-image" [alt]="imageName">
+      </div>
+      <button class="carousel-control-prev" type="button" attr.data-bs-target="#carouselSlides{{postModel.id}}" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{{prevStr}}</span>
+      </button>
+      <button class="carousel-control-next" type="button" attr.data-bs-target="#carouselSlides{{postModel.id}}" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">{{nextStr}}</span>
+      </button>
+    </div>
+  </div>
+
+  <br />
+
+  <div class="row">
+    <div class="col">
+      <p>{{datesStr}}:</p>
+      <ul>
+        <li *ngFor="let dateTime of postModel.performServiceOnDatesList; let i = index"
+            [class.text-decoration-underline]="i == datetimeNumber"
+            [class.text-danger]="i == datetimeNumber">
+          {{dateTime | date:'dd.MM.YY HH:mm:ss'}}
+          <svg *ngIf="i == datetimeNumber"
+               xmlns="http://www.w3.org/2000/svg" width="2vh" height="2vh" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+            <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z" />
+          </svg>
+        </li>
+      </ul>
+
+      <p>
+        <a href="https://www.google.com/maps/@{{postModel.performServiceInPlaceLat}},{{postModel.performServiceInPlaceLng}},{{postModel.performServiceInPlaceZoom}}z">
+          {{placeStr}}
+          <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-geo-alt-fill" viewBox="0 0 16 16">
+            <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z" />
+          </svg>
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-6">
+      <p>
+        <a routerLink="/userPage/{{postModel.authorName}}">
+          <img src="/api/user/getAvatarByName/{{postModel.authorName}}" class="avatar-img" />
+          {{postModel.authorName}}
+        </a>
+      </p>
+    </div>
+
+    <div class="col-6 text-end"><p>{{postModel.postedAt | date:'dd.MM.YY HH:mm:ss'}}</p></div>
+
+  </div>
+
+</div>

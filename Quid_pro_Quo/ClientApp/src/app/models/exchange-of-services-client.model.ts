@@ -1,4 +1,7 @@
-export interface ExchangeOfServicesApiModel {
+import { StatusEnum } from './exchange-of-services-api.model';
+import { PostGetApiModel } from './post-get-api.model';
+
+export interface ExchangeOfServicesClientModel {
   id: number;
   requestingPostId: number;
   requestedPostId: number;
@@ -12,10 +15,7 @@ export interface ExchangeOfServicesApiModel {
   doneStatus1: StatusEnum;
   doneStatus2: StatusEnum;
   notViewed: boolean;
-}
 
-export enum StatusEnum {
-  noInfo = 0,
-  yes = 1,
-  no = 2,
+  requestingPost: PostGetApiModel;
+  requestedPost: PostGetApiModel;
 }

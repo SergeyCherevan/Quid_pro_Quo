@@ -1,0 +1,17 @@
+.post-text {
+  overflow: hidden;
+  word-wrap: inherit;
+}
+
+.post-image {
+  height: 40vh;
+  object-fit: cover;
+  margin: auto;
+}
+
+.button-circle {
+  width: 5vh;
+  height: 5vh;
+  border-radius: 2.5vh;
+  padding: 0;
+}
