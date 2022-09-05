@@ -2,7 +2,7 @@
 
 <div class="container">
 
-  <h1 class="text-center">{{titleStr}}</h1>
+  <h1 class="text-center">{{titleStrs[directionNumber]}}</h1>
 
   <br />
 
@@ -10,7 +10,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingOne">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-          <b>{{firstSubtitleStr}}</b> &nbsp;
+          <b>{{firstSubtitleStrs[directionNumber]}}</b> &nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-journal-arrow-down" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M8 5a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 1 1 .708-.708L7.5 9.293V5.5A.5.5 0 0 1 8 5z" />
             <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
@@ -21,7 +21,7 @@
       <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
 
-          <div class="container" *ngFor="let exchange of inputExchanges">
+          <div class="container" *ngFor="let exchange of firstExchanges">
             <div class="row">
               <div class="col-5">
                 <small-post [postModel]="exchange.requestingPost" [datetimeNumber]="exchange.dateNumberOfRequestingPost">
@@ -82,7 +82,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="flush-headingTwo">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
-          <b>{{secondSubtitleStr}}</b> &nbsp;
+          <b>{{secondSubtitleStrs[directionNumber]}}</b> &nbsp;
           <svg xmlns="http://www.w3.org/2000/svg" width="3vh" height="3vh" fill="currentColor" class="bi bi-journal-x" viewBox="0 0 16 16">
             <path fill-rule="evenodd" d="M6.146 6.146a.5.5 0 0 1 .708 0L8 7.293l1.146-1.147a.5.5 0 1 1 .708.708L8.707 8l1.147 1.146a.5.5 0 0 1-.708.708L8 8.707 6.854 9.854a.5.5 0 0 1-.708-.708L7.293 8 6.146 6.854a.5.5 0 0 1 0-.708z" />
             <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
@@ -93,7 +93,7 @@
       <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
         <div class="accordion-body">
 
-          <div class="container" *ngFor="let exchange of cancelExchanges">
+          <div class="container" *ngFor="let exchange of secondExchanges">
 
             <div class="row">
               <div class="col-5">

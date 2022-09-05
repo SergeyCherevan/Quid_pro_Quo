@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { first, Subscription } from 'rxjs';
 
 import { AuthorizationService } from '../../../services/authorization.service';
 import { RequestService } from '../../../services/request.service';
@@ -11,8 +11,11 @@ import { ExchangeOfServicesClientModel } from '../../../models/exchange-of-servi
 enum DirectionEnum {
   In = "In",
   Out = "Out",
-  InProcess = "InProcess",
 };
+let directionArray: string[] = [
+  "In",
+  "Out",
+];
 
 @Component({
   selector: 'changing-proposals-page',
@@ -21,15 +24,43 @@ enum DirectionEnum {
 })
 export class ChangingProposalsPageComponent implements OnInit {
 
-  titleStr: string = "Пропозиції на обмін послугами (до мене)";
-  firstSubtitleStr: string = "Вхідні";
-  secondSubtitleStr: string = "Відхилені";
+  titleStrs: string[] = [
+    "Пропозиції на обмін послугами (до мене)",
+    "Пропозиції на обмін послугами (від мене)",
+  ];
+  firstSubtitleStrs: string[] = [
+    "Вхідні",
+    "Вихідні",
+  ];
+  secondSubtitleStrs: string[] = [
+    "Відхилені",
+    "Відхилені",
+  ];
+
+  get firstHttpRoute(): string {
+    if (this.direction == DirectionEnum.In) {
+      return `/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
+    } else {
+      return `/api/exchangeOfServices/getBySender/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
+    }
+  }
+  get secondHttpRoute(): string {
+    if (this.direction == DirectionEnum.In) {
+      return `/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.no}`;
+    } else {
+      return `/api/exchangeOfServices/getBySender/${this.authorizationService.userName}/${StatusEnum.no}`;
+    }
+  }
 
   direction: DirectionEnum = DirectionEnum.In;
   subscription: Subscription;
 
-  inputExchanges: ExchangeOfServicesClientModel[] = [];
-  cancelExchanges: ExchangeOfServicesClientModel[] = [];
+  get directionNumber(): number {
+    return directionArray.indexOf(<string>this.direction);
+  }
+
+  firstExchanges: ExchangeOfServicesClientModel[] = [];
+  secondExchanges: ExchangeOfServicesClientModel[] = [];
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -43,9 +74,9 @@ export class ChangingProposalsPageComponent implements OnInit {
       authorizationService
         .loginByLocalStorageData()
         .then(() => this.requestService
-          .get(`/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.noInfo}`))
-        .then(response => this.inputExchanges = response)
-        .then(() => this.inputExchanges.forEach(e => {
+          .get(this.firstHttpRoute))
+        .then(response => this.firstExchanges = response)
+        .then(() => this.firstExchanges.forEach(e => {
           this.requestService.get(`/api/post/get/${e.requestedPostId}`)
             .then(response => e.requestedPost = response);
 
@@ -53,9 +84,9 @@ export class ChangingProposalsPageComponent implements OnInit {
             .then(response => e.requestingPost = response);
         }))
         .then(() => this.requestService
-          .get(`/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.no}`))
-        .then(response => this.cancelExchanges = response)
-        .then(() => this.cancelExchanges.forEach(e => {
+          .get(this.secondHttpRoute))
+        .then(response => this.secondExchanges = response)
+        .then(() => this.secondExchanges.forEach(e => {
           this.requestService.get(`/api/post/get/${e.requestedPostId}`)
             .then(response => e.requestedPost = response);
 
