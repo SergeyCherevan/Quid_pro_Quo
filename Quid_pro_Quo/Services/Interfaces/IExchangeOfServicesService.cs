@@ -13,5 +13,7 @@ namespace Quid_pro_Quo.Services.Interfaces
         Task<IEnumerable<ExchangeOfServicesApiModel>> GetConfirmed(string userName, StatusEnum doneStatus);
 
         Task<ExchangeOfServicesApiModel> SendProposal(SendProposalToExchangeApiModel model);
+        Task<ExchangeOfServicesApiModel> ConfirmProposal(int id);
+        Task<ExchangeOfServicesApiModel> CancelProposal(int id);
     }
 }

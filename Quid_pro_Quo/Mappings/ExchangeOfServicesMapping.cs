@@ -35,7 +35,7 @@ namespace Quid_pro_Quo.Mappings
             (this ExchangeOfServicesEntity entity)
             => new ExchangeOfServicesApiModel()
             {
-                Id = 0,
+                Id = entity.Id,
 
                 RequestingPostId = entity.RequestingPostId,
                 RequestedPostId = entity.RequestedPostId,

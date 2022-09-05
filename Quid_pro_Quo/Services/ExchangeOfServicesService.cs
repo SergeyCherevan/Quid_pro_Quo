@@ -55,5 +55,29 @@ namespace Quid_pro_Quo.Services
 
             return returnedModel;
         }
+
+        public async Task<ExchangeOfServicesApiModel> ConfirmProposal(int id)
+        {
+            ExchangeOfServicesEntity entity = await _UoW.ExchangeOfServicesRepository.GetById(id);
+            entity.ProposalStatus = StatusEnum.Yes;
+            entity = await _UoW.ExchangeOfServicesRepository.Update(entity);
+            await _UoW.SaveChanges();
+
+            ExchangeOfServicesApiModel returnedModel = entity.ToExchangeOfServicesApiModel();
+
+            return returnedModel;
+        }
+
+        public async Task<ExchangeOfServicesApiModel> CancelProposal(int id)
+        {
+            ExchangeOfServicesEntity entity = await _UoW.ExchangeOfServicesRepository.GetById(id);
+            entity.ProposalStatus = StatusEnum.No;
+            entity = await _UoW.ExchangeOfServicesRepository.Update(entity);
+            await _UoW.SaveChanges();
+
+            ExchangeOfServicesApiModel returnedModel = entity.ToExchangeOfServicesApiModel();
+
+            return returnedModel;
+        }
     }
 }

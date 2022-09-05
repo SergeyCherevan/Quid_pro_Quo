@@ -91,5 +91,43 @@ namespace Quid_pro_Quo.Controllers
                 });
             }
         }
+
+        public record IdRequestRecord(int ExchangeId);
+
+        [Authorize]
+        [HttpPost]
+        [Route("confirmProposal")]
+        public async Task<ActionResult<ExchangeOfServicesApiModel>> ConfirmProposal([FromBody] IdRequestRecord model)
+        {
+            try
+            {
+                return await _exchangeOfServicesService.ConfirmProposal(model.ExchangeId);
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        [Route("cancelProposal")]
+        public async Task<ActionResult<ExchangeOfServicesApiModel>> CancelProposal([FromBody] IdRequestRecord model)
+        {
+            try
+            {
+                return await _exchangeOfServicesService.CancelProposal(model.ExchangeId);
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
     }
 }

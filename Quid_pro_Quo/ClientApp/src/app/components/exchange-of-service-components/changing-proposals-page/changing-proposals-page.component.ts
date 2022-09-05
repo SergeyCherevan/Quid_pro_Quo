@@ -69,12 +69,20 @@ export class ChangingProposalsPageComponent implements OnInit {
 
   }
 
-  clickOkButton() {
-
+  clickOkButton(id: number) {
+    this.requestService
+      .post('/api/exchangeOfServices/confirmProposal', {
+        exchangeId: id,
+      }, this.authorizationService.jwtString)
+      .catch(err => console.log(err));
   }
 
-  clickCancelButton() {
-
+  clickCancelButton(id: number) {
+    this.requestService
+      .post('/api/exchangeOfServices/cancelProposal', {
+        exchangeId: id,
+      }, this.authorizationService.jwtString)
+      .catch(err => console.log(err));
   }
 
 }
