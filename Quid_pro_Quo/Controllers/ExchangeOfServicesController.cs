@@ -129,5 +129,25 @@ namespace Quid_pro_Quo.Controllers
                 });
             }
         }
+
+        public record CancelExchangeRecord(int ExchangeId, int PostId);
+
+        [Authorize]
+        [HttpPost]
+        [Route("cancelExchange")]
+        public async Task<ActionResult<ExchangeOfServicesApiModel>> CancelExchange([FromBody] CancelExchangeRecord model)
+        {
+            try
+            {
+                return await _exchangeOfServicesService.CancelExchange(model.ExchangeId, model.PostId);
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
     }
 }

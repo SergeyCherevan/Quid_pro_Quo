@@ -7,14 +7,17 @@ import { RequestService } from '../../../services/request.service';
 
 import { StatusEnum } from '../../../models/exchange-of-services-api.model';
 import { ExchangeOfServicesClientModel } from '../../../models/exchange-of-services-client.model';
+import { PostGetApiModel } from '../../../models/post-get-api.model';
 
 enum DirectionEnum {
   In = "In",
   Out = "Out",
+  Confirmed = "Confirmed",
 };
 let directionArray: string[] = [
   "In",
   "Out",
+  "Confirmed",
 ];
 
 @Component({
@@ -27,28 +30,52 @@ export class ChangingProposalsPageComponent implements OnInit {
   titleStrs: string[] = [
     "Пропозиції на обмін послугами (до мене)",
     "Пропозиції на обмін послугами (від мене)",
+    "Підтверджені обміни послугами",
   ];
   firstSubtitleStrs: string[] = [
     "Вхідні",
     "Вихідні",
+    "В процесі",
   ];
   secondSubtitleStrs: string[] = [
     "Відхилені",
     "Відхилені",
+    "Виконані",
+  ];
+  thirdSubtitleStrs: string[] = [
+    "",
+    "",
+    "Відхилені",
   ];
 
   get firstHttpRoute(): string {
-    if (this.direction == DirectionEnum.In) {
-      return `/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
-    } else {
-      return `/api/exchangeOfServices/getBySender/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
+    switch (this.direction) {
+      case DirectionEnum.In:
+        return `/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
+      case DirectionEnum.Out:
+        return `/api/exchangeOfServices/getBySender/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
+      case DirectionEnum.Confirmed:
+        return `/api/exchangeOfServices/getConfirmed/${this.authorizationService.userName}/${StatusEnum.noInfo}`;
     }
   }
   get secondHttpRoute(): string {
-    if (this.direction == DirectionEnum.In) {
-      return `/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.no}`;
-    } else {
-      return `/api/exchangeOfServices/getBySender/${this.authorizationService.userName}/${StatusEnum.no}`;
+    switch (this.direction) {
+      case DirectionEnum.In:
+        return `/api/exchangeOfServices/getByDestination/${this.authorizationService.userName}/${StatusEnum.no}`;
+      case DirectionEnum.Out:
+        return `/api/exchangeOfServices/getBySender/${this.authorizationService.userName}/${StatusEnum.no}`;
+      case DirectionEnum.Confirmed:
+        return `/api/exchangeOfServices/getConfirmed/${this.authorizationService.userName}/${StatusEnum.yes}`;
+    }
+  }
+  get thirdHttpRoute(): string {
+    switch (this.direction) {
+      case DirectionEnum.In:
+        return '';
+      case DirectionEnum.Out:
+        return '';
+      case DirectionEnum.Confirmed:
+        return `/api/exchangeOfServices/getConfirmed/${this.authorizationService.userName}/${StatusEnum.no}`;
     }
   }
 
@@ -61,6 +88,7 @@ export class ChangingProposalsPageComponent implements OnInit {
 
   firstExchanges: ExchangeOfServicesClientModel[] = [];
   secondExchanges: ExchangeOfServicesClientModel[] = [];
+  thirdExchanges: ExchangeOfServicesClientModel[] = [];
 
   constructor(
     public activateRoute: ActivatedRoute,
@@ -71,28 +99,43 @@ export class ChangingProposalsPageComponent implements OnInit {
     this.subscription = activateRoute.params.subscribe(params => {
       this.direction = (<any>DirectionEnum)[params['direction']];
 
-      authorizationService
-        .loginByLocalStorageData()
-        .then(() => this.requestService
-          .get(this.firstHttpRoute))
-        .then(response => this.firstExchanges = response)
-        .then(() => this.firstExchanges.forEach(e => {
-          this.requestService.get(`/api/post/get/${e.requestedPostId}`)
-            .then(response => e.requestedPost = response);
+      let promise: Promise<any> =
+        authorizationService
+          .loginByLocalStorageData()
+          .then(() => this.requestService
+            .get(this.firstHttpRoute))
+          .then(response => this.firstExchanges = response)
+          .then(() => this.firstExchanges.forEach(e => {
+            this.requestService.get(`/api/post/get/${e.requestedPostId}`)
+              .then(response => e.requestedPost = response);
 
-          this.requestService.get(`/api/post/get/${e.requestingPostId}`)
-            .then(response => e.requestingPost = response);
-        }))
-        .then(() => this.requestService
-          .get(this.secondHttpRoute))
-        .then(response => this.secondExchanges = response)
-        .then(() => this.secondExchanges.forEach(e => {
-          this.requestService.get(`/api/post/get/${e.requestedPostId}`)
-            .then(response => e.requestedPost = response);
+            this.requestService.get(`/api/post/get/${e.requestingPostId}`)
+              .then(response => e.requestingPost = response);
+          }))
+          .then(() => this.requestService
+            .get(this.secondHttpRoute))
+          .then(response => this.secondExchanges = response)
+          .then(() => this.secondExchanges.forEach(e => {
+            this.requestService.get(`/api/post/get/${e.requestedPostId}`)
+              .then(response => e.requestedPost = response);
 
-          this.requestService.get(`/api/post/get/${e.requestingPostId}`)
-            .then(response => e.requestingPost = response);
-        }));
+            this.requestService.get(`/api/post/get/${e.requestingPostId}`)
+              .then(response => e.requestingPost = response);
+          }));
+
+      if (this.direction == DirectionEnum.Confirmed) {
+        promise
+          .then(() => this.requestService
+            .get(this.thirdHttpRoute))
+          .then(response => this.thirdExchanges = response)
+          .then(() => this.thirdExchanges.forEach(e => {
+            this.requestService.get(`/api/post/get/${e.requestedPostId}`)
+              .then(response => e.requestedPost = response);
+
+            this.requestService.get(`/api/post/get/${e.requestingPostId}`)
+              .then(response => e.requestingPost = response);
+          }));
+      }
     });
   }
 
@@ -100,20 +143,37 @@ export class ChangingProposalsPageComponent implements OnInit {
 
   }
 
-  clickOkButton(id: number) {
+  clickOkButton(exchange: ExchangeOfServicesClientModel) {
     this.requestService
       .post('/api/exchangeOfServices/confirmProposal', {
-        exchangeId: id,
+        exchangeId: exchange.id,
       }, this.authorizationService.jwtString)
       .catch(err => console.log(err));
   }
 
-  clickCancelButton(id: number) {
-    this.requestService
-      .post('/api/exchangeOfServices/cancelProposal', {
-        exchangeId: id,
-      }, this.authorizationService.jwtString)
-      .catch(err => console.log(err));
+  clickCancelButton(exchange: ExchangeOfServicesClientModel) {
+    if (this.direction != DirectionEnum.Confirmed) {
+      this.requestService
+        .post('/api/exchangeOfServices/cancelProposal', {
+          exchangeId: exchange.id,
+        }, this.authorizationService.jwtString)
+        .catch(err => console.log(err));
+    } else {
+      let myPost: PostGetApiModel;
+
+      if (exchange.requestingPost.authorName == this.authorizationService.userName) {
+        myPost = exchange.requestingPost;
+      } else {
+        myPost = exchange.requestedPost;
+      }
+
+      this.requestService
+        .post('/api/exchangeOfServices/cancelExchange', {
+          exchangeId: exchange.id,
+          postId: myPost.id,
+        }, this.authorizationService.jwtString)
+        .catch(err => console.log(err));
+    }
   }
 
 }

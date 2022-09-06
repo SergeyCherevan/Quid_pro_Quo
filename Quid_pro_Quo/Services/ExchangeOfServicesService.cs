@@ -45,6 +45,8 @@ namespace Quid_pro_Quo.Services
                 .Select(e => e.ToExchangeOfServicesApiModel());
         }
 
+
+
         public async Task<ExchangeOfServicesApiModel> SendProposal(SendProposalToExchangeApiModel model)
         {
             ExchangeOfServicesEntity entity
@@ -72,6 +74,27 @@ namespace Quid_pro_Quo.Services
         {
             ExchangeOfServicesEntity entity = await _UoW.ExchangeOfServicesRepository.GetById(id);
             entity.ProposalStatus = StatusEnum.No;
+            entity = await _UoW.ExchangeOfServicesRepository.Update(entity);
+            await _UoW.SaveChanges();
+
+            ExchangeOfServicesApiModel returnedModel = entity.ToExchangeOfServicesApiModel();
+
+            return returnedModel;
+        }
+
+        public async Task<ExchangeOfServicesApiModel> CancelExchange(int exchangeId, int postId)
+        {
+            ExchangeOfServicesEntity entity = await _UoW.ExchangeOfServicesRepository.GetById(exchangeId);
+
+            if (entity.RequestingPostId == postId)
+            {
+                entity.DoneStatus1 = StatusEnum.No;
+            }
+            if (entity.RequestedPostId == postId)
+            {
+                entity.DoneStatus2 = StatusEnum.No;
+            }
+
             entity = await _UoW.ExchangeOfServicesRepository.Update(entity);
             await _UoW.SaveChanges();
 
