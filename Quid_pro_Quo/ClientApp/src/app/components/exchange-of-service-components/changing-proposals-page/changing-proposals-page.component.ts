@@ -14,11 +14,6 @@ enum DirectionEnum {
   Out = "Out",
   Confirmed = "Confirmed",
 };
-let directionArray: string[] = [
-  "In",
-  "Out",
-  "Confirmed",
-];
 
 @Component({
   selector: 'changing-proposals-page',
@@ -82,8 +77,14 @@ export class ChangingProposalsPageComponent implements OnInit {
   direction: DirectionEnum = DirectionEnum.In;
   subscription: Subscription;
 
+  directionArray: string[] = [
+    "In",
+    "Out",
+    "Confirmed",
+  ];
+
   get directionNumber(): number {
-    return directionArray.indexOf(<string>this.direction);
+    return this.directionArray.indexOf(<string>this.direction);
   }
 
   firstExchanges: ExchangeOfServicesClientModel[] = [];
