@@ -9,7 +9,7 @@
             "request": "launch",
             "type": "chrome",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}/Web/ClientApp/src/assets"
         },
         {
             "name": ".NET Core Launch (web)",
@@ -18,7 +18,7 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/Web/Quid_pro_Quo/bin/Debug/net5.0/Quid_pro_Quo.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Quid_pro_Quo",
+            "cwd": "${workspaceFolder}/Web/Quid_pro_Quo",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
