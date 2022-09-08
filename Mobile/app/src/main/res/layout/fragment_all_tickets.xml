@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AllTicketsFragment"
+    android:background="@color/background_all_tickets">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <SearchView
+                android:id="@+id/search_tickets_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_searchview"
+                android:queryHint="Enter anything.."
+                android:iconifiedByDefault="false"
+                android:queryBackground="@android:color/transparent"
+                android:commitIcon="@drawable/default_ticket_img">
+
+            </SearchView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/buttonFiltersOpen"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginVertical="2dp"
+                android:backgroundTint="@color/buttonPassive"
+                android:drawableEnd="@drawable/ic_options_second"
+                android:paddingStart="149dp"
+                android:paddingEnd="149dp"
+                android:text="@string/filter_button_text"
+                android:textAlignment="center"
+                android:textAllCaps="false"
+                android:textColor="@color/buttonPassiveTextColor"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                tools:ignore="TouchTargetSizeCheck" />
+
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/list_all_tickets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="7dp"
+            android:layout_marginTop="1dp"
+            android:numColumns="2"
+            android:layout_marginBottom="60dp"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

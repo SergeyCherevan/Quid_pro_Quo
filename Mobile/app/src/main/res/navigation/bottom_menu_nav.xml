@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_menu_nav"
+    app:startDestination="@id/allTicketsFragment">
+
+    <fragment
+        android:id="@+id/allTicketsFragment"
+        android:name="projects.quidpro.AllTicketsFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_all_tickets" />
+    <fragment
+        android:id="@+id/suggestionsFragment"
+        android:name="projects.quidpro.SuggestionsFragment"
+        android:label="People"
+        tools:layout="@layout/fragment_suggestions" />
+    <fragment
+        android:id="@+id/createTicketFragment"
+        android:name="projects.quidpro.CreateTicketFragment"
+        android:label="Add"
+        tools:layout="@layout/fragment_create_ticket" />
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="projects.quidpro.MessagesFragment"
+        android:label="Messages"
+        tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="projects.quidpro.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

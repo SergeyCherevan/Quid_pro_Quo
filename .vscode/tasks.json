@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Quid_pro_Quo/Quid_pro_Quo.csproj",
+                "${workspaceFolder}/Web/Quid_pro_Quo/Quid_pro_Quo.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Quid_pro_Quo/Quid_pro_Quo.csproj",
+                "${workspaceFolder}/Web/Quid_pro_Quo/Quid_pro_Quo.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Quid_pro_Quo/Quid_pro_Quo.csproj"
+                "${workspaceFolder}/Web/Quid_pro_Quo/Quid_pro_Quo.csproj"
             ],
             "problemMatcher": "$msCompile"
         }

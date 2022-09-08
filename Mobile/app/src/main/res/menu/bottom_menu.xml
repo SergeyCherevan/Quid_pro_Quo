@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/allTicketsFragment"
+        android:title="Home"
+        android:icon="@drawable/ic_home_third" />
+    <item
+        android:id="@+id/suggestionsFragment"
+        android:title="People"
+        android:icon="@drawable/ic_like_first"/>
+    <item
+        android:id="@+id/createTicketFragment"
+        android:title="Add"
+        android:icon="@drawable/ic_add_second"/>
+    <item
+        android:id="@+id/messagesFragment"
+        android:title="Messages"
+        android:icon="@drawable/ic_mail_first"/>
+    <item
+        android:id="@+id/profileFragment"
+        android:title="Profile"
+        android:icon="@drawable/ic_person_first"/>
+</menu>

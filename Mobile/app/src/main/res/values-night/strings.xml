@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loginAppName">Quid Pro</string>
+    <string name="loginForgotPassLable">Forgot Password?</string>
+    <string name="buttonLoginText">Login</string>
+    <string name="textViewRegisterText">Create Account</string>
+    <string name="editTextUserNameTextValue">Name</string>
+    <string name="buttonRegisterText">Registration</string>
+    <string name="textViewLoginText">Authorization</string>
+    <string name="default_ticket_city">City of country</string>
+    <string name="filter_button_text">Filters</string>
+    <string name="buttonShowFilteredTickets">Show 25 tickets</string>
+    <string name="message_from_example">Несмотря на всю незащищенность, при необходимости допплеровская пеленгация района передачи с движущихся спутников вместе с работой «землян» по выявлению помех вполне окупаема, а значит будет проводиться, учитывая что «Меридиан» обслуживает северный морской путь. А вот помониторить их интересно, тем более что ловятся они на тв антенну без усилителя и ртл-сдр.</string>
+    <string name="message_to_example">Несмотря на всю незащищенность, при необходимости допплеровская пеленгация района передачи с движущихся спутников вместе с работой «землян» по выявлению помех вполне окупаема, а значит будет проводиться, учитывая что «Меридиан» обслуживает северный морской путь.</string>
+</resources>

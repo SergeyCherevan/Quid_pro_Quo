@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.FiltersActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/loginLableColor">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="490dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewTicketTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxWidth="170dp"
+                            android:maxHeight="48dp"
+                            android:text="Geolocation"
+                            android:textAlignment="textStart"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:background="@color/loginLableColor"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardGeolocationFilterPreInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"
+                            android:layout_gravity="top|start|end"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="12dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="140dp"
+                                android:layout_gravity="start|top|bottom"
+                                android:layout_marginTop="-10dp"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="12dp">
+
+                                <fragment
+                                    android:id="@+id/mapPreViewFiltersTickets"
+                                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent">
+
+                                </fragment>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_marginStart="111dp"
+                                android:paddingTop="4dp">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="45dp"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/textViewCityLable"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxWidth="170dp"
+                                        android:maxHeight="48dp"
+                                        android:text="City:"
+                                        android:textAlignment="textStart"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:background="@color/loginLableColor"
+                                        android:layout_marginTop="0dp" />
+
+                                    <TextView
+                                        android:id="@+id/textViewCityText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxWidth="170dp"
+                                        android:maxHeight="48dp"
+                                        android:text="Geolocation"
+                                        android:textAlignment="textStart"
+                                        android:textSize="17sp"
+                                        android:textStyle="normal"
+                                        android:background="@color/loginLableColor"
+                                        android:layout_marginTop="0dp" />
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="60dp"
+                                    android:orientation="vertical"
+                                    android:layout_marginTop="0dp">
+
+                                    <TextView
+                                        android:id="@+id/textViewCoordinatesLable"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxWidth="170dp"
+                                        android:maxHeight="48dp"
+                                        android:text="Coordinates:"
+                                        android:textAlignment="textStart"
+                                        android:textSize="18sp"
+                                        android:textStyle="bold"
+                                        android:background="@color/loginLableColor"
+                                        android:layout_marginTop="0dp" />
+
+                                    <TextView
+                                        android:id="@+id/textViewCoordinatesLatText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxWidth="170dp"
+                                        android:maxHeight="48dp"
+                                        android:text="Geolocation"
+                                        android:textAlignment="textStart"
+                                        android:textSize="15sp"
+                                        android:textStyle="normal"
+                                        android:background="@color/loginLableColor"
+                                        android:layout_marginTop="0dp" />
+
+                                    <TextView
+                                        android:id="@+id/textViewCoordinatesLongText"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:maxWidth="170dp"
+                                        android:maxHeight="48dp"
+                                        android:text="Geolocation"
+                                        android:textAlignment="textStart"
+                                        android:textSize="15sp"
+                                        android:textStyle="normal"
+                                        android:background="@color/loginLableColor"
+                                        android:layout_marginTop="0dp" />
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_gravity="end"
+                                android:layout_marginEnd="0dp">
+
+                                <Button
+                                    android:id="@+id/imageButtonClearGeolocation"
+                                    android:layout_width="60dp"
+                                    android:layout_height="140dp"
+                                    app:srcCompat="@drawable/ic_add_second"
+                                    android:drawableLeft="@drawable/ic_baseline_clear_24"
+                                    android:layout_marginTop="-10dp"
+                                    android:contentDescription="clearmap"
+                                    android:backgroundTint="@color/buttonRedFilters"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewTicketTitle2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxWidth="170dp"
+                            android:maxHeight="48dp"
+                            android:text="Date"
+                            android:textAlignment="textStart"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:background="@color/loginLableColor"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <androidx.cardview.widget.CardView
+                            android:id="@+id/cardDateFilterPreInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:layout_gravity="top|start|end"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            app:cardCornerRadius="12dp"
+                            app:cardElevation="12dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="70dp"
+                                android:layout_gravity="start|top|bottom"
+                                android:layout_marginTop="-5dp"
+                                app:cardCornerRadius="12dp"
+                                app:cardElevation="12dp">
+
+
+                                <ImageView
+                                    android:id="@+id/imageViewDateFilterPreInfo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:srcCompat="@drawable/ic_calendar_first"
+                                    android:padding="15dp"/>
+
+                            </androidx.cardview.widget.CardView>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:layout_marginStart="111dp"
+                                android:paddingTop="18dp">
+
+                                <TextView
+                                    android:id="@+id/textViewDateText"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:maxWidth="170dp"
+                                    android:maxHeight="48dp"
+                                    android:text="Date: "
+                                    android:textAlignment="textStart"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:background="@color/loginLableColor"
+                                    android:layout_marginTop="0dp" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:layout_gravity="end"
+                                android:layout_marginEnd="0dp">
+
+                                <Button
+                                    android:id="@+id/imageButtonClearDate"
+                                    android:layout_width="60dp"
+                                    android:layout_height="80dp"
+                                    app:srcCompat="@drawable/ic_add_second"
+                                    android:drawableLeft="@drawable/ic_baseline_clear_24"
+                                    android:layout_marginTop="-10dp"
+                                    android:contentDescription="clearmap"
+                                    android:backgroundTint="@color/buttonRedFilters"/>
+
+                            </LinearLayout>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/buttonShowFilteredTickets"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="5dp"
+            android:backgroundTint="@color/main_project_color_two"
+            android:text="@string/buttonShowFilteredTickets"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/buttonClearAllFilters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Clear filters"
+            android:layout_marginHorizontal="12dp"
+            android:backgroundTint="#ED6969"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+</RelativeLayout>

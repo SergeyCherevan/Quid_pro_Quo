@@ -16,7 +16,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Quid_pro_Quo/bin/Debug/net5.0/Quid_pro_Quo.dll",
+            "program": "${workspaceFolder}/Web/Quid_pro_Quo/bin/Debug/net5.0/Quid_pro_Quo.dll",
             "args": [],
             "cwd": "${workspaceFolder}/Quid_pro_Quo",
             "stopAtEntry": false,
@@ -28,7 +28,7 @@
                 "ASPNETCORE_ENVIRONMENT": "Development"
             },
             "sourceFileMap": {
-                "/Views": "${workspaceFolder}/Views"
+                "/Views": "${workspaceFolder}/Web/Views"
             }
         },
         {

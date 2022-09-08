@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/IntelliJ Idea Projects/Quidpro mobile 28.08.2022/Quidpro/app/src/main/res/drawable/ic_shuffle_tracks_actionbar_icon.xml" value="0.1935" />
+        <entry key="..\:/IntelliJ Idea Projects/Quidpro mobile 28.08.2022/Quidpro/app/src/main/res/drawable/ic_shuffle_tracks_main_icon.xml" value="0.119" />
+        <entry key="..\:/IntelliJ Idea Projects/Quidpro mobile 28.08.2022/Quidpro/app/src/main/res/menu/bottom_menu.xml" value="0.264" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable-v24/custom_input_ticket_create_title.xml" value="0.3015" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2825" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/bottom_nav_menu_item_color.xml" value="0.209" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_datepicker_backgroud.xml" value="0.1" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_filter_layout.xml" value="0.274" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_input_create_ticket_title.xml" value="0.3015" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_input_login_reg.xml" value="0.2825" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_input_ticket_create_title.xml" value="0.3015" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_item_ticket_shape.xml" value="0.254" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_itemimage_shape.xml" value="0.274" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_itemticket_button.xml" value="0.274" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_password_icon.xml" value="0.1995" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_searchview.xml" value="0.274" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_shape_circle_createticket_successfull.xml" value="0.3105" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_shape_rect_createticket_successfull.xml" value="0.3105" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/custom_username_icon.xml" value="0.29" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/default_ticket_img.xml" value="0.1845" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_account_focused.xml" value="0.29" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_account_unfocused.xml" value="0.29" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_baseline_clear_24.xml" value="0.243" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_baseline_exit_one_black.xml" value="0.336" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_baseline_lock_black.xml" value="0.336" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_check_first.xml" value="0.214" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_check_for_successfull_one.xml" value="0.3105" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_close_circle_first.xml" value="0.276" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_comment_second.xml" value="0.265" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_dislike_off.xml" value="0.306" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_dislike_on.xml" value="0.306" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_double_check_one_confirmed.xml" value="0.3345" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_double_check_one_unconfirmed.xml" value="0.3345" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_emoji_first.xml" value="0.265" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_emoji_second.xml" value="0.22" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_home_third.xml" value="0.209" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_like_first.xml" value="0.209" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_like_off.xml" value="0.306" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_like_on.xml" value="0.306" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_lock_focused.xml" value="0.1995" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_lock_unfocused.xml" value="0.2515" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_options_first.xml" value="0.274" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_options_second.xml" value="0.274" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_options_second_white.xml" value="0.2625" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_other_svgrepo_com.xml" value="0.2825" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_person_first.xml" value="0.336" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_send_message_one.xml" value="0.2915" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_shuffle_tracks_actionbar_icon.xml" value="0.1195" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/drawable/ic_shuffle_tracks_main_icon.xml" value="0.2825" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_bottom_menu.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_change_password.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_filters.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_geolocation_create_ticket.xml" value="0.2713541666666667" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_geolocation_filter.xml" value="0.22" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_login.xml" value="0.3202247191011236" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_message_dialog.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_profile_settings.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/activity_register.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/add_photo_create_ticket_row.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/create_ticket_fullphoto_custom_dialogbox.xml" value="0.3" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/create_ticket_geoloc_custom_dialogbox.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/fragment_all_tickets.xml" value="0.29819277108433734" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/fragment_create_ticket.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/fragment_messages.xml" value="0.2859375" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/fragment_profile.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/fragment_suggestions.xml" value="0.2859375" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/item_row_message_from.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/item_row_message_template.xml" value="0.23958333333333334" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/item_row_message_to.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/message_dialog_item_row.xml" value="0.27808988764044945" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/recomendation_item_row.xml" value="0.33" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/successfull_created_ticked.xml" value="0.2868525896414343" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/layout/ticket_item_row.xml" value="0.2535612535612536" />
+        <entry key="..\:/Users/glebg/Desktop/mobile_Hata_mira/Quidpro/app/src/main/res/menu/bottom_menu.xml" value="0.2859375" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
