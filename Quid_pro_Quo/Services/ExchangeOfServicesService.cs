@@ -102,5 +102,48 @@ namespace Quid_pro_Quo.Services
 
             return returnedModel;
         }
+
+        public async Task<ExchangeOfServicesApiModel> ConfirmServiceCompletion(int iotCode, ConfirmServiceCompletionApiModel model)
+        {
+            IoTEntity iot = await _UoW.IoTRepository.GetByCode(iotCode);
+            IEnumerable<ExchangeOfServicesEntity> exchanges =
+                await _UoW.ExchangeOfServicesRepository.GetConfirmed(iot.OwnerId, StatusEnum.NoInfo);
+
+            static double distanse(double lat1, double lng1, double lat2, double lng2)
+                => Math.Sqrt((lat2 - lat1) * (lat2 - lat1) + (lng2 - lng1) * (lng2 - lng1));
+
+            foreach (ExchangeOfServicesEntity exchange in exchanges)
+            {
+                bool isRequesting = exchange.RequestingPost.AuthorId == iot.OwnerId;
+
+                // Attantion: if isRequesting, then myPost = ___RequestedPost___
+                PostEntity myPost = isRequesting ? exchange.RequestedPost : exchange.RequestingPost;
+
+                if (
+                    distanse(
+                        myPost.PerformServiceInPlaceLat, myPost.PerformServiceInPlaceLng,
+                        model.Latitude, model.Longitude
+                    ) < 0.01
+                )
+                {
+                    if (isRequesting)
+                    {
+                        exchange.DoneStatus1 = StatusEnum.Yes;
+                    }
+                    else
+                    {
+                        exchange.DoneStatus2 = StatusEnum.Yes;
+                    }
+
+                    await _UoW.ExchangeOfServicesRepository.Update(exchange);
+                    await _UoW.SaveChanges();
+
+                    ExchangeOfServicesApiModel returnedModel = exchange.ToExchangeOfServicesApiModel();
+                    return returnedModel;
+                }
+            }
+            
+            return null;
+        }
     }
 }

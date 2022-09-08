@@ -16,6 +16,7 @@ namespace Quid_pro_Quo.Repositories
         public IPostRepository PostRepository { get; }
         public IExchangeOfServicesRepository ExchangeOfServicesRepository { get; }
         public IComplaintRepository ComplaintRepository { get; }
+        public IIoTRepository IoTRepository { get; }
         public IMessagingRepository MessagingRepository { get; }
         public ICommentRepository CommentRepository { get; }
 
@@ -31,6 +32,7 @@ namespace Quid_pro_Quo.Repositories
             PostRepository = new PostRepository(relationalDb);
             ExchangeOfServicesRepository = new ExchangeOfServicesRepository(relationalDb);
             ComplaintRepository = new ComplaintRepository(relationalDb);
+            IoTRepository = new IoTRepository(relationalDb);
 
             MessagingRepository = new MessagingRepository(_noSqlDb, UserRepository);
             CommentRepository = new CommentRepository(_noSqlDb);

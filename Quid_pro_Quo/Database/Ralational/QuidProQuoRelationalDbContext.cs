@@ -11,6 +11,7 @@ namespace Quid_pro_Quo.Database.Ralational
         public DbSet<PostEntity> Posts { get; set; }
         public DbSet<ExchangeOfServicesEntity> ExchangesOfServicess { get; set; }
         public DbSet<ComplaintEntity> Complaints { get; set; }
+        public DbSet<IoTEntity> IoTs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

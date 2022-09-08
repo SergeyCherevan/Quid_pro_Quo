@@ -39,6 +39,7 @@ namespace Quid_pro_Quo.Repositories
 
             return _db.ExchangesOfServicess
                 .Include(e => e.RequestedPost)
+                .Include(e => e.RequestingPost)
                 .Where(e => e.ProposalStatus == StatusEnum.Yes && (e.RequestingPost.AuthorId == userId || e.RequestedPost.AuthorId == userId))
                 .ToList()
                 .Where(e =>

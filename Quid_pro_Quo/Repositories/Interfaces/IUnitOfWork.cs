@@ -16,6 +16,7 @@ namespace Quid_pro_Quo.Repositories.Interfaces
         IComplaintRepository ComplaintRepository { get; }
         IMessagingRepository MessagingRepository { get; }
         ICommentRepository CommentRepository { get; }
+        IIoTRepository IoTRepository { get; }
 
         Task<int> SaveChanges();
     }

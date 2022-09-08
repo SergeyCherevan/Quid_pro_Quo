@@ -16,5 +16,7 @@ namespace Quid_pro_Quo.Services.Interfaces
         Task<ExchangeOfServicesApiModel> ConfirmProposal(int id);
         Task<ExchangeOfServicesApiModel> CancelProposal(int id);
         Task<ExchangeOfServicesApiModel> CancelExchange(int exchangeId, int postId);
+
+        Task<ExchangeOfServicesApiModel> ConfirmServiceCompletion(int iotCode, ConfirmServiceCompletionApiModel model);
     }
 }
