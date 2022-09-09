@@ -26,7 +26,14 @@ namespace Quid_pro_Quo.Controllers
             try
             {
                 int iotCode = 987654321;
-                return await _exchangeOfServicesService.ConfirmServiceCompletion(iotCode, model);
+                ExchangeOfServicesApiModel exchange = await _exchangeOfServicesService.ConfirmServiceCompletion(iotCode, model);
+
+                if (exchange != null)
+                {
+                    return exchange;
+                }
+                
+                return Ok("Any exchanges were not confirmed");
             }
             catch (Exception exp)
             {
