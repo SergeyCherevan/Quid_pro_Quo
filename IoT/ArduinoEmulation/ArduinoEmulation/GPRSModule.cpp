@@ -13,12 +13,19 @@ namespace ArduinoEmulation {
 
     public:
         string httpsPost(string url, string jsonObject, string jwt) {
+            cout << "Method httpsPost() run...\n";
+
             CURLcode ret;
             CURL* hnd;
             struct curl_slist* slist1;
 
+            cout << "My URL: \'" << url << "\'\n";
+            cout << "My JSON-object: " << jsonObject << "\n";
+            cout << "My JWT-string: \'" << jwt << "\'\n\n";
+
             slist1 = NULL;
             slist1 = curl_slist_append(slist1, "Content-Type: application/json");
+            slist1 = curl_slist_append(slist1, ("Authorization: Bearer "+ jwt).c_str());
 
             hnd = curl_easy_init();
             curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());

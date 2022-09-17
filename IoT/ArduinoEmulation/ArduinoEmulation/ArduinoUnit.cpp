@@ -58,13 +58,25 @@ namespace ArduinoEmulation {
             jwtString = getJWTStringFromAuthorizeRequest(IoTCode, password);
             ownerName = getOwnerNameFromJWT(jwtString);
 
+            cout << "\n\n"; 
             cout << "My JWT-string: \'" << jwtString << "\'\n";
             cout << "My owner name: " << ownerName << "\n\n";
         }
 
     private:
-        static string getJWTStringFromAuthorizeRequest(int iotCode, string pass) {
-            return "My JWT-string";
+        string getJWTStringFromAuthorizeRequest(int iotCode, string pass) {
+            string jsonObject = getJsonObjectByLoginApiModel(iotCode, pass);
+            string response = GPRS->httpsPost("https://localhost:5001/api/IoT/login/", jsonObject, "");
+            
+            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
+eyJJb1RDb2RlIjoiOTg3NjU0MzIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQXJkdWlub1VuaXQiLCJPd25lck5hbWUiOiJLYXRlIiwibmJmIjoxNjYzNDM0NzM0LCJleHAiOjE2Njk2NTU1MzQsImlzcyI6IlF1aWRfcHJvX1F1byIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.\
+K5jyU56jwfjy1zdV1VQdC9Uyiz7AZwMjlNhU8ycaz9M";
+        }
+
+        static string getJsonObjectByLoginApiModel(int iotCode, string pass) {
+            return string() + "{ " +
+                "\"ioTCode\": " + to_string(iotCode) + ", " +
+                "\"password\": \"" + pass + "\" }";
         }
 
     public:
@@ -138,13 +150,6 @@ namespace ArduinoEmulation {
             }
 
             apiModel.dateTime = "2022-07-10T06:52:00";
-            /*apiModel.dateTime = string() +
-                "20" + to_string(nmea.date % 100) + "-" +
-                       to_string(nmea.date % 10000 / 100) + "-" +
-                       to_string(nmea.date / 10000) + "T" + 
-                       to_string(int(nmea.utc_time / 10000)) + ":" +
-                       to_string(int(fmod(nmea.utc_time, 10000) / 100)) + ":" + 
-                       to_string(int(fmod(nmea.utc_time, 100))) + ".00Z";*/
 
             return apiModel;
         }

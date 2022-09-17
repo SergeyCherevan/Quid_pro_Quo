@@ -91,6 +91,7 @@ namespace Quid_pro_Quo
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IMessagingService, MessagingService>();
             services.AddScoped<IExchangeOfServicesService, ExchangeOfServicesService>();
+            services.AddScoped<IIoTService, IoTService>();
 
 
 

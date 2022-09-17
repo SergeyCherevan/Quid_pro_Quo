@@ -18,7 +18,7 @@ int main(void)
 
     string command = "";
     while (command != "end") {
-        cout << "Your command: ";
+        cout << "Your command (authorize/attach/confirm): ";
         cin >> command;
 
         if (command == "authorize") {

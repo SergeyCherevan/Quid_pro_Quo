@@ -1,10 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Quid_pro_Quo.Services.Interfaces;
-using Quid_pro_Quo.WebApiModels;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+
 using System.Threading.Tasks;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Security.Claims;
+
+using Quid_pro_Quo.WebApiModels;
+using Quid_pro_Quo.Services.Interfaces;
+using Quid_pro_Quo.Exceptions;
 
 namespace Quid_pro_Quo.Controllers
 {
@@ -12,20 +17,50 @@ namespace Quid_pro_Quo.Controllers
     [ApiController]
     public class IoTController : ControllerBase
     {
+        IIoTService _iotService { get; set; }
         IExchangeOfServicesService _exchangeOfServicesService { get; set; }
-        public IoTController(IExchangeOfServicesService exchangeOfServicesService)
+        public IoTController(IExchangeOfServicesService exchangeOfServicesService, IIoTService ioTService)
         {
+            _iotService = ioTService;
             _exchangeOfServicesService = exchangeOfServicesService;
         }
 
-        //[Authorize]
+
+
+        [HttpPost]
+        [Route("login")]
+        public async Task<ActionResult<JwtApiModel>> Login([FromBody] IoTLoginApiModel model)
+        {
+            try
+            {
+                return await _iotService.Login(model.IoTCode, model.Password);
+            }
+            catch (NotFoundAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "User not exists"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+        [Authorize]
         [HttpPost]
         [Route("confirmServiceCompletion")]
         public async Task<ActionResult<ExchangeOfServicesApiModel>> ConfirmServiceCompletion(ConfirmServiceCompletionApiModel model)
         {
             try
             {
-                int iotCode = 987654321;
+                string iotCodeStr = User.Claims.ToList().Find(claim => claim.Type == "IoTCode").Value;
+                int iotCode = Convert.ToInt32(iotCodeStr);
+
                 ExchangeOfServicesApiModel exchange = await _exchangeOfServicesService.ConfirmServiceCompletion(iotCode, model);
 
                 if (exchange != null)

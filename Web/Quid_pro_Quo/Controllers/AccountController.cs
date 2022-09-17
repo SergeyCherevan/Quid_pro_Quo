@@ -31,7 +31,7 @@ namespace Quid_pro_Quo.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<object>> Login([FromBody] LoginApiModel model)
+        public async Task<ActionResult<JwtApiModel>> Login([FromBody] LoginApiModel model)
         {
             try
             {
