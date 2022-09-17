@@ -8,12 +8,12 @@
 using namespace std;
 using namespace ArduinoEmulation;
 
-int main(void)
+int main(int argc, char* argv[])
 {
     GPSModule gpsModule = GPSModule();
     GPRSModule gprsModule = GPRSModule();
 
-    ArduinoUnit arduino(&gpsModule, &gprsModule);
+    ArduinoUnit arduino(&gpsModule, &gprsModule, string(argv[0]));
     arduino.init();
 
     string command = "";

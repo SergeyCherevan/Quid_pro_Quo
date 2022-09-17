@@ -19,6 +19,7 @@ namespace ArduinoEmulation {
 
         int IoTCode;
         string password;
+        string serviceURL;
 
         string jwtString;
         string ownerName;
@@ -26,11 +27,17 @@ namespace ArduinoEmulation {
         /* external emulated devices */
         GPSModule* GPS;
         GPRSModule* GPRS;
+        string pathToEEPROM;
 
     public:
-        ArduinoUnit(GPSModule* gps, GPRSModule* gprs) {
+        ArduinoUnit(GPSModule* gps, GPRSModule* gprs, string pathToROM) {
+            cout << "Constructor ArduinoUnit() run...\n";
+
             GPS = gps;
             GPRS = gprs;
+            pathToEEPROM = pathToROM.substr(0, pathToROM.find_last_of('\\'));
+
+            cout << "My path to EEPROM: \"" << pathToEEPROM << "\"\n\n";
         }
 
         void init() {
@@ -38,9 +45,11 @@ namespace ArduinoEmulation {
 
             IoTCode = getIoTCodeFromEEPROM();
             password = getPasswordFromEEPROM();
+            serviceURL = getServiceURLFromEEPROM();
 
             cout << "My IoT code: " << IoTCode << "\n";
-            cout << "My password: \"" << password << "\"\n\n";
+            cout << "My password: \"" << password << "\"\n";
+            cout << "My service URL: \"" << serviceURL << "\"\n\n";
         }
 
     private:
@@ -49,6 +58,9 @@ namespace ArduinoEmulation {
         }
         string getPasswordFromEEPROM() {
             return "1234";
+        }
+        string getServiceURLFromEEPROM() {
+            return "https://localhost:5001";
         }
 
     public:
@@ -66,7 +78,7 @@ namespace ArduinoEmulation {
     private:
         string getJWTStringFromAuthorizeRequest(int iotCode, string pass) {
             string jsonObject = getJsonObjectByLoginApiModel(iotCode, pass);
-            string response = GPRS->httpsPost("https://localhost:5001/api/IoT/login/", jsonObject, "");
+            string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", jsonObject, "");
             
             return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
 eyJJb1RDb2RlIjoiOTg3NjU0MzIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQXJkdWlub1VuaXQiLCJPd25lck5hbWUiOiJLYXRlIiwibmJmIjoxNjYzNDM0NzM0LCJleHAiOjE2Njk2NTU1MzQsImlzcyI6IlF1aWRfcHJvX1F1byIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.\
@@ -162,7 +174,7 @@ K5jyU56jwfjy1zdV1VQdC9Uyiz7AZwMjlNhU8ycaz9M";
         }
 
         bool sendGeolocationToServer(string jsonObject, string jwtString) {
-            string response = GPRS->httpsPost("https://localhost:5001/api/IoT/confirmServiceCompletion/", jsonObject, jwtString);
+            string response = GPRS->httpsPost(serviceURL + "/api/IoT/confirmServiceCompletion/", jsonObject, jwtString);
 
             if (!response.empty()) {
                 return true;
