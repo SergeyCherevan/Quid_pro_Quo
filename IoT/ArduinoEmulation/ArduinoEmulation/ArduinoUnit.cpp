@@ -3,6 +3,8 @@
 #include <iostream>
 #include <stdio.h>
 
+#include <nlohmann/json.hpp>
+
 #include "NMEA0183.h"
 #include "ConfirmServiceCompletionApiModel.hpp"
 
@@ -33,7 +35,7 @@ namespace ArduinoEmulation {
 
             GPS = gps;
             GPRS = gprs;
-            pathToEEPROM = pathToROM;
+            pathToEEPROM = pathToROM.substr(0, pathToROM.find_last_of('\\'));
 
             cout << "My path to EEPROM: \"" << pathToEEPROM << "\"\n\n";
         }
@@ -52,7 +54,7 @@ namespace ArduinoEmulation {
 
     private:
         int getIoTCodeFromEEPROM() {
-            return 123456789;
+            return 987654321;
         }
         string getPasswordFromEEPROM() {
             return "1234";
@@ -68,20 +70,19 @@ namespace ArduinoEmulation {
             jwtString = getJWTStringFromAuthorizeRequest(IoTCode, password);
             ownerName = getOwnerNameFromJWT(jwtString);
 
-            cout << "\n\n"; 
-            cout << "My JWT-string: \'" << jwtString << "\'\n";
+            cout << "My JWT-string: \"" << jwtString << "\"\n";
             cout << "My owner name: " << ownerName << "\n\n";
         }
 
     private:
         string getJWTStringFromAuthorizeRequest(int iotCode, string pass) {
+            using namespace nlohmann;
+
             string jsonObject = getJsonObjectByLoginApiModel(iotCode, pass);
             string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", jsonObject, "");
+            json respObj = json::parse(response);
             
-            return /*respObj["jwtString"];*/
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
-eyJJb1RDb2RlIjoiOTg3NjU0MzIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQXJkdWlub1VuaXQiLCJPd25lck5hbWUiOiJLYXRlIiwibmJmIjoxNjYzNDM0NzM0LCJleHAiOjE2Njk2NTU1MzQsImlzcyI6IlF1aWRfcHJvX1F1byIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.\
-K5jyU56jwfjy1zdV1VQdC9Uyiz7AZwMjlNhU8ycaz9M";
+            return respObj["jwtString"];
         }
 
         static string getJsonObjectByLoginApiModel(int iotCode, string pass) {

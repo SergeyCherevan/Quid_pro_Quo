@@ -28,7 +28,7 @@ int main(int argc, char* argv[]) {
 
     string command = "";
     while (command != "end") {
-        cout << "Your command ( authorize / attach / confirm ): ";
+        cout << "\n\nYour command ( authorize / attach / confirm ): ";
         cin >> command;
 
         if (command == "authorize") {

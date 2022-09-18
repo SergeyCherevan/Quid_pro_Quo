@@ -18,10 +18,11 @@ namespace ArduinoEmulation {
             CURLcode ret;
             CURL* hnd;
             struct curl_slist* slist1;
+            string stringResponse;
 
             cout << "My URL: \'" << url << "\'\n";
             cout << "My JSON-object: " << jsonObject << "\n";
-            cout << "My JWT-string: \'" << jwt << "\'\n\n";
+            cout << "My JWT-string: \"" << jwt << "\"\n\n";
 
             slist1 = NULL;
             slist1 = curl_slist_append(slist1, "Content-Type: application/json");
@@ -36,6 +37,8 @@ namespace ArduinoEmulation {
             curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
             curl_easy_setopt(hnd, CURLOPT_CUSTOMREQUEST, "POST");
             curl_easy_setopt(hnd, CURLOPT_TCP_KEEPALIVE, 1L);
+            curl_easy_setopt(hnd, CURLOPT_WRITEFUNCTION, getResponseToString);
+            curl_easy_setopt(hnd, CURLOPT_WRITEDATA, &stringResponse);
 
             ret = curl_easy_perform(hnd);
 
@@ -44,7 +47,15 @@ namespace ArduinoEmulation {
             curl_slist_free_all(slist1);
             slist1 = NULL;
 
-            return "Ok";
+            cout << "My response: " << stringResponse << "\n\n";
+
+            return stringResponse;
+        }
+
+    private:
+        static size_t getResponseToString(char* content, size_t size, size_t nmeber, string* my_str) {
+            my_str->append(content, size * nmeber);
+            return size * nmeber;
         }
     };
 }
