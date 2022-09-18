@@ -5,20 +5,30 @@
 #include <iostream>
 #include "ArduinoUnit.cpp"
 
-using namespace std;
-using namespace ArduinoEmulation;
+int main(int argc, char* argv[]) {
+    char* buff; {
+        const int BUFFSIZE = 200;
+        buff = new char[BUFFSIZE];
+        int strLen = (char*)((int)strrchr(argv[0], '\\') + (int)strrchr(argv[0], '/')) - argv[0];
+        strncpy_s(buff, BUFFSIZE * sizeof(char), argv[0], strLen);
+        buff[strLen] = '\0';
+    }
 
-int main(int argc, char* argv[])
-{
+    using namespace std;
+    using namespace ArduinoEmulation;
+
     GPSModule gpsModule = GPSModule();
     GPRSModule gprsModule = GPRSModule();
 
-    ArduinoUnit arduino(&gpsModule, &gprsModule, string(argv[0]));
+    ArduinoUnit arduino(&gpsModule, &gprsModule, string(buff));
     arduino.init();
+
+    delete[] buff;
+
 
     string command = "";
     while (command != "end") {
-        cout << "Your command (authorize/attach/confirm): ";
+        cout << "Your command ( authorize / attach / confirm ): ";
         cin >> command;
 
         if (command == "authorize") {

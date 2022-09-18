@@ -5,9 +5,9 @@
 
 #include <curl/curl.h>
 
-using namespace std;
-
 namespace ArduinoEmulation {
+
+    using namespace std;
 
     class GPRSModule {
 

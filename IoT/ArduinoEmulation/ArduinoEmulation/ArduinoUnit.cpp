@@ -3,17 +3,15 @@
 #include <iostream>
 #include <stdio.h>
 
-#include <curl/curl.h>
-
 #include "NMEA0183.h"
 #include "ConfirmServiceCompletionApiModel.hpp"
 
 #include "GPSModule.cpp"
 #include "GPRSModule.cpp"
 
-using namespace std;
-
 namespace ArduinoEmulation {
+
+    using namespace std;
 
     class ArduinoUnit {
 
@@ -35,7 +33,7 @@ namespace ArduinoEmulation {
 
             GPS = gps;
             GPRS = gprs;
-            pathToEEPROM = pathToROM.substr(0, pathToROM.find_last_of('\\'));
+            pathToEEPROM = pathToROM;
 
             cout << "My path to EEPROM: \"" << pathToEEPROM << "\"\n\n";
         }
@@ -80,7 +78,8 @@ namespace ArduinoEmulation {
             string jsonObject = getJsonObjectByLoginApiModel(iotCode, pass);
             string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", jsonObject, "");
             
-            return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
+            return /*respObj["jwtString"];*/
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.\
 eyJJb1RDb2RlIjoiOTg3NjU0MzIxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQXJkdWlub1VuaXQiLCJPd25lck5hbWUiOiJLYXRlIiwibmJmIjoxNjYzNDM0NzM0LCJleHAiOjE2Njk2NTU1MzQsImlzcyI6IlF1aWRfcHJvX1F1byIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3QifQ.\
 K5jyU56jwfjy1zdV1VQdC9Uyiz7AZwMjlNhU8ycaz9M";
         }
@@ -98,7 +97,7 @@ K5jyU56jwfjy1zdV1VQdC9Uyiz7AZwMjlNhU8ycaz9M";
             jwtString = getJWTStringFromAttachRequest(jwtString);
             ownerName = getOwnerNameFromJWT(jwtString);
 
-            cout << "My JWT-string: \'" << jwtString << "\'\n";
+            cout << "My JWT-string: \"" << jwtString << "\"\n";
             cout << "My owner name: " << ownerName << "\n\n";
         }
 
