@@ -1,9 +1,9 @@
 ﻿#include <string>
 #include <ctime>
 
-using namespace std;
-
 namespace ArduinoEmulation {
+
+    using namespace std;
 
     struct ConfirmServiceCompletionApiModel {
         double latitude;

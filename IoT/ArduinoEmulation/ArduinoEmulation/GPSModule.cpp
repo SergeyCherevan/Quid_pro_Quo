@@ -3,9 +3,9 @@
 #include <iostream>
 #include <fstream>
 
-using namespace std;
-
 namespace ArduinoEmulation {
+
+using namespace std;
 
     class GPSModule {
 

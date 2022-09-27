@@ -78,8 +78,8 @@ namespace ArduinoEmulation {
         string getJWTStringFromAuthorizeRequest(int iotCode, string pass) {
             using namespace nlohmann;
 
-            string jsonObject = getJsonObjectByLoginApiModel(iotCode, pass);
-            string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", jsonObject, "");
+            string postObj = getJsonObjectByLoginApiModel(iotCode, pass);
+            string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", postObj, "");
             json respObj = json::parse(response);
             
             return respObj["jwtString"];
@@ -103,11 +103,85 @@ namespace ArduinoEmulation {
         }
 
     private:
-        static string getJWTStringFromAttachRequest(string jwtString) {
-            return "My JWT-string";
+        string getJWTStringFromAttachRequest(string jwtStr) {
+            using namespace nlohmann;
+
+            string postObj = getJsonObjectByLoginApiModel(IoTCode, password);
+            string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", postObj, "");
+            json respObj = json::parse(response);
+
+            return respObj["jwtString"];
         }
         static string getOwnerNameFromJWT(string jwtStr) {
-            return "OwnerName";
+            using namespace nlohmann;
+
+            string bodyStr = split(jwtStr, ".")[1];
+            string jsonStr = b64_decode(bodyStr);
+            json jsonObj = json::parse(jsonStr);
+
+            return jsonObj["OwnerName"];
+        }
+
+        static string b64_decode(string encoded_string) {
+            string base64_chars =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                "abcdefghijklmnopqrstuvwxyz"
+                "0123456789+/";
+
+            int in_len = encoded_string.size();
+            int i = 0;
+            int j = 0;
+            int in_ = 0;
+            unsigned char char_array_4[4], char_array_3[3];
+            string ret;
+
+            while (in_len-- && (encoded_string[in_] != '=') && is_b64(encoded_string[in_])) {
+                char_array_4[i++] = encoded_string[in_]; in_++;
+                if (i == 4) {
+                    for (i = 0; i < 4; i++)
+                        char_array_4[i] = base64_chars.find(char_array_4[i]);
+
+                    char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+                    char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+                    char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+                    for (i = 0; (i < 3); i++)
+                        ret += char_array_3[i];
+                    i = 0;
+                }
+            }
+
+            if (i) {
+                for (j = i; j < 4; j++)
+                    char_array_4[j] = 0;
+
+                for (j = 0; j < 4; j++)
+                    char_array_4[j] = base64_chars.find(char_array_4[j]);
+
+                char_array_3[0] = (char_array_4[0] << 2) + ((char_array_4[1] & 0x30) >> 4);
+                char_array_3[1] = ((char_array_4[1] & 0xf) << 4) + ((char_array_4[2] & 0x3c) >> 2);
+                char_array_3[2] = ((char_array_4[2] & 0x3) << 6) + char_array_4[3];
+
+                for (j = 0; (j < i - 1); j++) ret += char_array_3[j];
+            }
+
+            return ret;
+        }
+        static bool is_b64(unsigned char c) {
+            return (isalnum(c) || (c == '+') || (c == '/'));
+        }
+        static vector<string> split(string str, string delim) {
+            vector<string> result;
+            size_t pos = 0;
+            string substr;
+
+            while ((pos = str.find(delim)) != string::npos) {
+                substr = str.substr(0, pos);
+                result.push_back(substr);
+                str.erase(0, pos + delim.length());
+            }
+
+            return result;
         }
 
     public:
@@ -116,11 +190,11 @@ namespace ArduinoEmulation {
 
             NMEA0183 nmeaGeoloc = getGeolocationFromGPS();
             ConfirmServiceCompletionApiModel apiModel = getApiModelByNMEA(nmeaGeoloc);
-            string jsonObject = getJsonObjectByConfirmApiModel(apiModel);
+            string postObj = getJsonObjectByConfirmApiModel(apiModel);
 
-            cout << "My json object for send to server: " << jsonObject << "\n\n";
+            cout << "My JSON-object for send to server: " << postObj << "\n\n";
 
-            bool success = sendGeolocationToServer(jsonObject, jwtString);
+            bool success = sendGeolocationToServer(postObj, jwtString);
 
             cout << "\n\n";
         }
@@ -173,8 +247,8 @@ namespace ArduinoEmulation {
                 "\"dateTime\": \"" + model.dateTime + "\" }";
         }
 
-        bool sendGeolocationToServer(string jsonObject, string jwtString) {
-            string response = GPRS->httpsPost(serviceURL + "/api/IoT/confirmServiceCompletion/", jsonObject, jwtString);
+        bool sendGeolocationToServer(string postObj, string jwtString) {
+            string response = GPRS->httpsPost(serviceURL + "/api/IoT/confirmServiceCompletion/", postObj, jwtString);
 
             if (!response.empty()) {
                 return true;

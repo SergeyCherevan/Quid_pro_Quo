@@ -12,7 +12,7 @@ namespace ArduinoEmulation {
     class GPRSModule {
 
     public:
-        string httpsPost(string url, string jsonObject, string jwt) {
+        string httpsPost(string url, string postObj, string jwt) {
             cout << "Method httpsPost() run...\n";
 
             CURLcode ret;
@@ -21,7 +21,7 @@ namespace ArduinoEmulation {
             string stringResponse;
 
             cout << "My URL: \'" << url << "\'\n";
-            cout << "My JSON-object: " << jsonObject << "\n";
+            cout << "My JSON-object: " << postObj << "\n";
             cout << "My JWT-string: \"" << jwt << "\"\n\n";
 
             slist1 = NULL;
@@ -31,7 +31,7 @@ namespace ArduinoEmulation {
             hnd = curl_easy_init();
             curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
             curl_easy_setopt(hnd, CURLOPT_NOPROGRESS, 1L);
-            curl_easy_setopt(hnd, CURLOPT_POSTFIELDS, jsonObject.c_str());
+            curl_easy_setopt(hnd, CURLOPT_POSTFIELDS, postObj.c_str());
             curl_easy_setopt(hnd, CURLOPT_USERAGENT, "curl/7.38.0");
             curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
             curl_easy_setopt(hnd, CURLOPT_MAXREDIRS, 50L);
