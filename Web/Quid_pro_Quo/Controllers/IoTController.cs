@@ -51,6 +51,33 @@ namespace Quid_pro_Quo.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("attach")]
+        public async Task<ActionResult<JwtApiModel>> Attach()
+        {
+            try
+            {
+                string iotCodeStr = User.Claims.ToList().Find(claim => claim.Type == "IoTCode").Value;
+                int iotCode = Convert.ToInt32(iotCodeStr);
+
+                return await _iotService.AttachToUser(iotCode);
+            }
+            catch (NotFoundAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "User not exists"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
         [Authorize]
         [HttpPost]
         [Route("confirmServiceCompletion")]
@@ -69,6 +96,31 @@ namespace Quid_pro_Quo.Controllers
                 }
                 
                 return Ok("Any exchanges were not confirmed");
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+        public record IoTCodeRecord(int IoTCode);
+
+        [Authorize]
+        [HttpPost]
+        [Route("addRequestToAttach")]
+        public async Task<ActionResult<ExchangeOfServicesApiModel>> AddRequestToAttach(IoTCodeRecord model)
+        {
+            try
+            {
+                string ownerName = User.Identity.Name;
+                int iotCode = model.IoTCode;
+
+                await _iotService.AddRequestToAttach(ownerName, iotCode);
+
+                return Ok("Request to attach IoT to user was added");
             }
             catch (Exception exp)
             {

@@ -12,6 +12,7 @@ using Quid_pro_Quo.Authentification;
 using Quid_pro_Quo.Database.Ralational;
 using Quid_pro_Quo.DTOs;
 using Quid_pro_Quo.Exceptions;
+using Quid_pro_Quo.AttachingRequests;
 using Quid_pro_Quo.Mappings;
 using Quid_pro_Quo.Repositories;
 using Quid_pro_Quo.Repositories.Interfaces;
@@ -23,9 +24,13 @@ namespace Quid_pro_Quo.Services
     public class IoTService : IIoTService
     {
         protected IUnitOfWork _UoW { get; set; }
-        public IoTService(IUnitOfWork uow)
+        protected IAttachingRequestsQueue _attachingRequestsQueue { get; set; }
+        protected IServiceProvider _serviceProvider { get; set; }
+        public IoTService(IUnitOfWork uow, IAttachingRequestsQueue attachingRequestsQueue, IServiceProvider serviceProvider)
         {
             _UoW = uow;
+            _attachingRequestsQueue = attachingRequestsQueue;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task<JwtApiModel> Login(int iotCode, string password)
@@ -55,12 +60,45 @@ namespace Quid_pro_Quo.Services
             return new JwtApiModel(jwtString);
         }
 
-        public Task<JwtApiModel> AttachToUser(int iotCode)
+        public async Task AddRequestToAttach(string ownerName, int iotCode)
         {
-            throw new NotImplementedException();
+            await Task.Run(() => { });
+
+            _attachingRequestsQueue.Add((ownerName, iotCode));
+
+            await AttachingRequestDeleteScheduler.Start(_serviceProvider, iotCode);
         }
 
-        
+        public async Task DeleteRequestToAttach(int iotCode)
+        {
+            await Task.Run(() => _attachingRequestsQueue.DeleteByCode(iotCode));
+        }
+
+        public async Task<JwtApiModel> AttachToUser(int iotCode)
+        {
+            IoTEntity IoT = await _UoW.IoTRepository.GetByCode(iotCode);
+            if (IoT is null)
+            {
+                throw new NotFoundAppException($"IoT not found");
+            }
+
+            var request = _attachingRequestsQueue.GetByCode(iotCode);
+            UserEntity owner = await _UoW.UserRepository.GetByName(request.OwnerName);
+
+            IoT.OwnerId = owner.Id;
+            await _UoW.IoTRepository.Update(IoT);
+
+            await DeleteRequestToAttach(iotCode);
+
+            await _UoW.SaveChanges();
+
+            ClaimsIdentity claims = GetIdentity(iotCode, owner.UserName);
+            string jwtString = JwtTokenizer.GetEncodedJWT(claims, AuthOptions.Lifetime);
+
+            return new JwtApiModel(jwtString);
+        }
+
+
 
         protected static string HashPassword(string password)
         {

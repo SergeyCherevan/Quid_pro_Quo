@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChooseTimeOfServiceComponent } from './choose-time-of-service-form.component.spec';
+import { ChooseTimeOfServiceFormComponent } from './choose-time-of-service-form.component';
 
-describe('ChooseTimeOfServiceComponent', () => {
-  let component: ChooseTimeOfServiceComponent;
-  let fixture: ComponentFixture<ChooseTimeOfServiceComponent>;
+describe('ChooseTimeOfServiceFormComponent', () => {
+  let component: ChooseTimeOfServiceFormComponent;
+  let fixture: ComponentFixture<ChooseTimeOfServiceFormComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChooseTimeOfServiceComponent ]
+      declarations: [ChooseTimeOfServiceFormComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChooseTimeOfServiceComponent);
+    fixture = TestBed.createComponent(ChooseTimeOfServiceFormComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

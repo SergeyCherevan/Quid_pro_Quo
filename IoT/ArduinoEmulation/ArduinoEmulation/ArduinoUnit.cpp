@@ -106,8 +106,7 @@ namespace ArduinoEmulation {
         string getJWTStringFromAttachRequest(string jwtStr) {
             using namespace nlohmann;
 
-            string postObj = getJsonObjectByLoginApiModel(IoTCode, password);
-            string response = GPRS->httpsPost(serviceURL + "/api/IoT/login/", postObj, "");
+            string response = GPRS->httpsPost(serviceURL + "/api/IoT/attach/", "{ }", jwtStr);
             json respObj = json::parse(response);
 
             return respObj["jwtString"];

@@ -10,7 +10,6 @@ namespace Quid_pro_Quo.Database.Ralational
         public int IoTCode { get; set; }
         public int OwnerId { get; set; }
         public string HashPassword { get; set; }
-        public bool IsProcessOfAttaching { get; set; }
 
         [ForeignKey("OwnerId")]
         public virtual UserEntity Owner { get; set; }
