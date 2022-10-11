@@ -22,6 +22,7 @@ import { EditPostFormComponent } from './components/edit-post-form/edit-post-for
 import { ChooseMyServiceToChangePageComponent } from './components/exchange-of-service-components/choose-my-service-to-change-page/choose-my-service-to-change-page.component';
 import { ChooseTimeOfServiceFormComponent } from './components/exchange-of-service-components/choose-time-of-service-form/choose-time-of-service-form.component';
 import { ChangingProposalsPageComponent } from './components/exchange-of-service-components/changing-proposals-page/changing-proposals-page.component';
+import { SmallPostComponent } from './components/exchange-of-service-components/small-post/small-post.component';
 
 import { MessagingCardsListComponent } from './components/messenger-components/messaging-cards-list/messaging-cards-list.component';
 import { MessagingCardComponent } from './components/messenger-components/messaging-card/messaging-card.component';
@@ -32,7 +33,7 @@ import { SendMessageFormComponent } from './components/messenger-components/send
 import { AuthorizationService } from './services/authorization.service';
 import { RequestService } from './services/request.service';
 import { MessengerSignalRService } from './services/messenger-signalR.service';
-import { SmallPostComponent } from './components/exchange-of-service-components/small-post/small-post.component';
+import { LoggerService } from './services/logger.service';
 
 // определение маршрутов
 const appRoutes: Routes = [
@@ -79,7 +80,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule
   ],
-  providers: [AuthorizationService, RequestService, MessengerSignalRService ],
+  providers: [ AuthorizationService, RequestService, LoggerService, MessengerSignalRService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

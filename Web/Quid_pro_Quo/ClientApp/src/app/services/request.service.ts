@@ -1,7 +1,11 @@
 import { Injectable } from "@angular/core";
 
+import { LoggerService } from "./logger.service";
+
 @Injectable()
 export class RequestService {
+
+  constructor(public loggerService: LoggerService) { }
 
   get(address: string, jwtString?: string) {
 
@@ -22,6 +26,22 @@ export class RequestService {
         } else {
           throw Error((await response.json()).error);
         }
+      })
+      .then(response => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.info('RequestService.get()', `response:`, response);
+
+        return response;
+      })
+      .catch((error: Error) => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.error('RequestService.get()', `Error ${error.name},
+\tmessage: ${error.message}
+\tby stack: ${error.stack}`);
+
+        throw error;
       });
   }
 
@@ -45,6 +65,23 @@ export class RequestService {
         } else {
           throw Error((await response.json()).error);
         }
+      })
+      .then(response => {
+        this.loggerService.info('RequestService.post()', `HTTP POST request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, postObj);
+        this.loggerService.info('RequestService.get()', `response:`, response);
+
+        return response;
+      })
+      .catch((error: Error) => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.error('RequestService.get()', `Error ${error.name},
+\tmessage: ${error.message}
+\tby stack: ${error.stack}`);
+
+        throw error;
       });
   }
 
@@ -67,6 +104,23 @@ export class RequestService {
         } else {
           throw Error((await response.json()).error);
         }
+      })
+      .then(response => {
+        this.loggerService.info('RequestService.postMultipartForm()', `HTTP POST request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, formData);
+        this.loggerService.info('RequestService.get()', `response:`, response);
+
+        return response;
+      })
+      .catch((error: Error) => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.error('RequestService.get()', `Error ${error.name},
+\tmessage: ${error.message}
+\tby stack: ${error.stack}`);
+
+        throw error;
       });
   }
 
@@ -90,6 +144,23 @@ export class RequestService {
         } else {
           throw Error((await response.json()).error);
         }
+      })
+      .then(response => {
+        this.loggerService.info('RequestService.put()', `HTTP PUT request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, postObj);
+        this.loggerService.info('RequestService.get()', `response:`, response);
+
+        return response;
+      })
+      .catch((error: Error) => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.error('RequestService.get()', `Error ${error.name},
+\tmessage: ${error.message}
+\tby stack: ${error.stack}`);
+
+        throw error;
       });
   }
 
@@ -112,6 +183,23 @@ export class RequestService {
         } else {
           throw Error((await response.json()).error);
         }
+      })
+      .then(response => {
+        this.loggerService.info('RequestService.putMultipartForm()', `HTTP PUT request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, formData);
+        this.loggerService.info('RequestService.get()', `response:`, response);
+
+        return response;
+      })
+      .catch((error: Error) => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.error('RequestService.get()', `Error ${error.name},
+\tmessage: ${error.message}
+\tby stack: ${error.stack}`);
+
+        throw error;
       });
   }
 
@@ -135,6 +223,23 @@ export class RequestService {
         } else {
           throw Error((await response.json()).error);
         }
+      })
+      .then(response => {
+        this.loggerService.info('RequestService.delete()', `HTTP DELETE request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, postObj);
+        this.loggerService.info('RequestService.get()', `response:`, response);
+
+        return response;
+      })
+      .catch((error: Error) => {
+        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
+\tJWT string: '${jwtString}'`);
+        this.loggerService.error('RequestService.get()', `Error ${error.name},
+\tmessage: ${error.message}
+\tby stack: ${error.stack}`);
+
+        throw error;
       });
   }
 }
