@@ -27,7 +27,9 @@ namespace ArduinoEmulation {
         /* external emulated devices */
         GPSModule* GPS;
         GPRSModule* GPRS;
-        string pathToEEPROM;
+
+        class EEPROMModule;
+        EEPROMModule* ROM;
 
     public:
         ArduinoUnit(GPSModule* gps, GPRSModule* gprs, string pathToROM) {
@@ -35,7 +37,9 @@ namespace ArduinoEmulation {
 
             GPS = gps;
             GPRS = gprs;
-            pathToEEPROM = pathToROM.substr(0, pathToROM.find_last_of('\\'));
+
+            string pathToEEPROM = pathToROM;
+            ROM = new EEPROMModule(pathToEEPROM);
 
             cout << "My path to EEPROM: \"" << pathToEEPROM << "\"\n\n";
         }
@@ -52,15 +56,63 @@ namespace ArduinoEmulation {
             cout << "My service URL: \"" << serviceURL << "\"\n\n";
         }
 
+        class EEPROMModule {
+            string pathToEEPROM;
+        public:
+            EEPROMModule(string path) : pathToEEPROM(path) { }
+
+            string getStringVar(string name) {
+                ifstream file(filePath(pathToEEPROM, name));
+
+                string result;
+                copy(
+                    istream_iterator<char>(file),
+                    istream_iterator<char>(),
+                    insert_iterator<string>(result, result.begin())
+                );
+
+                file.close();
+                return result;
+            }
+
+            int getIntegerVar(string name) {
+                ifstream file(filePath(pathToEEPROM, name));
+
+                int number;
+                file >> number;
+
+                file.close();
+                return number;
+            }
+
+            static string filePath(string directoryPath, string fileName) {
+                char pathSeparator = '\0';
+
+                if (directoryPath.find('/') != string::npos) {
+                    pathSeparator = '/';
+                }
+
+                if (directoryPath.find('\\') != string::npos) {
+                    pathSeparator = '\\';
+                }
+
+                if (pathSeparator == '\0') {
+                    throw exception("There are not any path separators in directory path");
+                }
+
+                return directoryPath + pathSeparator + fileName;
+            }
+        };
+
     private:
         int getIoTCodeFromEEPROM() {
-            return 987654321;
+            return ROM->getIntegerVar("IoTCode");
         }
         string getPasswordFromEEPROM() {
-            return "1234";
+            return ROM->getStringVar("password");
         }
         string getServiceURLFromEEPROM() {
-            return "https://localhost:5001";
+            return ROM->getStringVar("serviceURL");
         }
 
     public:
