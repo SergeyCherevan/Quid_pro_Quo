@@ -134,6 +134,23 @@
   <ItemGroup>
     <ClCompile Include="ArduinoEmulation.cpp" />
     <ClCompile Include="ArduinoUnit.cpp" />
+    <ClCompile Include="ArduinoUnit_attach.cpp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="ArduinoUnit_authorize.cpp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="ArduinoUnit_confirm.cpp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="ArduinoUnit_init.cpp">
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </DeploymentContent>
+    </ClCompile>
+    <ClCompile Include="EEPROMModule.cpp" />
     <ClCompile Include="GPRSModule.cpp" />
     <ClCompile Include="GPSModule.cpp" />
   </ItemGroup>

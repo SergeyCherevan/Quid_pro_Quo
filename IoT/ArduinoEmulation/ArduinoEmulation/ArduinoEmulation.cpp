@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#define CURL_STATICLIB
-
 #include <iostream>
 #include "ArduinoUnit.hpp"
 
