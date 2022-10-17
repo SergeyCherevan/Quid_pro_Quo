@@ -138,7 +138,10 @@
     <ClCompile Include="GPSModule.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArduinoUnit.hpp" />
     <ClInclude Include="ConfirmServiceCompletionApiModel.hpp" />
+    <ClInclude Include="GPRSModule.hpp" />
+    <ClInclude Include="GPSModule.hpp" />
     <ClInclude Include="NMEA0183.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

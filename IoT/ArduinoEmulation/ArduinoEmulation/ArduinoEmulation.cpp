@@ -3,7 +3,7 @@
 #define CURL_STATICLIB
 
 #include <iostream>
-#include "ArduinoUnit.cpp"
+#include "ArduinoUnit.hpp"
 
 int main(int argc, char* argv[]) {
     char* buff; {
