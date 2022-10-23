@@ -5,11 +5,25 @@
 #include <iostream>
 #include <fstream>
 
+#include "ArduinoUnit.hpp"
+
 namespace ArduinoEmulation {
 
     using namespace std;
 
+    GPSModule::GPSModule(string path) : pathToGPS(path) { }
+
     string GPSModule::getNMEA0183Sring() {
-        return "$GPRMC,065200.00,A,4914.08,N,2823.97,E,,,100722,,,A*4E\r\n";
+        ifstream file(ArduinoUnit::EEPROMModule::filePath(pathToGPS, "GPSInput"));
+
+        string result;
+        copy(
+            istream_iterator<char>(file),
+            istream_iterator<char>(),
+            insert_iterator<string>(result, result.begin())
+        );
+
+        file.close();
+        return result;
     }
 }

@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
     using namespace std;
     using namespace ArduinoEmulation;
 
-    GPSModule gpsModule = GPSModule();
+    GPSModule gpsModule = GPSModule(string(buff));
     GPRSModule gprsModule = GPRSModule();
 
     ArduinoUnit arduino(&gpsModule, &gprsModule, string(buff));

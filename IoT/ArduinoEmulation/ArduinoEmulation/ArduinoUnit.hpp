@@ -43,14 +43,8 @@ namespace ArduinoEmulation {
 
             int getIntegerVar(string name);
 
-        private:
             static string filePath(string directoryPath, string fileName);
         };
-
-    private:
-        int getIoTCodeFromEEPROM();
-        string getPasswordFromEEPROM();
-        string getServiceURLFromEEPROM();
 
     public:
         void authorize();
@@ -66,8 +60,6 @@ namespace ArduinoEmulation {
         string getJWTStringFromAttachRequest(string jwtStr);
         static string getOwnerNameFromJWT(string jwtStr);
 
-        static string b64_decode(string encoded_string);
-        static bool is_b64(unsigned char c);
         static vector<string> split(string str, string delim);
 
     public:

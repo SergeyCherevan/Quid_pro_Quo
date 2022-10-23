@@ -18,9 +18,6 @@
     <ClCompile Include="ArduinoEmulation.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="ArduinoUnit.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="GPRSModule.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>

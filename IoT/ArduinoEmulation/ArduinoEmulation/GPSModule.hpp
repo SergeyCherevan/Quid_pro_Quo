@@ -8,7 +8,11 @@ namespace ArduinoEmulation {
 
     class GPSModule {
 
+        string pathToGPS;
+
     public:
+        GPSModule(string path);
+
         string getNMEA0183Sring();
     };
 }

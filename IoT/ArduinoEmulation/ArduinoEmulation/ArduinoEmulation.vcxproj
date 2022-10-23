@@ -71,7 +71,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>D:\Visual Studio Projects\NlohmannJSON\include;D:\Visual Studio Projects\CURL\builds\libcurl-vc-x86-release-static-ipv6-sspi-schannel\include;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Visual Studio Projects\CppBase64;D:\Visual Studio Projects\NlohmannJSON\include;D:\Visual Studio Projects\CURL\builds\libcurl-vc-x86-release-static-ipv6-sspi-schannel\include;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Visual Studio Projects\CURL\builds\libcurl-vc-x86-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -133,7 +133,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArduinoEmulation.cpp" />
-    <ClCompile Include="ArduinoUnit.cpp" />
     <ClCompile Include="ArduinoUnit_attach.cpp">
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </DeploymentContent>
