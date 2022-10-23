@@ -60,6 +60,22 @@ namespace Quid_pro_Quo.Services
             return new JwtApiModel(jwtString);
         }
 
+        public async Task<int> GetUserIoTCode(string ownerName)
+        {
+            if (string.IsNullOrEmpty(ownerName))
+            {
+                throw new ArgumentException($"{nameof(ownerName)} not specified");
+            }
+
+            IoTEntity IoT = await _UoW.IoTRepository.GetByOwnerName(ownerName);
+            if (IoT is null)
+            {
+                throw new NotFoundAppException($"IoT not found");
+            }
+
+            return IoT.IoTCode;
+        }
+
         public async Task AddRequestToAttach(string ownerName, int iotCode)
         {
             await Task.Run(() => { });

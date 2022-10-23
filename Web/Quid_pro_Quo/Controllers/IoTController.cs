@@ -95,7 +95,10 @@ namespace Quid_pro_Quo.Controllers
                     return exchange;
                 }
                 
-                return Ok("Any exchanges were not confirmed");
+                return Ok(new
+                {
+                    Message = "Any exchanges were not confirmed"
+                });
             }
             catch (Exception exp)
             {
@@ -120,7 +123,30 @@ namespace Quid_pro_Quo.Controllers
 
                 await _iotService.AddRequestToAttach(ownerName, iotCode);
 
-                return Ok("Request to attach IoT to user was added");
+                return Ok(new
+                {
+                    Message = "Request to attach IoT to user was added"
+                });
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("getMyIoTCode")]
+        public async Task<ActionResult<int>> getMyIoTCode()
+        {
+            try
+            {
+                string ownerName = User.Identity.Name;
+
+                return await _iotService.GetUserIoTCode(ownerName);
             }
             catch (Exception exp)
             {

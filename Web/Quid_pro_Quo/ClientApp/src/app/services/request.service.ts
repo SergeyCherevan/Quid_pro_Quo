@@ -70,14 +70,15 @@ export class RequestService {
         this.loggerService.info('RequestService.post()', `HTTP POST request by address: ${address};
 \tJWT string: '${jwtString}'
 \trequest body:`, postObj);
-        this.loggerService.info('RequestService.get()', `response:`, response);
+        this.loggerService.info('RequestService.post()', `response:`, response);
 
         return response;
       })
       .catch((error: Error) => {
-        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
-\tJWT string: '${jwtString}'`);
-        this.loggerService.error('RequestService.get()', `Error ${error.name},
+        this.loggerService.info('RequestService.post()', `HTTP POST request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, postObj);
+        this.loggerService.error('RequestService.post()', `Error ${error.name},
 \tmessage: ${error.message}
 \tby stack: ${error.stack}`);
 
@@ -109,14 +110,15 @@ export class RequestService {
         this.loggerService.info('RequestService.postMultipartForm()', `HTTP POST request by address: ${address};
 \tJWT string: '${jwtString}'
 \trequest body:`, formData);
-        this.loggerService.info('RequestService.get()', `response:`, response);
+        this.loggerService.info('RequestService.postMultipartForm()', `response:`, response);
 
         return response;
       })
       .catch((error: Error) => {
-        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
-\tJWT string: '${jwtString}'`);
-        this.loggerService.error('RequestService.get()', `Error ${error.name},
+        this.loggerService.info('RequestService.postMultipartForm()', `HTTP POST request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, formData);
+        this.loggerService.error('RequestService.postMultipartForm()', `Error ${error.name},
 \tmessage: ${error.message}
 \tby stack: ${error.stack}`);
 
@@ -149,14 +151,15 @@ export class RequestService {
         this.loggerService.info('RequestService.put()', `HTTP PUT request by address: ${address};
 \tJWT string: '${jwtString}'
 \trequest body:`, postObj);
-        this.loggerService.info('RequestService.get()', `response:`, response);
+        this.loggerService.info('RequestService.put()', `response:`, response);
 
         return response;
       })
       .catch((error: Error) => {
-        this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
-\tJWT string: '${jwtString}'`);
-        this.loggerService.error('RequestService.get()', `Error ${error.name},
+        this.loggerService.info('RequestService.put()', `HTTP PUT request by address: ${address};
+\tJWT string: '${jwtString}'
+\trequest body:`, postObj);
+        this.loggerService.error('RequestService.put()', `Error ${error.name},
 \tmessage: ${error.message}
 \tby stack: ${error.stack}`);
 
@@ -194,7 +197,8 @@ export class RequestService {
       })
       .catch((error: Error) => {
         this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
-\tJWT string: '${jwtString}'`);
+\tJWT string: '${jwtString}'
+\trequest body:`, formData);
         this.loggerService.error('RequestService.get()', `Error ${error.name},
 \tmessage: ${error.message}
 \tby stack: ${error.stack}`);
@@ -234,7 +238,8 @@ export class RequestService {
       })
       .catch((error: Error) => {
         this.loggerService.info('RequestService.get()', `HTTP GET request by address: ${address};
-\tJWT string: '${jwtString}'`);
+\tJWT string: '${jwtString}'
+\trequest body:`, postObj);
         this.loggerService.error('RequestService.get()', `Error ${error.name},
 \tmessage: ${error.message}
 \tby stack: ${error.stack}`);

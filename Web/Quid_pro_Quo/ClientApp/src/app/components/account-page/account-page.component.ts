@@ -32,7 +32,7 @@ export class AccountPageComponent implements OnInit {
   oldPasswordStr: string = "Старий пароль";
   newPasswordStr: string = "Новий пароль";
   confirmNewPasswordStr: string = "Підтвердіть пароль";
-  iotCodeStr: string = "ID-номер IoT-пристрою";
+  iotCodeStr: string = "Код IoT-пристрою";
   attachStr: string = "Прикріпити IoT-пристрій";
 
   changesIsSavedStr: string = "Зміни збережені";
@@ -106,7 +106,7 @@ export class AccountPageComponent implements OnInit {
     confirmNewPassword: "",
   };
 
-  iotCode: number = 0;
+  iotCode: string = "0";
 
   //subscription: Subscription;
 
@@ -131,6 +131,11 @@ export class AccountPageComponent implements OnInit {
         this.requestService
           .get(`/api/user/get/${this.authorizationService.userName}`)
           .then(respObj => this.userModel = <UserApiModel>respObj)
+      )
+      .then(() =>
+        this.requestService
+          .get(`/api/IoT/getMyIoTCode`, this.authorizationService.jwtString)
+          .then(respObj => this.iotCode = '' + <number>respObj)
       );
   }
 
@@ -172,5 +177,11 @@ export class AccountPageComponent implements OnInit {
       .then(() => this.isPasswordChanged = true)
       .then(() => window.location.reload())
       .catch((err: Error) => this.serverChangePassError = err);
+  }
+
+  sendRequestToAttachIoT(): void {
+    this.requestService
+      .post('/api/IoT/addRequestToAttach', { ioTCode: Number(this.iotCode) }, this.authorizationService.jwtString)
+      .then(() => { })
   }
 }
