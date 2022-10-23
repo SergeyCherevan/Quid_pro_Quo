@@ -32,6 +32,8 @@ export class AccountPageComponent implements OnInit {
   oldPasswordStr: string = "Старий пароль";
   newPasswordStr: string = "Новий пароль";
   confirmNewPasswordStr: string = "Підтвердіть пароль";
+  iotCodeStr: string = "ID-номер IoT-пристрою";
+  attachStr: string = "Прикріпити IoT-пристрій";
 
   changesIsSavedStr: string = "Зміни збережені";
   passwordIsChangedStr: string = "Пароль змінено";
@@ -103,6 +105,8 @@ export class AccountPageComponent implements OnInit {
     newPassword: "",
     confirmNewPassword: "",
   };
+
+  iotCode: number = 0;
 
   //subscription: Subscription;
 
