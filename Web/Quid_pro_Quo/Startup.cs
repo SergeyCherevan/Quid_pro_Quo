@@ -145,6 +145,7 @@ namespace Quid_pro_Quo
 
             services.AddQuartz(configurator =>
             {
+                configurator.UseMicrosoftDependencyInjectionJobFactory();
                 // base quartz scheduler, job and trigger configuration
             });
 

@@ -106,7 +106,7 @@ export class AccountPageComponent implements OnInit {
     confirmNewPassword: "",
   };
 
-  iotCode: string = "0";
+  iotCode: string = "—";
 
   //subscription: Subscription;
 

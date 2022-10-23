@@ -10,7 +10,7 @@ namespace Quid_pro_Quo.AttachingRequests
 {
     public class AttachingRequestDeleteScheduler
     {
-        static int count = 0;
+        public static int count = 0;
         public static async Task Start(IServiceProvider serviceProvider, int iotCode)
         {
             IScheduler scheduler = await StdSchedulerFactory.GetDefaultScheduler();
@@ -26,7 +26,7 @@ namespace Quid_pro_Quo.AttachingRequests
 
             ITrigger trigger = TriggerBuilder.Create()  // создаем триггер
                 .WithIdentity("OneTimeAfter5Minutes_Trigger" + count, "AttachingRequest_Group")     // идентифицируем триггер с именем и группой
-                .StartAt(DateTime.Now + new TimeSpan(0, 5, 0))                            // запуск через 5 минут начала выполнения
+                .StartAt(DateTime.Now + new TimeSpan(0, 0, 30))                            // запуск через 5 минут начала выполнения
                 .WithSimpleSchedule(x => x            // настраиваем выполнение действия
                     .WithIntervalInSeconds(0))          // 
                 .Build();                               // создаем триггер
