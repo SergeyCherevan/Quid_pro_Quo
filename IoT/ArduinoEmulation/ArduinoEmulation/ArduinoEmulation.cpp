@@ -1,7 +1,10 @@
 ﻿#pragma once
 
 #include <iostream>
+
 #include "ArduinoUnit.hpp"
+#include "GPSModule.hpp"
+#include "GPRSModule.hpp"
 
 int main(int argc, char* argv[]) {
     char* buff; {
@@ -18,7 +21,7 @@ int main(int argc, char* argv[]) {
     GPSModule gpsModule = GPSModule(string(buff));
     GPRSModule gprsModule = GPRSModule();
 
-    ArduinoUnit arduino(&gpsModule, &gprsModule, string(buff));
+    IArduinoUnit& arduino = (IArduinoUnit&)ArduinoUnit(&gpsModule, &gprsModule, string(buff));
     arduino.init();
 
     delete[] buff;

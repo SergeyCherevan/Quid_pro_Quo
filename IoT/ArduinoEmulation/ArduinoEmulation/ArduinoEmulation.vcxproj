@@ -158,6 +158,9 @@
     <ClInclude Include="ConfirmServiceCompletionApiModel.hpp" />
     <ClInclude Include="GPRSModule.hpp" />
     <ClInclude Include="GPSModule.hpp" />
+    <ClInclude Include="Interfaces\IArduinoUnit.hpp" />
+    <ClInclude Include="Interfaces\IGPRSModule.hpp" />
+    <ClInclude Include="Interfaces\IGPSModule.hpp" />
     <ClInclude Include="NMEA0183.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

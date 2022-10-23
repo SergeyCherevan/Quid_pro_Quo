@@ -1,19 +1,21 @@
 #pragma once
 
+#include "Interfaces/IArduinoUnit.hpp"
+
 #include <string>
 #include <vector>
 
 #include "NMEA0183.h"
 #include "ConfirmServiceCompletionApiModel.hpp"
 
-#include "GPSModule.hpp"
-#include "GPRSModule.hpp"
+#include "Interfaces/IGPSModule.hpp"
+#include "Interfaces/IGPRSModule.hpp"
 
 namespace ArduinoEmulation {
 
     using namespace std;
 
-    class ArduinoUnit {
+    class ArduinoUnit : public IArduinoUnit {
 
         int IoTCode;
         string password;
@@ -23,14 +25,14 @@ namespace ArduinoEmulation {
         string ownerName;
 
         /* external emulated devices */
-        GPSModule* GPS;
-        GPRSModule* GPRS;
+        IGPSModule* GPS;
+        IGPRSModule* GPRS;
 
         class EEPROMModule;
         EEPROMModule* ROM;
 
     public:
-        ArduinoUnit(GPSModule* gps, GPRSModule* gprs, string pathToROM);
+        ArduinoUnit(IGPSModule* gps, IGPRSModule* gprs, string pathToROM);
 
         void init();
 

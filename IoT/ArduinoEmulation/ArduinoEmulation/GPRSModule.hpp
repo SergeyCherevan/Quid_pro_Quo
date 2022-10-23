@@ -1,12 +1,14 @@
 #pragma once
 
+#include "Interfaces/IGPRSModule.hpp"
+
 #include <string>
 
 namespace ArduinoEmulation {
 
     using namespace std;
 
-    class GPRSModule {
+    class GPRSModule : public IGPRSModule {
 
     public:
         string httpsPost(string url, string postObj, string jwt);

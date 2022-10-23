@@ -9,7 +9,7 @@ namespace ArduinoEmulation {
     using namespace std;
 
     // constructor
-    ArduinoUnit::ArduinoUnit(GPSModule* gps, GPRSModule* gprs, string pathToROM) {
+    ArduinoUnit::ArduinoUnit(IGPSModule* gps, IGPRSModule* gprs, string pathToROM) {
         cout << "Constructor ArduinoUnit() run...\n";
 
         GPS = gps;
