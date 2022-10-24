@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Quid_pro_Quo.Database.Ralational;
+using Quid_pro_Quo.Exceptions;
 using Quid_pro_Quo.Mappings;
 using Quid_pro_Quo.Repositories.Interfaces;
 using Quid_pro_Quo.Services.Interfaces;
@@ -105,16 +106,22 @@ namespace Quid_pro_Quo.Services
 
         public async Task<ExchangeOfServicesApiModel> ConfirmServiceCompletion(int iotCode, ConfirmServiceCompletionApiModel model)
         {
-            IoTEntity iot = await _UoW.IoTRepository.GetByCode(iotCode);
+            IoTEntity IoT = await _UoW.IoTRepository.GetByCode(iotCode);
+
+            if (IoT.OwnerId == null)
+            {
+                throw new NotFoundAppException($"IoT hasn't owner");
+            }
+
             IEnumerable<ExchangeOfServicesEntity> exchanges =
-                await _UoW.ExchangeOfServicesRepository.GetConfirmed(iot.OwnerId, StatusEnum.NoInfo);
+                await _UoW.ExchangeOfServicesRepository.GetConfirmed((int)IoT.OwnerId, StatusEnum.NoInfo);
 
             static double distanse(double lat1, double lng1, double lat2, double lng2)
                 => Math.Sqrt((lat2 - lat1) * (lat2 - lat1) + (lng2 - lng1) * (lng2 - lng1));
 
             foreach (ExchangeOfServicesEntity exchange in exchanges)
             {
-                bool isRequesting = exchange.RequestingPost.AuthorId == iot.OwnerId;
+                bool isRequesting = exchange.RequestingPost.AuthorId == IoT.OwnerId;
 
                 // Attantion: if isRequesting, then myPost = ___RequestedPost___
                 PostEntity myPost = isRequesting ? exchange.RequestedPost : exchange.RequestingPost;

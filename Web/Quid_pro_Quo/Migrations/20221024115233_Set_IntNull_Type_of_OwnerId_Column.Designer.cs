@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Quid_pro_Quo.Database.Ralational;
 
 namespace Quid_pro_Quo.Migrations
 {
     [DbContext(typeof(QuidProQuoRelationalDbContext))]
-    partial class QuidProQuoRelationalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221024115233_Set_IntNull_Type_of_OwnerId_Column")]
+    partial class Set_IntNull_Type_of_OwnerId_Column
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

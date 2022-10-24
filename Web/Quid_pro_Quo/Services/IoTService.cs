@@ -52,9 +52,17 @@ namespace Quid_pro_Quo.Services
                 throw new NotFoundAppException($"uncorrect password");
             }
 
-            UserEntity owner = await _UoW.UserRepository.GetById(IoT.OwnerId);
+            UserEntity owner;
+            if (IoT.OwnerId != null)
+            {
+                owner = await _UoW.UserRepository.GetById((int)IoT.OwnerId);
+            }
+            else
+            {
+                owner = null;
+            }
 
-            ClaimsIdentity claims = GetIdentity(iotCode, owner.UserName);
+            ClaimsIdentity claims = GetIdentity(iotCode, owner?.UserName ?? "");
             string jwtString = JwtTokenizer.GetEncodedJWT(claims, AuthOptions.Lifetime);
 
             return new JwtApiModel(jwtString);
@@ -122,7 +130,7 @@ namespace Quid_pro_Quo.Services
                 throw new NotFoundAppException($"IoT not found");
             }
 
-            IoT.OwnerId = 35;
+            IoT.OwnerId = null;
             await _UoW.IoTRepository.Update(IoT);
 
             await _UoW.SaveChanges();

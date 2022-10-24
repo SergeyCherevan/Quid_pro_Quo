@@ -8,7 +8,7 @@ namespace Quid_pro_Quo.Database.Ralational
     public class IoTEntity : BaseEntity<int>
     {
         public int IoTCode { get; set; }
-        public int OwnerId { get; set; }
+        public int? OwnerId { get; set; }
         public string HashPassword { get; set; }
 
         [ForeignKey("OwnerId")]
