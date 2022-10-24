@@ -26,7 +26,7 @@ namespace Quid_pro_Quo.AttachingRequests
 
             ITrigger trigger = TriggerBuilder.Create()  // создаем триггер
                 .WithIdentity("OneTimeAfter5Minutes_Trigger" + count, "AttachingRequest_Group")     // идентифицируем триггер с именем и группой
-                .StartAt(DateTime.Now + new TimeSpan(0, 0, 30))                            // запуск через 5 минут начала выполнения
+                .StartAt(DateTime.Now.AddMinutes(5))                            // запуск через 5 минут начала выполнения
                 .WithSimpleSchedule(x => x            // настраиваем выполнение действия
                     .WithIntervalInSeconds(0))          // 
                 .Build();                               // создаем триггер

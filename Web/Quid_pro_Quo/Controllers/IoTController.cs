@@ -66,7 +66,7 @@ namespace Quid_pro_Quo.Controllers
             {
                 return BadRequest(new
                 {
-                    Error = "User not exists"
+                    Error = "IoT not exists"
                 });
             }
             catch (Exception exp)
@@ -147,6 +147,36 @@ namespace Quid_pro_Quo.Controllers
                 string ownerName = User.Identity.Name;
 
                 return await _iotService.GetUserIoTCode(ownerName);
+            }
+            catch (Exception exp)
+            {
+                return BadRequest(new
+                {
+                    Error = exp.Message
+                });
+            }
+        }
+
+        [HttpPost]
+        [Route("dettach")]
+        public async Task<ActionResult<JwtApiModel>> Dettach()
+        {
+            try
+            {
+                string ownerName = User.Identity.Name;
+                await _iotService.DetachIoTFromUser(ownerName);
+
+                return Ok(new
+                {
+                    Message = "IoT has been successfully detached from the user"
+                });
+            }
+            catch (NotFoundAppException)
+            {
+                return BadRequest(new
+                {
+                    Error = "You haven't IoT"
+                });
             }
             catch (Exception exp)
             {

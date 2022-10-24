@@ -114,6 +114,20 @@ namespace Quid_pro_Quo.Services
             return new JwtApiModel(jwtString);
         }
 
+        public async Task DetachIoTFromUser(string ownerName)
+        {
+            IoTEntity IoT = await _UoW.IoTRepository.GetByOwnerName(ownerName);
+            if (IoT is null)
+            {
+                throw new NotFoundAppException($"IoT not found");
+            }
+
+            IoT.OwnerId = 35;
+            await _UoW.IoTRepository.Update(IoT);
+
+            await _UoW.SaveChanges();
+        }
+
 
 
         protected static string HashPassword(string password)

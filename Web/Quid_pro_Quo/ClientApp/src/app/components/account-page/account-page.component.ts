@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, timeInterval } from 'rxjs';
 
 import { AuthorizationService } from '../../services/authorization.service';
 import { RequestService } from '../../services/request.service';
@@ -10,6 +10,14 @@ import { MessengerSignalRService } from '../../services/messenger-signalR.servic
 import { UserApiModel } from '../../models/user-api.model';
 import { AccountFormApiModel } from '../../models/account-form-api.model';
 import { ChangePasswordApiModel } from '../../models/change-password-api.model';
+
+
+
+export enum HasIoT {
+  No = 'No',
+  Yes = 'Yes',
+  Attaching = 'Attaching',
+}
 
 @Component({
   selector: 'account-page',
@@ -34,6 +42,8 @@ export class AccountPageComponent implements OnInit {
   confirmNewPasswordStr: string = "Підтвердіть пароль";
   iotCodeStr: string = "Код IoT-пристрою";
   attachStr: string = "Прикріпити IoT-пристрій";
+  dettachStr: string = "Відкріпити IoT-пристрій";
+  pleaseConfirmAttachStr: string = "Підтведіть прикріплення на IoT-пристрої";
 
   changesIsSavedStr: string = "Зміни збережені";
   passwordIsChangedStr: string = "Пароль змінено";
@@ -107,6 +117,11 @@ export class AccountPageComponent implements OnInit {
   };
 
   iotCode: string = "—";
+  hasIoT: HasIoT = HasIoT.No;
+
+  timerId: number = -1;
+  timeLeft: Date = new Date(0);
+
 
   //subscription: Subscription;
 
@@ -135,7 +150,14 @@ export class AccountPageComponent implements OnInit {
       .then(() =>
         this.requestService
           .get(`/api/IoT/getMyIoTCode`, this.authorizationService.jwtString)
-          .then(respObj => this.iotCode = '' + <number>respObj)
+          .then(respObj => {
+            this.iotCode = "" + <number>respObj;
+            this.hasIoT = HasIoT.Yes;
+          })
+          .catch(respObj => {
+            this.iotCode = "—";
+            this.hasIoT = HasIoT.No;
+          })
       );
   }
 
@@ -182,6 +204,29 @@ export class AccountPageComponent implements OnInit {
   sendRequestToAttachIoT(): void {
     this.requestService
       .post('/api/IoT/addRequestToAttach', { ioTCode: Number(this.iotCode) }, this.authorizationService.jwtString)
-      .then(() => { })
+      .then(() => {
+        this.hasIoT = HasIoT.Attaching;
+        this.timeLeft = new Date(0, 0, 0, 0, 5, 0);
+        this.timerId = window.setInterval(() => this.decrementSecondsVariable(), 1000);
+      })
+  }
+
+  decrementSecondsVariable(): void {
+    this.timeLeft.setTime(this.timeLeft.getTime() - 1000);
+    this.timeLeft = new Date(this.timeLeft);
+
+    if (this.timeLeft.getTime() - new Date(0, 0, 0).getTime() <= 0) {
+      window.clearInterval(this.timerId);
+      this.hasIoT = HasIoT.No;
+    }
+  }
+
+  sendRequestToDettachIoT(): void {
+    this.requestService
+      .post('/api/IoT/dettach', { }, this.authorizationService.jwtString)
+      .then(() => {
+        this.iotCode = "—";
+        this.hasIoT = HasIoT.No;
+      })
   }
 }

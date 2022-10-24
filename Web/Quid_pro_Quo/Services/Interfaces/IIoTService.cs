@@ -11,5 +11,6 @@ namespace Quid_pro_Quo.Services.Interfaces
         Task AddRequestToAttach(string ownerName, int iotCode);
         Task DeleteRequestToAttach(int iotCode);
         Task<JwtApiModel> AttachToUser(int iotCode);
+        Task DetachIoTFromUser(string ownerName);
     }
 }
