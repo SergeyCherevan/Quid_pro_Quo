@@ -6,10 +6,9 @@ import { AuthorizationService } from '../../services/authorization.service';
 import { RequestService } from '../../services/request.service';
 import { DictionaryService } from '../../services/dictionary.service';
 import { MessengerSignalRService } from '../../services/messenger-signalR.service';
+import { IoTSignalRService } from '../../services/IoT-signalR.service';
 
 import { UserApiModel } from '../../models/user-api.model';
-import { AccountFormApiModel } from '../../models/account-form-api.model';
-import { ChangePasswordApiModel } from '../../models/change-password-api.model';
 
 
 
@@ -44,6 +43,7 @@ export class AccountPageComponent implements OnInit {
   attachStr: string = "Прикріпити IoT-пристрій";
   dettachStr: string = "Відкріпити IoT-пристрій";
   pleaseConfirmAttachStr: string = "Підтведіть прикріплення на IoT-пристрої";
+  iotIsAttachedStr: string = "IoT-пристрій прикріплено";
 
   changesIsSavedStr: string = "Зміни збережені";
   passwordIsChangedStr: string = "Пароль змінено";
@@ -118,6 +118,7 @@ export class AccountPageComponent implements OnInit {
 
   iotCode: string = "—";
   hasIoT: HasIoT = HasIoT.No;
+  isAttached: boolean = false;
 
   timerId: number = -1;
   timeLeft: Date = new Date(0);
@@ -132,6 +133,7 @@ export class AccountPageComponent implements OnInit {
     public requestService: RequestService,
     public dictionaryService: DictionaryService,
     public messagingsService: MessengerSignalRService,
+    public iotService: IoTSignalRService,
   ) {
     dictionaryService.dictionary = new Map<string, string>([
       //["User already exist", "Такий користувач вже існує"],
@@ -208,6 +210,8 @@ export class AccountPageComponent implements OnInit {
         this.hasIoT = HasIoT.Attaching;
         this.timeLeft = new Date(0, 0, 0, 0, 5, 0);
         this.timerId = window.setInterval(() => this.decrementSecondsVariable(), 1000);
+
+        this.iotService.startConnection(() => this.hasBeenAttached());
       })
   }
 
@@ -219,6 +223,11 @@ export class AccountPageComponent implements OnInit {
       window.clearInterval(this.timerId);
       this.hasIoT = HasIoT.No;
     }
+  }
+
+  hasBeenAttached(): void {
+    this.hasIoT = HasIoT.Yes;
+    this.isAttached = true;
   }
 
   sendRequestToDettachIoT(): void {

@@ -33,6 +33,7 @@ import { SendMessageFormComponent } from './components/messenger-components/send
 import { AuthorizationService } from './services/authorization.service';
 import { RequestService } from './services/request.service';
 import { MessengerSignalRService } from './services/messenger-signalR.service';
+import { IoTSignalRService } from './services/IoT-signalR.service';
 import { LoggerService } from './services/logger.service';
 
 // определение маршрутов
@@ -80,7 +81,7 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule, FormsModule, RouterModule.forRoot(appRoutes), GoogleMapsModule
   ],
-  providers: [ AuthorizationService, RequestService, LoggerService, MessengerSignalRService ],
+  providers: [AuthorizationService, RequestService, LoggerService, MessengerSignalRService, IoTSignalRService],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

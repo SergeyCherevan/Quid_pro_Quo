@@ -29,7 +29,7 @@ int main(int argc, char* argv[]) {
 
     string command = "";
     while (command != "end") {
-        cout << "\n\nYour command ( authorize / attach / confirm ): ";
+        cout << "\n\nYour command ( authorize / attach / confirm / end ): ";
         cin >> command;
 
         if (command == "authorize") {

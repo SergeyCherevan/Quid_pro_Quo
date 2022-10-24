@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 using Quid_pro_Quo.Authentification;
 using Quid_pro_Quo.Database.Ralational;
@@ -18,6 +19,7 @@ using Quid_pro_Quo.Repositories;
 using Quid_pro_Quo.Repositories.Interfaces;
 using Quid_pro_Quo.Services.Interfaces;
 using Quid_pro_Quo.WebApiModels;
+using Quid_pro_Quo.SignalRHubs;
 
 namespace Quid_pro_Quo.Services
 {
@@ -26,11 +28,17 @@ namespace Quid_pro_Quo.Services
         protected IUnitOfWork _UoW { get; set; }
         protected IAttachingRequestsQueue _attachingRequestsQueue { get; set; }
         protected IServiceProvider _serviceProvider { get; set; }
-        public IoTService(IUnitOfWork uow, IAttachingRequestsQueue attachingRequestsQueue, IServiceProvider serviceProvider)
+        protected IHubContext<IoTHub> _iotContext { get; set; }
+        public IoTService(
+            IUnitOfWork uow,
+            IAttachingRequestsQueue attachingRequestsQueue,
+            IServiceProvider serviceProvider,
+            IHubContext<IoTHub> iotContext)
         {
             _UoW = uow;
             _attachingRequestsQueue = attachingRequestsQueue;
             _serviceProvider = serviceProvider;
+            _iotContext = iotContext;
         }
 
         public async Task<JwtApiModel> Login(int iotCode, string password)
@@ -115,6 +123,8 @@ namespace Quid_pro_Quo.Services
             await DeleteRequestToAttach(iotCode);
 
             await _UoW.SaveChanges();
+
+            await _iotContext.Clients.User(owner.UserName).SendAsync("IoTisAttached");
 
             ClaimsIdentity claims = GetIdentity(iotCode, owner.UserName);
             string jwtString = JwtTokenizer.GetEncodedJWT(claims, AuthOptions.Lifetime);

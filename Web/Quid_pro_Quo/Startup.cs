@@ -128,7 +128,7 @@ namespace Quid_pro_Quo
                             // If the request is for our hub...
                             var path = context.HttpContext.Request.Path;
                             if (!string.IsNullOrEmpty(accessToken) &&
-                                (path.StartsWithSegments("/messenger")))
+                                (path.StartsWithSegments("/messenger") || path.StartsWithSegments("/IoT")))
                             {
                                 // Read the token out of the query string
                                 context.Token = accessToken;
@@ -189,6 +189,7 @@ namespace Quid_pro_Quo
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapHub<MessengerHub>("/messenger");
+                endpoints.MapHub<IoTHub>("/IoT");
 
                 endpoints.MapControllerRoute(
                     name: "default",
