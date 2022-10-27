@@ -211,7 +211,9 @@ export class AccountPageComponent implements OnInit {
         this.timeLeft = new Date(0, 0, 0, 0, 5, 0);
         this.timerId = window.setInterval(() => this.decrementSecondsVariable(), 1000);
 
-        this.iotService.startConnection(() => this.hasBeenAttached());
+        this.iotService.isAttachedCallback =
+          () => this.hasBeenAttached();
+        this.iotService.startConnection();
       })
   }
 
@@ -236,6 +238,7 @@ export class AccountPageComponent implements OnInit {
       .then(() => {
         this.iotCode = "—";
         this.hasIoT = HasIoT.No;
+        this.isAttached = false;
       })
   }
 }

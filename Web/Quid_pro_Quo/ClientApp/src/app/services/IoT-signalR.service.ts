@@ -13,12 +13,10 @@ export class IoTSignalRService {
   ) { }
 
   hubConnection?: signalR.HubConnection;
-  _isAttachedCallback: () => void
+  isAttachedCallback: () => void
     = () => { };
 
-  startConnection(isAttachedCallback: () => void) {
-    this._isAttachedCallback = isAttachedCallback;
-
+  startConnection() {
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl('/IoT', {
         skipNegotiation: true,
@@ -47,7 +45,7 @@ export class IoTSignalRService {
   isAttachedListener() {
     this.hubConnection?.on("IoTisAttached",
       () => {
-        this._isAttachedCallback();
+        this.isAttachedCallback();
       }
     );
   }

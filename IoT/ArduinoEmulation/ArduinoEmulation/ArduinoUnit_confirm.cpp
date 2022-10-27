@@ -3,6 +3,7 @@
 #include "ArduinoUnit.hpp"
 
 #include <iostream>
+#include <sstream>
 
 namespace ArduinoEmulation {
 
@@ -27,17 +28,125 @@ namespace ArduinoEmulation {
 
         cout << "My nmea string: " << nmeaString << "\n";
 
-        return getNMEAByString(nmeaString);
+        NMEA0183 nmea = getNMEAByString(nmeaString);
+
+        return nmea;
     }
 
     NMEA0183 ArduinoUnit::getNMEAByString(string nmeaString) {
         NMEA0183 nmea;
-        nmea.latitude = 4914.08;
-        nmea.p_hemisphere = 'N';
-        nmea.longitude = 2823.97;
-        nmea.j_hemisphere = 'E';
-        nmea.date = 100722;
-        nmea.utc_time = 065200.00;
+
+        stringstream strStrm;
+        strStrm << nmeaString;
+
+        char strBuf[21];
+
+        nmea.dollar_or_exclamation = strStrm.get();
+        strStrm.read(nmea.source, 2);
+        strStrm.read(nmea.format, 3);
+
+        if (strStrm.get() != ',') {
+            throw exception("Error of format input geolocation data: string must be delimited by ','");
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.utc_time = atof(strBuf);
+        }
+        else {
+            nmea.utc_time = 0;
+        }
+
+        strStrm.getline(strBuf, 2, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.data_is_reliable = strBuf[0];
+        }
+        else {
+            nmea.data_is_reliable = '\0';
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.latitude = atof(strBuf);
+        }
+        else {
+            nmea.latitude = 0;
+        }
+
+        strStrm.getline(strBuf, 2, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.p_hemisphere = strBuf[0];
+        }
+        else {
+            nmea.p_hemisphere = '\0';
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.longitude = atof(strBuf);
+        }
+
+        strStrm.getline(strBuf, 2, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.j_hemisphere = strBuf[0];
+        }
+        else {
+            nmea.j_hemisphere = '\0';
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.horizontal_speed = atof(strBuf);
+        }
+        else {
+            nmea.horizontal_speed = 0;
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.heading = atof(strBuf);
+        }
+        else {
+            nmea.heading = 0;
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.date = atoi(strBuf);
+        }
+        else {
+            nmea.date = 0;
+        }
+
+        strStrm.getline(strBuf, 21, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.magnetic_declination = atof(strBuf);
+        }
+        else {
+            nmea.magnetic_declination = 0;
+        }
+
+        strStrm.getline(strBuf, 2, ',');
+        if (strlen(strBuf) > 0) {
+            nmea.magnetic_declination_direction = strBuf[0];
+        }
+        else {
+            nmea.magnetic_declination_direction = '\0';
+        }
+
+        if (strStrm.peek() != '*') {
+            strStrm.getline(strBuf, 2, '*');
+            if (strlen(strBuf) > 0) {
+                nmea.mode_indicator = strBuf[0];
+            }
+            else {
+                nmea.mode_indicator = '\0';
+            }
+        }
+
+        if (strlen(strBuf) > 1) {
+            throw exception("Error of format input geolocation data: string must be ended by '*'");
+        }
 
         return nmea;
     }
@@ -57,7 +166,25 @@ namespace ArduinoEmulation {
             apiModel.longitude = -apiModel.longitude;
         }
 
-        apiModel.dateTime = "2022-07-10T06:52:00";
+        char strBuf[21];
+
+        sprintf_s(strBuf, "%02u", nmea.date % 100);
+        apiModel.dateTime = string("20") + strBuf;
+
+        sprintf_s(strBuf, "%02u", nmea.date % 10000 / 100);
+        apiModel.dateTime += string("-") + strBuf;
+
+        sprintf_s(strBuf, "%02u", int(nmea.date / 10000));
+        apiModel.dateTime += string("-") + strBuf;
+
+        sprintf_s(strBuf, "%02u", int(nmea.utc_time / 10000));
+        apiModel.dateTime += string("T") + strBuf;
+
+        sprintf_s(strBuf, "%02u", int(nmea.utc_time / 100) % 100);
+        apiModel.dateTime += string(":") + strBuf;
+
+        sprintf_s(strBuf, "%06.3f", nmea.utc_time - int(nmea.utc_time / 100) * 100);
+        apiModel.dateTime += string(":") + strBuf;
 
         return apiModel;
     }

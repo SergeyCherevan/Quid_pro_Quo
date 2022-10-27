@@ -32,14 +32,19 @@ int main(int argc, char* argv[]) {
         cout << "\n\nYour command ( authorize / attach / confirm / end ): ";
         cin >> command;
 
-        if (command == "authorize") {
-            arduino.authorize();
+        try {
+            if (command == "authorize") {
+                arduino.authorize();
+            }
+            else if (command == "attach") {
+                arduino.attachIoTToUser();
+            }
+            else if (command == "confirm") {
+                arduino.confirmServiceCompletion();
+            }
         }
-        else if (command == "attach") {
-            arduino.attachIoTToUser();
-        }
-        else if (command == "confirm") {
-            arduino.confirmServiceCompletion();
+        catch (exception exc) {
+            cerr << "\n\nERROR: " << exc.what();
         }
     }
 

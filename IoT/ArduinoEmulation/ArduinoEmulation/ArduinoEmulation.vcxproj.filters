@@ -39,31 +39,29 @@
     <ClCompile Include="ArduinoUnit_init.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="ConfirmServiceCompletionApiModel.hpp">
+    <ClCompile Include="ArduinoUnit.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="NMEA0183.h">
+    </ClCompile>
+    <ClCompile Include="ConfirmServiceCompletionApiModel.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="ArduinoUnit.hpp">
+    </ClCompile>
+    <ClCompile Include="GPRSModule.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="GPRSModule.hpp">
+    </ClCompile>
+    <ClCompile Include="GPSModule.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="GPSModule.hpp">
+    </ClCompile>
+    <ClCompile Include="Interfaces\IArduinoUnit.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\IArduinoUnit.hpp">
+    </ClCompile>
+    <ClCompile Include="Interfaces\IGPRSModule.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\IGPRSModule.hpp">
+    </ClCompile>
+    <ClCompile Include="Interfaces\IGPSModule.hpp">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\IGPSModule.hpp">
+    </ClCompile>
+    <ClCompile Include="NMEA0183.h">
       <Filter>Файлы заголовков</Filter>
-    </ClInclude>
+    </ClCompile>
   </ItemGroup>
 </Project>

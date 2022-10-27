@@ -27,7 +27,7 @@ namespace ArduinoEmulation {
         // heading (путевой угол) in degrees: bbb.b
         double heading;
         // date by UTC: ddmmyy, dd - day, mm - month, yy - year
-        int date;
+        unsigned int date;
         // magnetic declination in degrees: xx.x 
         double magnetic_declination;
         // magnetic declination direction: E - subtract from true course, W - add to true course
